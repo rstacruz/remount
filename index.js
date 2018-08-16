@@ -1,5 +1,5 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
+const React = require('react')
+const ReactDOM = require('react-dom')
 
 /*::
 export type PropertyMap = {
@@ -86,4 +86,4 @@ function getProps (element /*: Element */) {
   }, {})
 }
 
-export default define
+module.exports = { define }

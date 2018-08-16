@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "buble": "^0.19.3",
     "prettier-eslint-cli": "^4.7.1",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",

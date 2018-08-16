@@ -1,5 +1,5 @@
-const React = require('react')
-const ReactDOM = require('react-dom')
+import React from 'react'
+import ReactDOM from 'react-dom'
 
 /*::
 export type PropertyMap = {
@@ -15,7 +15,7 @@ export type ComponentMap = {
  * Registers elements.
  */
 
-function define (components /*: ComponentMap */) {
+export function define (components /*: ComponentMap */) {
   Object.keys(components).forEach((name /*: string */) => {
     const Component = components[name]
     defineOne(Component, name)
@@ -85,5 +85,3 @@ function getProps (element /*: Element */) {
     return result
   }, {})
 }
-
-module.exports = { define }

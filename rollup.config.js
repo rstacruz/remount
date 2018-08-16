@@ -1,5 +1,5 @@
 // rollup.config.js
-import buble from 'rollup-plugin-buble'
+import babel from 'rollup-plugin-babel'
 
 export default [
   // Modern build, module
@@ -27,7 +27,12 @@ export default [
   // Legacy build
   {
     input: 'index.js',
-    plugins: [buble()],
+    plugins: [
+
+    babel({
+      exclude: 'node_modules/**'
+    })
+  ],
     external: ['react', 'react-dom'],
     output: {
       file: 'dist/react-web-components.es5.js',

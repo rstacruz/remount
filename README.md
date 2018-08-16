@@ -32,6 +32,9 @@ Use it:
 
 You will need the ES5 adaptor if you plan to support ES5 browsers.
 
+- ES5 adapter (1kb minified, 600 bytes gzipped)
+- Web components polyfill (2.5kb minified, 1160 bytes gzipped)
+
 Loading it via JS:
 
 ```js

@@ -16,10 +16,10 @@ export type ComponentMap = {
  * Registers elements.
  */
 
-function register (components /*: ComponentMap */) {
+function define (components /*: ComponentMap */) {
   Object.keys(components).forEach((name /*: string */) => {
     const Component = components[name]
-    registerOne(Component, name)
+    defineOne(Component, name)
   })
 }
 
@@ -28,7 +28,7 @@ function register (components /*: ComponentMap */) {
  * @private
  */
 
-function registerOne (Component /*: React.Component */, name /*: string */) {
+function defineOne (Component /*: React.Component */, name /*: string */) {
   class ComponentElement extends window.HTMLElement {
     connectedCallback () {
       const mountPoint = document.createElement('span')
@@ -57,4 +57,4 @@ function getProps (element /*: Element */) {
   }, {})
 }
 
-export default register
+export default define

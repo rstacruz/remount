@@ -10,7 +10,7 @@
 </head>
 <body>
   <h1>Web components test</h1>
-  <div id='root'></div>
+  <x-app></x-app>
   <script>
     const h = React.createElement
     const Greeter = ({ name }) => {
@@ -30,7 +30,7 @@
       }
 
       getRandomName () {
-        const names = ['Jason', 'James', 'Jessie', 'Janice']
+        const names = ['Jason', 'James', 'Jessie', 'Janice', 'Jack', 'Jordan']
         return names[Math.round(Math.random() * (names.length - 1))]
       }
 
@@ -43,10 +43,9 @@
     }
 
     ReactWebComponents.define({
-      'x-greeter': Greeter
+      'x-greeter': Greeter,
+      'x-app': App
     })
-
-    ReactDOM.render(h(App), document.getElementById('root'))
   </script>
 </body>
 </html>

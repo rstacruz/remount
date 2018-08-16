@@ -31,14 +31,18 @@ function define (components /*: ComponentMap */) {
 function defineOne (Component /*: React.Component */, name /*: string */) {
   class ComponentElement extends window.HTMLElement {
     connectedCallback () {
-      const mountPoint = document.createElement('span')
-      this.attachShadow({ mode: 'open' }).appendChild(mountPoint)
+      this._mountPoint = createMountPoint(this)
+      update(this, Component, this._mountPoint)
+    }
 
-      const props = this.hasAttribute('props-json')
-        ? JSON.parse(this.getAttribute('props-json'))
-        : getProps(this)
+    disconnectedCallback () {
+      if (!this._mountPoint) return
+      ReactDOM.unmountComponentAtNode(this._mountPoint)
+    }
 
-      ReactDOM.render(React.createElement(Component, props), mountPoint)
+    attributeChangedCallback () {
+      if (!this._mountPoint) return
+      update(this, Component, this._mountPoint)
     }
   }
 
@@ -46,7 +50,33 @@ function defineOne (Component /*: React.Component */, name /*: string */) {
 }
 
 /**
+ * Creates a `<span>` element that serves as the mounting point for React
+ * components.
+ * @private
+ */
+
+function createMountPoint (element) {
+  const mountPoint = document.createElement('span')
+  element.attachShadow({ mode: 'open' }).appendChild(mountPoint)
+  return mountPoint
+}
+
+/**
+ * Updates a custom element by calling `ReactDOM.render()`.
+ * @private
+ */
+
+function update (element, Component, mountPoint) {
+  const props = element.hasAttribute('props-json')
+    ? JSON.parse(element.getAttribute('props-json'))
+    : getProps(element)
+
+  ReactDOM.render(React.createElement(Component, props), mountPoint)
+}
+
+/**
  * Returns properties for a given HTML element.
+ * @private
  */
 
 function getProps (element /*: Element */) {

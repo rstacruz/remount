@@ -70,7 +70,10 @@ function update (element, Component, mountPoint) {
     ? JSON.parse(element.getAttribute('props-json'))
     : getProps(element)
 
-  ReactDOM.render(React.createElement(Component, props), mountPoint)
+  // Same as <Component {...props} />
+  const reactElement = React.createElement(Component, props)
+
+  ReactDOM.render(reactElement, mountPoint)
 }
 
 /**

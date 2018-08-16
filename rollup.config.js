@@ -17,8 +17,10 @@ export default [
     input: 'index.js',
     external: ['react', 'react-dom'],
     output: {
-      file: 'dist/react-web-components.cjs.js',
-      format: 'cjs'
+      file: 'dist/react-web-components.umd.js',
+      format: 'umd',
+      name: 'ReactWebComponents',
+      globals: { react: 'React', 'react-dom': 'ReactDOM' }
     }
   },
 

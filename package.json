@@ -8,5 +8,11 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "prettier-eslint-cli": "^4.7.1",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
+    "standard": "^11.0.1"
+  }
 }

@@ -29,6 +29,10 @@ export function define (components /*: ComponentMap */) {
 
 function defineOne (Component /*: React.Component */, name /*: string */) {
   class ComponentElement extends window.HTMLElement {
+    static get observedAttributes () {
+      return ['props-json']
+    }
+
     connectedCallback () {
       this._mountPoint = createMountPoint(this)
       update(this, Component, this._mountPoint)

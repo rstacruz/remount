@@ -7,14 +7,46 @@
 <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
 <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
 <script src='../dist/react-web-components.umd.js'></script>
-<script>
-/* Example JS */
-  const Greeter = ({ name }) => (React.createElement('div', { style: { border: 'solid 1px #ccc' } }, 'Oh hello, ', name, '!'))
-  ReactWebComponents.define({ 'x-greeter': Greeter })
-</script>
 </head>
 <body>
   <h1>Web components test</h1>
-  <x-greeter props-json='{"name":"John"}' />
+  <div id='root'></div>
+  <script>
+    const h = React.createElement
+    const Greeter = ({ name }) => {
+      return h('div', { style: { border: 'solid 1px #ccc' } }, 'Oh hello, ', name, '!')
+    }
+
+    class App extends React.Component {
+      constructor () {
+        super()
+        this.state = { name: '...' }
+      }
+
+      componentDidMount () {
+        setInterval(() => {
+          this.setState({ name: this.getRandomName() })
+        }, 300)
+      }
+
+      getRandomName () {
+        const names = ['Jason', 'James', 'Jessie', 'Janice']
+        return names[Math.round(Math.random() * (names.length - 1))]
+      }
+
+      render () {
+        return h('div', {},
+          'Greeting ', this.state.name, ':',
+          h('x-greeter', { 'props-json': JSON.stringify({ name: this.state.name }) })
+        )
+      }
+    }
+
+    ReactWebComponents.define({
+      'x-greeter': Greeter
+    })
+
+    ReactDOM.render(h(App), document.getElementById('root'))
+  </script>
 </body>
 </html>

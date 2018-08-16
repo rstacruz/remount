@@ -23,14 +23,14 @@ export default [
   // Modern build, module
   {
     ...DEFAULTS,
-    output: { file: 'dist/react-web-components.mjs', format: 'esm' }
+    output: { file: 'dist/react-web-components.esm.mjs', format: 'esm' }
   },
 
   // Modern build, module (min)
   {
     ...DEFAULTS,
     plugins: [MINIFY],
-    output: { file: 'dist/react-web-components.min.mjs', format: 'esm' }
+    output: { file: 'dist/react-web-components.esm.min.mjs', format: 'esm' }
   },
 
   // Modern build, commonJS
@@ -50,13 +50,13 @@ export default [
   {
     ...DEFAULTS,
     plugins: [BABEL],
-    output: { file: 'dist/react-web-components.es5.js', ...UMD }
+    output: { file: 'dist/react-web-components.legacy.js', ...UMD }
   },
 
   // Legacy build (min)
   {
     ...DEFAULTS,
     plugins: [BABEL, MINIFY],
-    output: { file: 'dist/react-web-components.es5.min.js', ...UMD }
+    output: { file: 'dist/react-web-components.legacy.min.js', ...UMD }
   }
 ]

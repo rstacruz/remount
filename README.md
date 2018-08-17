@@ -1,6 +1,8 @@
 # Remount
 
-> Mount React components to the DOM using custom elements
+> :electric_plug: Mount React components to the DOM using custom elements
+
+*Experimental* - Remount lets you use your React components anywhere in the page as a web component (custom element).
 
 [![Status](https://travis-ci.org/rstacruz/remount.svg?branch=master)](https://travis-ci.org/rstacruz/remount "See test builds")
 

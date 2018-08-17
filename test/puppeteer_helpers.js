@@ -11,7 +11,8 @@ const CI_OPTIONS = {
 }
 
 global.beforeAll(async () => {
-  const options = process.env.CI ? CI_OPTIONS : OPTIONS
+  const options = process.env.CI === 'true' ? CI_OPTIONS : OPTIONS
+  console.log('[puppeteer] Using options:', options)
   global.browser = await puppeteer.launch(options)
 })
 

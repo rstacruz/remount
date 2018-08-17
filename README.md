@@ -70,6 +70,12 @@ define({
 })
 ```
 
+## Limitations
+
+- Custom components require a hyphen in the their names.
+
+- Attributes are case insensitive.
+
 ## Browser support
 
 Remount supports all browsers [supported by React](https://reactjs.org/docs/react-dom.html#browser-support). Use the polyfills below to ensure the best compatibility.

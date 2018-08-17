@@ -1,22 +1,17 @@
 {
   "name": "remount",
-  "description": "> Mount React components to the DOM using custom elements",
-  "version": "1.0.0",
+  "description": "Mount React components to the DOM using custom elements",
+  "version": "0.1.0",
   "author": "Rico Sta. Cruz <rstacruz@users.noreply.github.com>",
   "bugs": {
     "url": "https://github.com/rstacruz/remount/issues"
-  },
-  "dependencies": {
-    "expect-puppeteer": "3.3.0"
-  },
-  "peerDependencies": {
-    "react": ">= 15.0.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-jest": "^23.4.2",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
+    "expect-puppeteer": "3.3.0",
     "jest": "^23.5.0",
     "prettier-eslint-cli": "^4.7.1",
     "puppeteer": "^1.7.0",
@@ -41,6 +36,9 @@
   ],
   "license": "MIT",
   "main": "dist/remount.umd.js",
+  "peerDependencies": {
+    "react": ">= 15.0.0"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/rstacruz/remount.git"

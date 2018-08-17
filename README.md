@@ -18,7 +18,7 @@ _Experimental_ - Remount lets you use your React components anywhere in the page
 
 [![Status](https://travis-ci.org/rstacruz/remount.svg?branch=master)](https://travis-ci.org/rstacruz/remount 'See test builds')
 
-## Install
+## Installation
 
 Remount is available through the [npm package repository](https://yarnpkg.com/en/package/remount).
 
@@ -29,7 +29,7 @@ Be sure to use the [recommended polyfills](#polyfills) below as well!
 
 ## Usage
 
-👇 Given any React component, such as this:
+Given any React component, such as this:
 
 ```js
 const Greeter = ({ name }) => {
@@ -37,7 +37,7 @@ const Greeter = ({ name }) => {
 }
 ```
 
-📝 You can use _define()_ to define custom elements. Let's define `<x-greeter>` like so:
+You can use _define()_ to define custom elements. Let's define `<x-greeter>` like so:
 
 ```js
 import { define } from 'remount'
@@ -47,20 +47,24 @@ define({
 })
 ```
 
-🎉 You can then use it in your HTML, or even in your other React components!
+You can then use it in your HTML, or even in your other React components!
 
 ```html
 <x-greeter props-json='{"name":"John"}'></x-greeter>
 ```
 
+➡️ More at **[API documentation](docs/api.md)**
+
 ## Use cases
 
-|                                                                                                                                                                                                            |                                                                             |
-| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
-| <img src='http://source.unsplash.com/350x250?sea'> | ✨ **Adding React to non-SPA apps** <br> You can use React components on any page of a "regular" HTML site. Great for adding React to apps built on Rails or Phoenix.                                       |
-| | |
-| <img src='http://source.unsplash.com/350x250?sun'> | 💞 **Interop with other frameworks** <br> Remount lets you use your React components just like any other HTML element. This means you can use React with Vue, Angular, or any other DOM library/framework.
-|                                                                                                                                                                                                            |                                                                             |
+Some ideas on why you might want to consider Remount for your project:
+
+|                                                    |                                                                                                                                                                                                            |
+| -------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| <img src='http://source.unsplash.com/350x250?sea'> | ✨ **Adding React to non-SPA apps** <br> You can use React components on any page of a "regular" HTML site. Great for adding React to apps built on Rails or Phoenix.                                      |
+|                                                    |                                                                                                                                                                                                            |
+| <img src='http://source.unsplash.com/350x250?sun'> | 💞 **Interop with other frameworks** <br> Remount lets you use your React components just like any other HTML element. This means you can use React with Vue, Angular, or any other DOM library/framework. |
+|                                                    |                                                                                                                                                                                                            |
 
 ## Custom properties
 
@@ -118,7 +122,7 @@ If you are encountering UglifyJS errors, try the legacy ES5 build.
 import { define } from 'remount/dist/remount.legacy.js'
 ```
 
-You can see all available builds at [here](https://cdn.jsdelivr.net/npm/remount/dist).
+➡️ More at **[Builds documentation](docs/builds.md)**
 
 ## Thanks
 
@@ -129,8 +133,10 @@ Authored and maintained by Rico Sta. Cruz with help from contributors ([list][co
 > GitHub [@rstacruz](https://github.com/rstacruz) &nbsp;&middot;&nbsp;
 > Twitter [@rstacruz](https://twitter.com/rstacruz)
 
-[![](https://img.shields.io/github/followers/rstacruz.svg?style=social&label=@rstacruz)](https://github.com/rstacruz) &nbsp;
-[![](https://img.shields.io/twitter/follow/rstacruz.svg?style=social&label=@rstacruz)](https://twitter.com/rstacruz)
-
 [mit]: http://mit-license.org/
 [contributors]: http://github.com/rstacruz/remount/contributors
+
+<br>
+
+[![](https://img.shields.io/github/followers/rstacruz.svg?style=social&label=@rstacruz)](https://github.com/rstacruz) &nbsp;
+[![](https://img.shields.io/twitter/follow/rstacruz.svg?style=social&label=@rstacruz)](https://twitter.com/rstacruz) <br>

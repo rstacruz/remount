@@ -21,3 +21,9 @@ See [Comparison](comparison.md).
 > Q: Can I use Remount to put React components in React components?
 
 Yes, but it'd be better if you just use React. You're sure to have better performance that way.
+
+## Happy face
+
+> Q: Who's that guy in the README cover photo?
+
+I stole [@rem](https://twitter.com/rem)'s avatar from [uifaces.com](https://uifaces.com/).

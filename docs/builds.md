@@ -1,5 +1,6 @@
 # Builds
 
+You can see all available builds at [here](https://cdn.jsdelivr.net/npm/remount/dist).
 Each version ships with three variants:
 
 | Version  | Description                  |

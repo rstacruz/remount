@@ -60,7 +60,7 @@ define({
 Only the `props-json` attribute is supported by default. To support custom properties like above, pass the names of attributes you want Remount to use.
 
 ```js
-import { define } from 'react-web-components'
+import { define } from 'remount'
 
 define({
   'x-greeter': {

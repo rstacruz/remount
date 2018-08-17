@@ -7,7 +7,8 @@ const OPTIONS = {
 
 const CI_OPTIONS = {
   headless: true,
-  args: ['--no-sandbox', '--disable-gpu']
+  args: ['--no-sandbox', '--disable-setuid-sandbox'],
+  exitOnPageError: true
 }
 
 global.beforeAll(async () => {

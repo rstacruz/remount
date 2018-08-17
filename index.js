@@ -1,3 +1,4 @@
+// @flow
 import React from 'react'
 import ReactDOM from 'react-dom'
 
@@ -6,20 +7,33 @@ export type PropertyMap = {
   [string]: string
 }
 
-export type ComponentMap = {
-  [string]: React.Component
+export type ElementMap = {
+  [string]: ElementSpecArg
 }
+
+export type ElementSpec = {
+  component: React.Component
+  attributes?: Array<string>
+}
+
+export type ElementSpecArg = ElementSpec | React.Component
 */
 
 /**
  * Registers elements.
  */
 
-export function define (components /*: ComponentMap */) {
+export function define (components /*: ElementMap */) {
   Object.keys(components).forEach((name /*: string */) => {
-    const Component = components[name]
-    defineOne(Component, name)
+    const elSpec /*: ElementSpec */ = toElementSpec(components[name])
+    defineOne(elSpec, name)
   })
+}
+
+function toElementSpec (thing /*: ElementSpecArg */) /*: ElementSpec */ {
+  if (thing.hasOwnProperty('component')) return thing
+
+  return { component: thing }
 }
 
 /**
@@ -27,15 +41,18 @@ export function define (components /*: ComponentMap */) {
  * @private
  */
 
-function defineOne (Component /*: React.Component */, name /*: string */) {
+function defineOne (elSpec /*: ElementSpec */, name /*: string */) {
+  const Component = elSpec.component
+  const attributes = elSpec.attributes || []
+
   class ComponentElement extends window.HTMLElement {
     static get observedAttributes () {
-      return ['props-json']
+      return ['props-json', ...attributes]
     }
 
     connectedCallback () {
       this._mountPoint = createMountPoint(this)
-      update(this, Component, this._mountPoint)
+      update(this, elSpec, this._mountPoint)
     }
 
     disconnectedCallback () {
@@ -45,7 +62,7 @@ function defineOne (Component /*: React.Component */, name /*: string */) {
 
     attributeChangedCallback () {
       if (!this._mountPoint) return
-      update(this, Component, this._mountPoint)
+      update(this, elSpec, this._mountPoint)
     }
   }
 
@@ -58,7 +75,7 @@ function defineOne (Component /*: React.Component */, name /*: string */) {
  * @private
  */
 
-function createMountPoint (element) {
+function createMountPoint (element /*: Element */) {
   const mountPoint = document.createElement('span')
   element.attachShadow({ mode: 'open' }).appendChild(mountPoint)
   return mountPoint
@@ -69,13 +86,17 @@ function createMountPoint (element) {
  * @private
  */
 
-function update (element, Component, mountPoint) {
+function update (
+  element /* Element */,
+  { component, attributes } /*: ElementSpec */,
+  mountPoint /* Element */
+) {
   const props = element.hasAttribute('props-json')
     ? JSON.parse(element.getAttribute('props-json'))
-    : getProps(element)
+    : getProps(element, attributes)
 
   // Same as <Component {...props} />
-  const reactElement = React.createElement(Component, props)
+  const reactElement = React.createElement(component, props)
 
   ReactDOM.render(reactElement, mountPoint)
 }
@@ -85,10 +106,13 @@ function update (element, Component, mountPoint) {
  * @private
  */
 
-function getProps (element /*: Element */) {
-  const names /*: Array<string> */ = element.getAttributeNames()
+function getProps (element /*: Element */, attributes /*: ?Array<string> */) {
+  const names /*: Array<string> */ = attributes || []
   return names.reduce((result /*: PropertyMap */, attribute /*: string */) => {
     result[attribute] = element.getAttribute(attribute)
     return result
   }, {})
+
+  // By the way, did you know el.getAttributeNames()
+  // will not work in IE11? Now you do.
 }

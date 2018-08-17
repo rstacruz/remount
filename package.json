@@ -1,16 +1,12 @@
 {
   "name": "remount",
+  "description": "> Mount React components to the DOM using custom elements",
   "version": "1.0.0",
-  "description": "",
-  "main": "dist/remount.umd.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rollup --config",
-    "watch": "rollup --config --watch"
+  "author": "Rico Sta. Cruz <rstacruz@users.noreply.github.com>",
+  "bugs": {
+    "url": "https://github.com/rstacruz/remount/issues"
   },
-  "keywords": [],
-  "author": "",
-  "license": "MIT",
+  "dependencies": {},
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-plugin-external-helpers": "^6.22.0",
@@ -22,5 +18,28 @@
     "rollup-plugin-babel": "^3.0.7",
     "rollup-plugin-babel-minify": "^5.0.0",
     "standard": "^11.0.1"
+  },
+  "directories": {
+    "doc": "docs",
+    "example": "examples"
+  },
+  "homepage": "https://github.com/rstacruz/remount#readme",
+  "keywords": [
+    "custom element",
+    "mount",
+    "onmount",
+    "react",
+    "web component"
+  ],
+  "license": "MIT",
+  "main": "dist/remount.umd.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rstacruz/remount.git"
+  },
+  "scripts": {
+    "build": "rollup --config",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "rollup --config --watch"
   }
 }

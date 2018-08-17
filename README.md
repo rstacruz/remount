@@ -22,10 +22,6 @@ yarn add remount
 
 ## Usage
 
-> ```html
-> <x-greeter props-json='{"name":"John"}'></x-greeter>
-> ```
-
 Given this React component:
 
 ```js
@@ -52,9 +48,10 @@ Use it:
 
 ## Custom properties
 
-> ```html
-> <x-greeter name="John"></x-greeter>
-> ```
+```html
+<!-- Support for this isn't enabled by default; see below -->
+<x-greeter name="John"></x-greeter>
+```
 
 Only the `props-json` attribute is supported by default. To support custom properties like above, pass the names of attributes you want Remount to use.
 
@@ -74,9 +71,7 @@ define({
 We recommend using these two polyfills to support browsers down to IE9 (~1.7kb gzipped), provided by the [`@webcomponents/webcomponentsjs`][@webcomponents/webcomponentsjs] package. Load it via JavaScript in your app's entry point:
 
 ```js
-/*
- * Add the package via: yarn add @webcomponents/webcomponentsjs
- */
+// Add the package via: yarn add @webcomponents/webcomponentsjs
 
 import '@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js'
 import '@webcomponents/webcomponentsjs/webcomponents-loader.js'
@@ -92,6 +87,14 @@ Or you can load it via CDN:
 [@webcomponents/webcomponentsjs]: https://yarn.pm/@webcomponents/webcomponentsjs
 
 More info at the [Polyfills documentation](./docs/polyfills.md).
+
+## Legacy support
+
+If you are encountering UglifyJS errors, try the legacy ES5 build.
+
+```js
+import { define } from 'remount/dist/remount.legacy.js'
+```
 
 ## Thanks
 

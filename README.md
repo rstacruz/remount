@@ -20,6 +20,8 @@
 yarn add remount
 ```
 
+Be sure to use the [recommended polyfills](#polyfills) below as well.
+
 ## Usage
 
 Given this React component:
@@ -66,9 +68,13 @@ define({
 })
 ```
 
+## Browser support
+
+Remount supports all browsers [supported by React](https://reactjs.org/docs/react-dom.html#browser-support). Use the polyfills below to ensure the best compatibility.
+
 ## Polyfills
 
-We recommend using these two polyfills to support browsers down to IE9 (~1.7kb gzipped), provided by the [`@webcomponents/webcomponentsjs`][@webcomponents/webcomponentsjs] package. Load it via JavaScript in your app's entry point:
+We recommend these two polyfills provided by the [@webcomponents/webcomponentsjs][@webcomponents/webcomponentsjs] package. Load it via JavaScript in your app's entry point:
 
 ```js
 // Add the package via: yarn add @webcomponents/webcomponentsjs

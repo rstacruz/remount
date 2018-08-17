@@ -2,20 +2,20 @@
 <html>
 <head>
 <meta charset='utf-8'>
-<script>(function(){'use strict';(function(){if(void 0===window.Reflect||void 0===window.customElements||window.customElements.hasOwnProperty('polyfillWrapFlushCallback'))return;const a=HTMLElement;window.HTMLElement=function(){return Reflect.construct(a,[],this.constructor)},HTMLElement.prototype=a.prototype,HTMLElement.prototype.constructor=HTMLElement,Object.setPrototypeOf(HTMLElement,a);})();}());</script><!-- via https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2.0.4/custom-elements-es5-adapter.js -->
+<script crossorigin src='https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2.0.4/custom-elements-es5-adapter.js'></script>
 <script crossorigin src='https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2.0.4/webcomponents-loader.js'></script>
 <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
 <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
-<script src='../dist/react-web-components.umd.js'></script>
+<script src='../dist/remount.umd.js'></script>
 <script>
 /* Example JS */
   const Greeter = ({ name }) => (React.createElement('div', { style: { border: 'solid 1px #ccc' } }, 'Oh hello, ', name, '!'))
-ReactWebComponents.define({
-  'x-greeter': {
-    component: Greeter,
-    attributes: ['name']
-  }
-})
+  Remount.define({
+    'x-greeter': {
+      component: Greeter,
+      attributes: ['name']
+    }
+  })
 </script>
 </head>
 <body>

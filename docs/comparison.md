@@ -16,4 +16,5 @@
 | License                          | `MIT`               | `MIT`?                      | `MIT`                                |
 
 [react docs]: https://reactjs.org/docs/web-components.html
+[react-mount]: https://yarnpkg.com/en/package/react-mount
 [react-web-component]: https://yarnpkg.com/en/package/react-web-component

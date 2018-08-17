@@ -15,7 +15,7 @@ const DEFAULTS = {
 
 const UMD = {
   format: 'umd',
-  name: 'ReactWebComponents',
+  name: 'Remount',
   globals: { react: 'React', 'react-dom': 'ReactDOM' }
 }
 
@@ -23,40 +23,40 @@ export default [
   // Modern build, module
   {
     ...DEFAULTS,
-    output: { file: 'dist/react-web-components.esm.mjs', format: 'esm' }
+    output: { file: 'dist/remount.esm.mjs', format: 'esm' }
   },
 
   // Modern build, module (min)
   {
     ...DEFAULTS,
     plugins: [MINIFY],
-    output: { file: 'dist/react-web-components.esm.min.mjs', format: 'esm' }
+    output: { file: 'dist/remount.esm.min.mjs', format: 'esm' }
   },
 
   // Modern build, commonJS
   {
     ...DEFAULTS,
-    output: { file: 'dist/react-web-components.umd.js', ...UMD }
+    output: { file: 'dist/remount.umd.js', ...UMD }
   },
 
   // Modern build, commonJS
   {
     ...DEFAULTS,
     plugins: [MINIFY],
-    output: { file: 'dist/react-web-components.umd.min.js', ...UMD }
+    output: { file: 'dist/remount.umd.min.js', ...UMD }
   },
 
   // Legacy build
   {
     ...DEFAULTS,
     plugins: [BABEL],
-    output: { file: 'dist/react-web-components.legacy.js', ...UMD }
+    output: { file: 'dist/remount.legacy.js', ...UMD }
   },
 
   // Legacy build (min)
   {
     ...DEFAULTS,
     plugins: [BABEL, MINIFY],
-    output: { file: 'dist/react-web-components.legacy.min.js', ...UMD }
+    output: { file: 'dist/remount.legacy.min.js', ...UMD }
   }
 ]

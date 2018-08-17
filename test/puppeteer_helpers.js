@@ -6,7 +6,8 @@ const OPTIONS = {
 }
 
 const CI_OPTIONS = {
-  args: ['--no-sandbox', '--disable-dev-shm-usage']
+  headless: true,
+  args: ['--no-sandbox', '--disable-gpu']
 }
 
 global.beforeAll(async () => {

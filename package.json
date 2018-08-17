@@ -7,6 +7,9 @@
     "url": "https://github.com/rstacruz/remount/issues"
   },
   "dependencies": {},
+  "peerDependencies": {
+    "react": ">= 15.0.0"
+  },
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-plugin-external-helpers": "^6.22.0",

@@ -1,6 +1,10 @@
+<br>
+
 <p align='center'><img src='docs/images/remount.png'></p>
 
 <p align='center'><a href='https://codepen.io/rstacruz/pen/EpBZRv?editors=1010'><b>Demo</b></a></p>
+
+<br>
 
 # Remount
 

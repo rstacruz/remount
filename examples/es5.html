@@ -9,7 +9,7 @@
 <script src='../dist/remount.legacy.js'></script>
 <script>
 /* Example JS */
-  const Greeter = ({ name }) => (React.createElement('div', { style: { border: 'solid 1px #ccc' } }, 'Oh hello, ', name, '!'))
+  const Greeter = ({ name }) => (React.createElement('div', { id: 'greeter', style: { border: 'solid 1px #ccc' } }, 'Oh hello, ', name, '!'))
   Remount.define({ 'x-greeter': Greeter })
 </script>
 </head>

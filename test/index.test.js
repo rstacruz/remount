@@ -16,7 +16,7 @@ describe('remount', () => {
     })
   })
 
-  it('works', () => {
+  xit('works', () => {
     const div = document.createElement('div')
     ReactDOM.render(
       <span>
@@ -24,7 +24,5 @@ describe('remount', () => {
       </span>,
       div
     )
-
-    console.log(div.innerHTML)
   })
 })

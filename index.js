@@ -96,9 +96,10 @@ function ensureSupported () {
  */
 
 function createMountPoint (element /*: Element */) {
-  const mountPoint = document.createElement('span')
-  element.attachShadow({ mode: 'open' }).appendChild(mountPoint)
-  return mountPoint
+  return element
+  // const mountPoint = document.createElement('span')
+  // element.attachShadow({ mode: 'open' }).appendChild(mountPoint)
+  // return mountPoint
 }
 
 /**

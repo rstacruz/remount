@@ -17,6 +17,7 @@
     "babel-preset-react": "^6.24.1",
     "jest": "^23.5.0",
     "prettier-eslint-cli": "^4.7.1",
+    "puppeteer": "^1.7.0",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
     "rollup": "^0.64.1",

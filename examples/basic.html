@@ -9,12 +9,13 @@
 <script src='../dist/remount.umd.js'></script>
 <script>
 /* Example JS */
-  const Greeter = ({ name }) => (React.createElement('div', { style: { border: 'solid 1px #ccc' } }, 'Oh hello, ', name, '!'))
+  const Greeter = ({ name }) => (React.createElement('div', { id: 'greeter', style: { border: 'solid 1px #ccc' } }, 'Oh hello, ', name, '!'))
   Remount.define({ 'x-greeter': Greeter })
 </script>
 </head>
 <body>
   <h1>Web components test</h1>
-  <x-greeter props-json='{"name":"John"}' />
+  <x-greeter props-json='{"name":"John"}'></x-greeter>
+  <div id='end'></div>
 </body>
 </html>

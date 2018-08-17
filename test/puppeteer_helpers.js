@@ -15,5 +15,8 @@ global.beforeAll(async () => {
 })
 
 global.afterAll(async () => {
+  // Not sure why, but this sometimes isn't available
+  // in Travis
+  if (!global.browser || !global.browser.close) return
   await global.browser.close()
 })

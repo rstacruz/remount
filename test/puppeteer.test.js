@@ -1,7 +1,7 @@
 /* eslint-env jest */
-import puppeteer from 'puppeteer'
+/* global browser */
+import '../lib/puppeteer_helpers'
 jest.setTimeout(25000)
-let browser
 
 function example (what) {
   const url = require('path').join('file://', __dirname, '..', 'examples', what)
@@ -9,34 +9,27 @@ function example (what) {
 }
 
 describe('puppeteer tests', () => {
-  beforeAll(async () => {
-    browser = await puppeteer.launch({
-      headless: false,
-      args: ['--no-sandbox', '--disable-setuid-sandbox']
-    })
-  })
-
-  afterAll(async () => {
-    await browser.close()
-  })
-
   it('basic.html', async () => {
     const url = example('basic.html')
 
     const page = await browser.newPage()
     await page.goto(url)
     await page.waitForSelector('#greeter')
-    const text = await page.evaluate(() => document.body.textContent)
-    expect(text).toContain('Oh hello, John!')
+    const text = await getContent(page)
+    expect(text).toMatch('Oh hello, John!')
   })
 
   it('es5.html', async () => {
-    const url = example('basic.html')
+    const url = example('es5.html')
 
     const page = await browser.newPage()
     await page.goto(url)
     await page.waitForSelector('#greeter')
-    const text = await page.evaluate(() => document.body.textContent)
+    const text = await getContent(page)
     expect(text).toContain('Oh hello, John!')
   })
 })
+
+const getContent = (page) => {
+  return page.evaluate(() => document.body.textContent)
+}

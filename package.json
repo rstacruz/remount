@@ -6,7 +6,9 @@
   "bugs": {
     "url": "https://github.com/rstacruz/remount/issues"
   },
-  "dependencies": {},
+  "dependencies": {
+    "expect-puppeteer": "3.3.0"
+  },
   "peerDependencies": {
     "react": ">= 15.0.0"
   },

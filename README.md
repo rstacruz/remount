@@ -14,9 +14,9 @@
 
 > 🔌 Mount React components to the DOM using custom elements
 
-*Experimental* - Remount lets you use your React components anywhere in the page as a web component (custom element).
+_Experimental_ - Remount lets you use your React components anywhere in the page as a web component (custom element).
 
-[![Status](https://travis-ci.org/rstacruz/remount.svg?branch=master)](https://travis-ci.org/rstacruz/remount "See test builds")
+[![Status](https://travis-ci.org/rstacruz/remount.svg?branch=master)](https://travis-ci.org/rstacruz/remount 'See test builds')
 
 ## Install
 
@@ -37,7 +37,7 @@ const Greeter = ({ name }) => {
 }
 ```
 
-📝 You can use *define()* to define custom elements. Let's define `<x-greeter>` like so:
+📝 You can use _define()_ to define custom elements. Let's define `<x-greeter>` like so:
 
 ```js
 import { define } from 'remount'
@@ -52,6 +52,15 @@ define({
 ```html
 <x-greeter props-json='{"name":"John"}'></x-greeter>
 ```
+
+## Use cases
+
+|                                                                                                                                                                                                            |                                                                             |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| <img src='http://source.unsplash.com/350x250?sea'> | ✨ **Adding React to non-SPA apps** <br> You can use React components on any page of a "regular" HTML site. Great for adding React to apps built on Rails or Phoenix.                                       |
+| | |
+| <img src='http://source.unsplash.com/350x250?sun'> | 💞 **Interop with other frameworks** <br> Remount lets you use your React components just like any other HTML element. This means you can use React with Vue, Angular, or any other DOM library/framework.
+|                                                                                                                                                                                                            |                                                                             |
 
 ## Custom properties
 

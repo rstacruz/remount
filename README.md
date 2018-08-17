@@ -25,7 +25,25 @@ define({
 Use it:
 
 ```html
-<x-greeter name='John'></x-greeter>
+<x-greeter data-props='{"name":"John"}'></x-greeter>
+```
+
+## Named attributes
+
+```html
+<x-greeter name="John"></x-greeter>
+<!-- This doesn't work by default, unless you do the thing below -->
+```
+
+```js
+import { define } from 'react-web-components'
+
+define({
+  'x-greeter': {
+    component: Greeter,
+    attributes: ['name']
+  }
+})
 ```
 
 ## Polyfills
@@ -44,7 +62,7 @@ import '@webcomponents/webcomponentsjs/webcomponents-loader.js'
 
 Or via HTML:
 
- ```html
+```html
 <script crossorigin src='https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2.0.4/custom-elements-es5-adapter.js'></script>
 <script crossorigin src='https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2.0.4/webcomponents-loader.js'></script>
 ```

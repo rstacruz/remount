@@ -48,7 +48,7 @@ define({
 
 ## Polyfills
 
-We recommend using these two polyfills to support browsers down to IE9. They're all provided by the [@webcomponents/webcomponentsjs] package. Load it via JavaScript in your app's entry point:
+We recommend using these two polyfills to support browsers down to IE9 (~1.7kb gzipped), provided by the [`@webcomponents/webcomponentsjs`][@webcomponents/webcomponentsjs] package. Load it via JavaScript in your app's entry point:
 
 ```js
 /*
@@ -59,7 +59,7 @@ import '@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js'
 import '@webcomponents/webcomponentsjs/webcomponents-loader.js'
 ```
 
-Or via the jsdelivr.net CDN:
+Or you can load it via CDN:
 
 ```html
 <script crossorigin src='https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2.0.4/custom-elements-es5-adapter.js'></script>

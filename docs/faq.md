@@ -15,3 +15,9 @@ The `x-` prefix is *not* required. However, it's featured in a lot of Remount's 
 > Q: Why should I use Remount, and not `$another_library`?
 
 See [Comparison](comparison.md).
+
+## Remount in React
+
+> Q: Can I use Remount to put React components in React components?
+
+Yes, but it'd be better if you just use React. You're sure to have better performance that way.

@@ -6,7 +6,7 @@ const OPTIONS = {
 }
 
 const CI_OPTIONS = {
-  args: ['--no-sandbox']
+  args: ['--disable-dev-shm-usage']
 }
 
 global.beforeAll(async () => {

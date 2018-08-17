@@ -42,7 +42,6 @@ function toElementSpec (thing /*: ElementSpecArg */) /*: ElementSpec */ {
  */
 
 function defineOne (elSpec /*: ElementSpec */, name /*: string */) {
-  const Component = elSpec.component
   const attributes = elSpec.attributes || []
 
   class ComponentElement extends window.HTMLElement {
@@ -66,7 +65,28 @@ function defineOne (elSpec /*: ElementSpec */, name /*: string */) {
     }
   }
 
+  if (!ensureSupported()) return
   window.customElements.define(name, ComponentElement)
+}
+
+/**
+ * Ensures that custom elements are supported
+ * @private
+ */
+
+function ensureSupported () {
+  if (!window.customElements || !window.customElements.define) {
+    console.error(
+      "remount: Custom elements aren't support in this browser. " +
+        'Remount will not work. ' +
+        'Including polyfills will likely fix this. ' +
+        'See Remount documentation for more info: ' +
+        'https://github.com/rstacruz/remount'
+    )
+    return false
+  }
+
+  return true
 }
 
 /**

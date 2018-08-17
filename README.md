@@ -1,6 +1,6 @@
 <br>
 
-<p align='center'><img src='docs/images/remount.png'></p>
+<p align='center'><img src='docs/images/remount.png' width='500'></p>
 
 <p align='center'><a href='https://codepen.io/rstacruz/pen/EpBZRv?editors=1010'><b>Demo</b></a></p>
 
@@ -116,4 +116,4 @@ Authored and maintained by Rico Sta. Cruz with help from contributors ([list][co
 [![](https://img.shields.io/github/followers/rstacruz.svg?style=social&label=@rstacruz)](https://github.com/rstacruz) &nbsp;
 [![](https://img.shields.io/twitter/follow/rstacruz.svg?style=social&label=@rstacruz)](https://twitter.com/rstacruz)
 
-[mit]: http://mit-license.org/
+[mit]: http://mit-li

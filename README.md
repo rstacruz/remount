@@ -2,7 +2,17 @@
 
 > Mount React components to the DOM using custom elements
 
+## Install
+
+```sh
+yarn add remount
+```
+
 ## Usage
+
+> ```html
+> <x-greeter props-json='{"name":"John"}'></x-greeter>
+> ```
 
 Given this React component:
 
@@ -25,15 +35,16 @@ define({
 Use it:
 
 ```html
-<x-greeter data-props='{"name":"John"}'></x-greeter>
+<x-greeter props-json='{"name":"John"}'></x-greeter>
 ```
 
-## Named attributes
+## Custom properties
 
-```html
-<x-greeter name="John"></x-greeter>
-<!-- This doesn't work by default, unless you do the thing below -->
-```
+> ```html
+> <x-greeter name="John"></x-greeter>
+> ```
+
+Only the `props-json` attribute is supported by default. To support custom properties like above, pass the names of attributes you want Remount to use.
 
 ```js
 import { define } from 'react-web-components'
@@ -68,7 +79,7 @@ Or you can load it via CDN:
 
 [@webcomponents/webcomponentsjs]: https://yarn.pm/@webcomponents/webcomponentsjs
 
-More info at the [Polyfills documentation →](./docs/polyfills.md)
+More info at the [Polyfills documentation](./docs/polyfills.md).
 
 ## Thanks
 

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src='http://cdn.jsdelivr.net/npm/mocha@5.2.0/mocha.js'></script>
+  <link rel='stylesheet' href='http://cdn.jsdelivr.net/npm/mocha@5.2.0/mocha.css'>
+  <style>
+  #debug {
+    border: solid 1px #ddd;
+    border-radius: 3px;
+    position: absolute;
+    right: 32px;
+    top: 80px;
+    bottom: 32px;
+    left: 50%;
+    background: white;
+    z-index: 1;
+    padding: 16px;
+    opacity: 0;
+  }
+  #debug.-visible {
+    opacity: 1;
+  }
+  </style>
+</head>
+<body>
+  <div id='debug'></div>
+  <div id='mocha'></div>
+  <script crossorigin src='https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2.0.4/custom-elements-es5-adapter.js'></script>
+  <script crossorigin src='https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2.0.4/webcomponents-loader.js'></script>
+  <script crossorigin src='https://cdn.jsdelivr.net/npm/react@16/umd/react.development.js'></script>
+  <script crossorigin src='https://cdn.jsdelivr.net/npm/react-dom@16/umd/react-dom.development.js'></script>
+  <script crossorigin src='https://cdn.jsdelivr.net/npm/assert@1.4.1/assert.js'></script>
+  <script src='../dist/remount.umd.js'></script>
+  <script>mocha.setup('bdd')</script>
+  <script src='./test.js'></script>
+  <script>mocha.run()</script>
+</body>
+</html>

@@ -51,5 +51,11 @@
     "build": "rollup --config",
     "test": "jest",
     "watch": "rollup --config --watch"
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/browser_test/"
+    ]
   }
 }

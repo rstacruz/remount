@@ -31,6 +31,15 @@ describe('puppeteer tests', () => {
     expect(text).toContain('Oh hello, John!')
   })
 
+  it('mocha tests', async () => {
+    const url = example('../browser_test/index.html')
+    page = await browser.newPage()
+    await page.goto(url)
+    await page.waitForSelector('#finish')
+    const text = await getContent(page)
+    expect(text).toContain('failures: 0')
+  })
+
   afterEach(async () => {
     await page.close()
   })

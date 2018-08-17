@@ -16,7 +16,7 @@ describe('puppeteer tests', () => {
     await page.goto(url)
     await page.waitForSelector('#greeter')
     const text = await getContent(page)
-    expect(text).toMatch('Oh hello, John!')
+    await expect(text).toMatch('Oh hello, John!')
   })
 
   it('es5.html', async () => {
@@ -26,7 +26,7 @@ describe('puppeteer tests', () => {
     await page.goto(url)
     await page.waitForSelector('#greeter')
     const text = await getContent(page)
-    expect(text).toContain('Oh hello, John!')
+    await expect(text).toContain('Oh hello, John!')
   })
 })
 

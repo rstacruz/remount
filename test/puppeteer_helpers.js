@@ -6,7 +6,7 @@ const OPTIONS = {
 }
 
 const CI_OPTIONS = {
-  args: ['--disable-dev-shm-usage']
+  args: ['--no-sandbox', '--disable-dev-shm-usage']
 }
 
 global.beforeAll(async () => {
@@ -15,8 +15,5 @@ global.beforeAll(async () => {
 })
 
 global.afterAll(async () => {
-  // Not sure why, but this sometimes isn't available
-  // in Travis
-  if (!global.browser || !global.browser.close) return
   await global.browser.close()
 })

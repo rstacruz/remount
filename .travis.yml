@@ -1,0 +1,17 @@
+language: node_js
+node_js:
+  - 10
+dist: trusty
+sudo: false
+addons:
+  chrome: stable
+before_install:
+  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
+cache:
+  yarn: true
+  directories:
+    - node_modules
+install:
+  - yarn install
+script:
+  - yarn test

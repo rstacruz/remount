@@ -2,6 +2,8 @@
 
 > Mount React components to the DOM using custom elements
 
+[![Status](https://travis-ci.org/rstacruz/remount.svg?branch=master)](https://travis-ci.org/rstacruz/remount "See test builds")
+
 ## Install
 
 ```sh

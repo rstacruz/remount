@@ -1,6 +1,6 @@
 /* eslint-env jest */
 /* global browser */
-import '../lib/puppeteer_helpers'
+import './puppeteer_helpers'
 jest.setTimeout(25000)
 
 function example (what) {

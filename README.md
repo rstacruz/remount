@@ -24,7 +24,7 @@ Be sure to use the [recommended polyfills](#polyfills) below as well.
 
 ## Usage
 
-Given this React component:
+:point_down: Given any React component, such as this:
 
 ```js
 const Greeter = ({ name }) => {
@@ -32,7 +32,7 @@ const Greeter = ({ name }) => {
 }
 ```
 
-Define it with:
+:pencil: You can use *define()* to define custom elements. Let's define `<x-greeter>` like so:
 
 ```js
 import { define } from 'remount'
@@ -42,7 +42,7 @@ define({
 })
 ```
 
-Use it:
+:tada: You can then use it in your HTML, or even in your other React components!
 
 ```html
 <x-greeter props-json='{"name":"John"}'></x-greeter>
@@ -51,8 +51,8 @@ Use it:
 ## Custom properties
 
 ```html
-<!-- Support for this isn't enabled by default; see below -->
 <x-greeter name="John"></x-greeter>
+<!-- Support for this isn't enabled by default. See below. -->
 ```
 
 Only the `props-json` attribute is supported by default. To support custom properties like above, pass the names of attributes you want Remount to use.
@@ -78,7 +78,6 @@ We recommend these two polyfills provided by the [@webcomponents/webcomponentsjs
 
 ```js
 // Add the package via: yarn add @webcomponents/webcomponentsjs
-
 import '@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js'
 import '@webcomponents/webcomponentsjs/webcomponents-loader.js'
 ```
@@ -116,4 +115,5 @@ Authored and maintained by Rico Sta. Cruz with help from contributors ([list][co
 [![](https://img.shields.io/github/followers/rstacruz.svg?style=social&label=@rstacruz)](https://github.com/rstacruz) &nbsp;
 [![](https://img.shields.io/twitter/follow/rstacruz.svg?style=social&label=@rstacruz)](https://twitter.com/rstacruz)
 
-[mit]: http://mit-li
+[mit]: http://mit-license.org/
+[contributors]: http://github.com/rstacruz/remount/contributors

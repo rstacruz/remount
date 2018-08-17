@@ -96,6 +96,8 @@ If you are encountering UglifyJS errors, try the legacy ES5 build.
 import { define } from 'remount/dist/remount.legacy.js'
 ```
 
+You can see all available builds at [here](https://cdn.jsdelivr.net/npm/remount/dist).
+
 ## Thanks
 
 **remount** © 2018, Rico Sta. Cruz. Released under the [MIT] License.<br>
@@ -109,4 +111,3 @@ Authored and maintained by Rico Sta. Cruz with help from contributors ([list][co
 [![](https://img.shields.io/twitter/follow/rstacruz.svg?style=social&label=@rstacruz)](https://twitter.com/rstacruz)
 
 [mit]: http://mit-license.org/
-[contributors]: http://github.com/rstacruz/remount/contributors

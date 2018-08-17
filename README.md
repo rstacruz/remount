@@ -8,7 +8,7 @@
 
 # Remount
 
-> :electric_plug: Mount React components to the DOM using custom elements
+> 🔌 Mount React components to the DOM using custom elements
 
 *Experimental* - Remount lets you use your React components anywhere in the page as a web component (custom element).
 
@@ -16,15 +16,16 @@
 
 ## Install
 
-```sh
-yarn add remount
-```
+Remount is available through the [npm package repository](https://yarnpkg.com/en/package/remount).
 
-Be sure to use the [recommended polyfills](#polyfills) below as well.
+- Via yarn: `yarn add remount`
+- or npm: `npm install remount`
+
+Be sure to use the [recommended polyfills](#polyfills) below as well!
 
 ## Usage
 
-:point_down: Given any React component, such as this:
+👇 Given any React component, such as this:
 
 ```js
 const Greeter = ({ name }) => {
@@ -32,7 +33,7 @@ const Greeter = ({ name }) => {
 }
 ```
 
-:pencil: You can use *define()* to define custom elements. Let's define `<x-greeter>` like so:
+📝 You can use *define()* to define custom elements. Let's define `<x-greeter>` like so:
 
 ```js
 import { define } from 'remount'
@@ -42,7 +43,7 @@ define({
 })
 ```
 
-:tada: You can then use it in your HTML, or even in your other React components!
+🎉 You can then use it in your HTML, or even in your other React components!
 
 ```html
 <x-greeter props-json='{"name":"John"}'></x-greeter>
@@ -50,10 +51,7 @@ define({
 
 ## Custom properties
 
-```html
-<x-greeter name="John"></x-greeter>
-<!-- Support for this isn't enabled by default. See below. -->
-```
+> `<x-greeter name="John"></x-greeter>`
 
 Only the `props-json` attribute is supported by default. To support custom properties like above, pass the names of attributes you want Remount to use.
 

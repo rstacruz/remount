@@ -20,12 +20,12 @@ Remount lets you use your React components anywhere in the page as a web compone
 
 ## Installation
 
-Remount is available through the [npm package repository](https://yarnpkg.com/en/package/remount).
+Remount is available through the npm package repository.
 
 - Via yarn: `yarn add remount`
 - or npm: `npm install remount`
 
-Be sure to use the [recommended polyfills](#polyfills) below as well!
+Be sure to use the recommended polyfills below as well. [#](#polyfills)
 
 ## Usage
 
@@ -45,13 +45,13 @@ import { define } from 'remount'
 define({ 'x-greeter': Greeter })
 ```
 
-You can now use it anywhere in your HTML. :boom:
+You can now use it anywhere in your HTML! :boom:
 
 ```html
 <x-greeter props-json='{"name":"John"}'></x-greeter>
 ```
 
-More at **[API documentation →](docs/api.md)**
+⚡ **[API documentation →](docs/api.md)**
 
 ## Use cases
 
@@ -74,15 +74,17 @@ Only the `props-json` attribute is supported by default. To support custom prope
 define({ 'x-greeter': Greeter }, { attributes: ['name'] })
 ```
 
-More at **[API documentation →](docs/api.md)**
+⚡ **[API documentation →](docs/api.md)**
 
 ## Browser support
 
-Remount supports all browsers [supported by React](https://reactjs.org/docs/react-dom.html#browser-support), which includes IE9. Use the polyfills below to ensure the best compatibility.
+Remount supports all browsers supported by React, which includes IE9.<sup>[#](https://reactjs.org/docs/react-dom.html#browser-support)</sup> Use the polyfills below to ensure the best compatibility.
+
+⚡ [Polyfill docs →](./docs/polyfills.md)
 
 ## Polyfills
 
-We recommend these two polyfills provided by the [@webcomponents/webcomponentsjs][@webcomponents/webcomponentsjs] package. Load it via JavaScript in your app's entry point:
+We recommend these two polyfills provided by the `@webcomponents/webcomponentsjs` package. Load it via JavaScript in your app's entry point:
 
 ```js
 // Add the package via: yarn add @webcomponents/webcomponentsjs
@@ -97,9 +99,7 @@ Or you can load it via CDN:
 <script crossorigin src='https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2.0.4/webcomponents-loader.js'></script>
 ```
 
-[@webcomponents/webcomponentsjs]: https://yarn.pm/@webcomponents/webcomponentsjs
-
-More info at the [Polyfills documentation](./docs/polyfills.md).
+⚡ [Polyfill docs →](./docs/polyfills.md)
 
 ## More info
 

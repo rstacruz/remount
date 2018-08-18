@@ -38,6 +38,13 @@
     "esm.mjs"
   ],
   "homepage": "https://github.com/rstacruz/remount#readme",
+  "jest": {
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/browser_test/",
+      "/dist/"
+    ]
+  },
   "keywords": [
     "custom element",
     "mount",
@@ -56,16 +63,10 @@
   },
   "scripts": {
     "build": "rollup --config",
+    "flow": "flow",
+    "jest": "jest",
     "prepare": "run-s build",
     "test": "run-p -l --race watch jest",
-    "jest": "jest",
     "watch": "env NODE_ENV=test-rollup rollup --config --watch"
-  },
-  "jest": {
-    "testPathIgnorePatterns": [
-      "/node_modules/",
-      "/browser_test/",
-      "/dist/"
-    ]
   }
 }

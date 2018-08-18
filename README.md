@@ -51,7 +51,7 @@ You can now use it anywhere in your HTML. :boom:
 <x-greeter props-json='{"name":"John"}'></x-greeter>
 ```
 
-➡️ More at **[API documentation](docs/api.md)**
+More at **[API documentation →](docs/api.md)**
 
 ## Use cases
 
@@ -81,16 +81,11 @@ define({
 })
 ```
 
-## Limitations
-
-Remount relies on the [Custom Elements](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements) HTML API, so all limitations of the Custom Elements API apply. Keep these in mind:
-
-- Custom components names require a hyphen, and are case insensitive.
-- Attributes are case insensitive.
+More at **[API documentation →](docs/api.md)**
 
 ## Browser support
 
-Remount supports all browsers [supported by React](https://reactjs.org/docs/react-dom.html#browser-support). Use the polyfills below to ensure the best compatibility.
+Remount supports all browsers [supported by React](https://reactjs.org/docs/react-dom.html#browser-support), which includes IE9. Use the polyfills below to ensure the best compatibility.
 
 ## Polyfills
 

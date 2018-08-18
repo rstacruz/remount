@@ -1,1 +1,1 @@
-export * from './dist/remount.esm.js'
+export * from './dist/remount.esm.mjs'

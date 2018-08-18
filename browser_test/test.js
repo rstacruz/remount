@@ -8,7 +8,7 @@ const root = document.getElementById('debug')
 if (window.location.hash === '#debug') root.classList.add('-visible')
 
 const Greeter = ({ name }) => {
-  return h('span', { className: 'greeter' }, 'Hello ', name || '(unknown)', '!')
+  return <span className='greeter'>Hello {name || '(unknown)'}!</span>
 }
 
 Remount.define({

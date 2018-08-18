@@ -33,7 +33,7 @@
   <script crossorigin src='https://cdn.jsdelivr.net/npm/react@16/umd/react.development.js'></script>
   <script crossorigin src='https://cdn.jsdelivr.net/npm/react-dom@16/umd/react-dom.development.js'></script>
   <script crossorigin src='https://cdn.jsdelivr.net/npm/assert@1.4.1/assert.js'></script>
-  <script src='../dist/remount.umd.js'></script>
+  <script src='./remount.es5.js'></script>
   <script>mocha.setup('bdd')</script>
   <script src='./test.js'></script>
   <script>mocha.run()</script>

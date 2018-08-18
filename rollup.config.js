@@ -1,6 +1,9 @@
 // rollup.config.js
 import babel from 'rollup-plugin-babel'
 import minify from 'rollup-plugin-babel-minify'
+import server from 'rollup-plugin-server'
+
+const IS_TEST = process.env.NODE_ENV === 'test'
 
 const MINIFY = minify({ comments: false })
 
@@ -18,6 +21,16 @@ const UMD = {
   name: 'Remount',
   globals: { react: 'React', 'react-dom': 'ReactDOM' }
 }
+
+const TEST_MODULES = IS_TEST
+  ? [
+    {
+      input: 'browser_test/test.js',
+      plugins: [BABEL, server('dist')],
+      output: { file: 'dist/test.js', format: 'cjs' }
+    }
+  ]
+  : []
 
 export default [
   // ES Modules
@@ -55,5 +68,7 @@ export default [
     ...DEFAULTS,
     plugins: [BABEL, MINIFY],
     output: { file: 'dist/remount.es5.min.js', ...UMD }
-  }
+  },
+
+  ...TEST_MODULES
 ]

@@ -2,8 +2,6 @@
 /* global React, Remount */
 'use strict'
 
-const h = React.createElement
-
 const root = document.getElementById('debug')
 if (window.location.hash === '#debug') root.classList.add('-visible')
 
@@ -103,8 +101,25 @@ describe('Remount', () => {
         Remount.define({
           banana: Greeter
         })
+        assert('Failed')
       } catch (e) {
-        assert(e.message)
+        assert(e.message !== 'Failed')
+      }
+    })
+
+    it('tag names will fail to be defined twice', () => {
+      try {
+        Remount.define({
+          'x-dragonfruit': Greeter
+        })
+
+        Remount.define({
+          'x-dragonfruit': Greeter
+        })
+
+        assert('Failed')
+      } catch (e) {
+        assert(e.message !== 'Failed')
       }
     })
   })

@@ -20,43 +20,40 @@ const UMD = {
 }
 
 export default [
-  // Modern build, module
+  // ES Modules
   {
     ...DEFAULTS,
     output: { file: 'dist/remount.esm.mjs', format: 'esm' }
   },
 
-  // Modern build, module (min)
   {
     ...DEFAULTS,
     plugins: [MINIFY],
     output: { file: 'dist/remount.esm.min.mjs', format: 'esm' }
   },
 
-  // Modern build, commonJS
+  // ES6
   {
     ...DEFAULTS,
-    output: { file: 'dist/remount.umd.js', ...UMD }
+    output: { file: 'dist/remount.es6.js', ...UMD }
   },
 
-  // Modern build, commonJS
   {
     ...DEFAULTS,
     plugins: [MINIFY],
-    output: { file: 'dist/remount.umd.min.js', ...UMD }
+    output: { file: 'dist/remount.es6.min.js', ...UMD }
   },
 
-  // Legacy build
+  // ES5
   {
     ...DEFAULTS,
     plugins: [BABEL],
-    output: { file: 'dist/remount.legacy.js', ...UMD }
+    output: { file: 'dist/remount.es5.js', ...UMD }
   },
 
-  // Legacy build (min)
   {
     ...DEFAULTS,
     plugins: [BABEL, MINIFY],
-    output: { file: 'dist/remount.legacy.min.js', ...UMD }
+    output: { file: 'dist/remount.es5.min.js', ...UMD }
   }
 ]

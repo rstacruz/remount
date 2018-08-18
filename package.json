@@ -39,7 +39,7 @@
     "web component"
   ],
   "license": "MIT",
-  "main": "dist/remount.umd.js",
+  "main": "dist/remount.es5.js",
   "peerDependencies": {
     "react": ">= 15.0.0"
   },

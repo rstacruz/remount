@@ -1,22 +1,26 @@
 <br>
 
-<p align='center'><a href='https://github.com/rstacruz/remount'><img src='docs/images/remount.png' width='500'></a></p>
+<p align='center'><a href='https://github.com/rstacruz/remount'><img src='docs/images/remount.png' width='450'></a></p>
+
+<br>
+
+<h1 align='center'>Remount</h1>
+
+<p align='center'>
+<a href='https://travis-ci.org/rstacruz/remount'><img src='https://api.travis-ci.org/rstacruz/remount.svg?branch=master' alt='Travis CI' /></a>
+</p>
+
+<p align='center'>Use your React components anywhere in your <br> HTML as web components (custom elements).</p>
 
 <p align='center'>
 <a href='https://codepen.io/rstacruz/pen/EpBZRv?editors=1010'>Demo</a> ⚡ <a href='https://github.com/rstacruz/remount#remount'>Docs</a>
 <br>
-1kb gzip'd &nbsp;&middot;&nbsp; No dependencies &nbsp;&middot;&nbsp; IE11 support
+<em>1kb gzip'd &nbsp;&middot;&nbsp; No dependencies &nbsp;&middot;&nbsp; IE support</em>
 </p>
 
 <br>
 
-# Remount
-
-> 🔀 Mount React components to the DOM using custom elements
-
-Remount lets you use your React components anywhere in the page as a web component (custom element).
-
-[![Status](https://api.travis-ci.org/rstacruz/remount.svg?branch=master)](https://travis-ci.org/rstacruz/remount 'See test builds')
+<br>
 
 ## Installation
 
@@ -62,7 +66,6 @@ Some ideas on why you might want to consider Remount for your project:
 | <br><img src='./docs/images/non-spa.png' width='400'><br><br> | ✨ **Adding React to non-SPA apps** <br> You can use React components on any page of a "regular" HTML site. Great for adding React to apps built on Rails or Phoenix.                                      |
 |                                                    |                                                                                                                                                                                                            |
 | <br><img src='./docs/images/interop.png' width='400'><br><br> | 💞 **Interop with other frameworks** <br> Remount lets you use your React components just like any other HTML element. This means you can use React with Vue, Angular, or any other DOM library/framework. |
-|                                                    |                                                                                                                                                                                                            |
 
 ## More features
 

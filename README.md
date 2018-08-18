@@ -5,7 +5,7 @@
 <p align='center'>
 <a href='https://codepen.io/rstacruz/pen/EpBZRv?editors=1010'>Demo</a> ⚡ <a href='https://github.com/rstacruz/remount#remount'>Docs</a>
 <br>
-1kb gzip'd &nbsp;&middot;&nbsp; No dependencies &nbsp;&middot;&nbsp; IE9 support
+1kb gzip'd &nbsp;&middot;&nbsp; No dependencies &nbsp;&middot;&nbsp; IE11 support
 </p>
 
 <br>
@@ -72,7 +72,7 @@ Some ideas on why you might want to consider Remount for your project:
 
 ## Browser support
 
-Remount supports all browsers supported by React, which includes IE9.<sup>[#](https://reactjs.org/docs/react-dom.html#browser-support)</sup> Use the polyfills below to ensure the best compatibility.
+Remount supports all modern browsers, including IE11 (Internet Explorer's oldest supported version as of 2016). Remember to use the polyfills below to ensure the best compatibility.
 
 ⚡ [Polyfill docs →](./docs/polyfills.md)
 

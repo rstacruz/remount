@@ -40,9 +40,15 @@ Use the `remount/es6` variant. See [builds](./builds.md) documentation on how.
 
 ## Codesandbox
 
-> Q: How do I use remount on Codesandbox?
+> Q: How do I use Remount on Codesandbox?
 
 The default Codesandbox React template is based on create-react-app. See the [answer above](#create-react-app). You can also fork [this Codesandbox template](https://codesandbox.io/s/yqqv0zz16x).
+
+## Jsfiddle
+
+> Q: How do I use Remount on Jsfiddle?
+
+Fork [this template](http://jsfiddle.net/b81mcdno/).
 
 ## Preact
 

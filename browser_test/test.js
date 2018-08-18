@@ -185,7 +185,9 @@ describe('Remount', () => {
   })
 
   describe('Shadow DOM mode', () => {
-    it('will not be seen by .textContent', () => {
+    // Skip this for now; only Chrome supports this.
+    // Polyfilled environments have no way of hiding it from .textContent.
+    it.skip('will not be seen by .textContent', () => {
       Remount.define({ 'x-grape': Greeter }, { shadow: true })
       div.innerHTML = `Grape: <x-grape></x-grape>`
 
@@ -202,3 +204,6 @@ describe('Remount', () => {
     })
   })
 })
+
+// TODO: test disconnection
+// TODO: test moving components

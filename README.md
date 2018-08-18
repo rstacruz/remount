@@ -1,6 +1,6 @@
 <br>
 
-<p align='center'><img src='docs/images/remount.png' width='500'></p>
+<p align='center'><a href='https://github.com/rstacruz/remount'><img src='docs/images/remount.png' width='500'></a></p>
 
 <p align='center'>
 <a href='https://codepen.io/rstacruz/pen/EpBZRv?editors=1010'>Demo</a> ⚡ <a href='https://github.com/rstacruz/remount#remount'>Docs</a>
@@ -64,17 +64,11 @@ Some ideas on why you might want to consider Remount for your project:
 | <br><img src='./docs/images/interop.png' width='400'><br><br> | 💞 **Interop with other frameworks** <br> Remount lets you use your React components just like any other HTML element. This means you can use React with Vue, Angular, or any other DOM library/framework. |
 |                                                    |                                                                                                                                                                                                            |
 
-## Named properties
+## More features
 
-> `<x-greeter name="John"></x-greeter>`
-
-Only the `props-json` attribute is supported by default. To support custom properties like above, pass the names of attributes you want Remount to use.
-
-```js
-define({ 'x-greeter': Greeter }, { attributes: ['name'] })
-```
-
-⚡ **[API documentation →](docs/api.md)**
+- JSON props (eg, `<x-greeter props-json="{...}">`) ([docs](./docs/api.md))
+- Named attributes (eg, `<x-greeter name="John">`) ([docs](./docs/api.md))
+- Shadow DOM ([docs](./docs/api.md))
 
 ## Browser support
 
@@ -84,7 +78,7 @@ Remount supports all browsers supported by React, which includes IE9.<sup>[#](ht
 
 ## Polyfills
 
-We recommend these two polyfills provided by the `@webcomponents/webcomponentsjs` package. Load it via JavaScript in your app's entry point:
+We recommend these two polyfills provided by the *@webcomponents/webcomponentsjs* package<sup>[#][webcomponentsjs]</sup>. Load it via JavaScript in your app's entry point.
 
 ```js
 // Add the package via: yarn add @webcomponents/webcomponentsjs
@@ -92,16 +86,17 @@ import '@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js'
 import '@webcomponents/webcomponentsjs/webcomponents-loader.js'
 ```
 
-Or you can load it via CDN:
-
 ```html
+<!-- or via CDN: -->
 <script crossorigin src='https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2.0.4/custom-elements-es5-adapter.js'></script>
 <script crossorigin src='https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2.0.4/webcomponents-loader.js'></script>
 ```
 
 ⚡ [Polyfill docs →](./docs/polyfills.md)
 
-## More info
+[webcomponentsjs]: https://yarn.pm/@webcomponents/webcomponentsjs
+
+## Documentation
 
 - [API documentation](./docs/api.md)
 - [Builds](./docs/builds.md) &mdash; ES2015+ and ES Module builds are also provided.

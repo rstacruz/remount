@@ -27,6 +27,10 @@ Add these URL's:
 <script src='https://cdn.jsdelivr.net/npm/remount@0.5.0'></script>
 ```
 
+## Testing browser support
+
+I often publish the latest test suite at <https://ricostacruz.com/remount/dist/> (via `yarn deploy`). You can use this URL to check if your browser supports Remount.
+
 ## Contacting me
 
 I'm on Twitter as [@rstacruz](https://twitter.com/rstacruz), hit me up for any questions at all. I'm happy to help!

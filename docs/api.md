@@ -4,6 +4,19 @@
 import { define } from 'remount'
 ```
 
+<!-- TOC depthFrom:2 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
+
+- [define()](#define)
+	- [Multiple elements](#multiple-elements)
+	- [Passing options](#passing-options)
+	- [Per-element options](#per-element-options)
+	- [Named attributes](#named-attributes)
+	- [props-json](#props-json)
+	- [Shadow DOM](#shadow-dom)
+	- [Options](#options)
+
+<!-- /TOC -->
+
 ## define()
 
 > `define({ [string]: React.Component, ... }, options?: Options)`
@@ -40,7 +53,7 @@ define({
 })
 ```
 
-## Per-element options
+### Per-element options
 
 Alternatively, you can also pass options per component using this syntax:
 
@@ -76,9 +89,9 @@ All elements allow for the `props-json` attribute.
 <x-my-element props-json='{"color":"red"}'></x-my-element>
 ```
 
-While this seems more verbose than [named attributes](#named-attributes), it lets you have props that limitations.
+While being more verbose than [named attributes](#named-attributes), it lets you have props without the limitations of named attributes:
 
-- You can use non-string values like numbers or booleans. (named attributes only supports strings.)
+- You can use non-string values like numbers or booleans. (named attributes only support strings.)
 
 - You can use `mixedCase` property names. (named attributes are case insensitive.)
 
@@ -87,6 +100,8 @@ If a `props-json` property exists, all other named attributes will be ignored.
 ### Shadow DOM
 
 Remount doesn't use Shadow DOM by default. To enable it, pass the `shadow: true` option.
+
+[The Shadow DOM API](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM) should be available anywhere custom elements are, but keep in mind that your React elements will be "hidden" from JavaScript. Depending on your situation, this may be a good or bad thing.
 
 ```js
 define({

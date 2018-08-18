@@ -59,9 +59,9 @@ Some ideas on why you might want to consider Remount for your project:
 
 |                                                    |                                                                                                                                                                                                            |
 | -------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| <img src='http://source.unsplash.com/400x200?sea'> | ✨ **Adding React to non-SPA apps** <br> You can use React components on any page of a "regular" HTML site. Great for adding React to apps built on Rails or Phoenix.                                      |
+| <br><img src='./docs/images/non-spa.png' width='400'><br><br> | ✨ **Adding React to non-SPA apps** <br> You can use React components on any page of a "regular" HTML site. Great for adding React to apps built on Rails or Phoenix.                                      |
 |                                                    |                                                                                                                                                                                                            |
-| <img src='http://source.unsplash.com/400x200?sun'> | 💞 **Interop with other frameworks** <br> Remount lets you use your React components just like any other HTML element. This means you can use React with Vue, Angular, or any other DOM library/framework. |
+| <br><img src='./docs/images/interop.png' width='400'><br><br> | 💞 **Interop with other frameworks** <br> Remount lets you use your React components just like any other HTML element. This means you can use React with Vue, Angular, or any other DOM library/framework. |
 |                                                    |                                                                                                                                                                                                            |
 
 ## Named properties

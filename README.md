@@ -85,8 +85,9 @@ define({
 
 ## Limitations
 
-- Custom components require a hyphen in the their names.
+Remount relies on the [Custom Elements](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements) HTML API, so all limitations of the Custom Elements API apply. Keep these in mind:
 
+- Custom components names require a hyphen, and are case insensitive.
 - Attributes are case insensitive.
 
 ## Browser support

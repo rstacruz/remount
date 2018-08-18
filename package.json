@@ -20,6 +20,7 @@
     "rollup": "^0.64.1",
     "rollup-plugin-babel": "^3.0.7",
     "rollup-plugin-babel-minify": "^5.0.0",
+    "rollup-plugin-copy": "^0.2.3",
     "rollup-plugin-server": "^0.7.0",
     "standard": "^11.0.1"
   },
@@ -51,7 +52,7 @@
   "scripts": {
     "build": "rollup --config",
     "test": "jest",
-    "watch": "mkdir -p dist; cp browser_test/index.html.template dist/index.html; env NODE_ENV=test rollup --config --watch"
+    "watch": "env NODE_ENV=test rollup --config --watch"
   },
   "jest": {
     "testPathIgnorePatterns": [

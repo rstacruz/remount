@@ -2,6 +2,7 @@
 import babel from 'rollup-plugin-babel'
 import minify from 'rollup-plugin-babel-minify'
 import server from 'rollup-plugin-server'
+import copy from 'rollup-plugin-copy'
 
 const IS_TEST = process.env.NODE_ENV === 'test'
 
@@ -26,7 +27,17 @@ const TEST_MODULES = IS_TEST
   ? [
     {
       input: 'browser_test/test.js',
-      plugins: [BABEL, server('dist')],
+      plugins: [
+        BABEL,
+        server({
+          open: true,
+          contentBase: 'dist',
+          port: +(process.env.PORT || 10049)
+        }),
+        copy({
+          'browser_test/index.html.template': 'dist/index.html'
+        })
+      ],
       output: { file: 'dist/test.js', format: 'cjs' }
     }
   ]

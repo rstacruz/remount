@@ -1,5 +1,11 @@
 ## Pre-v1.0.0 changes
 
+[v0.4.0] Aug 18, 2018
+
+- Publish `remount/es6` and `remount/esm` builds.
+
+[v0.4.0]: https://github.com/rstacruz/remount/compare/v0.3.1...v0.4.0
+
 [v0.3.1] Aug 18, 2018
 
 - Fix build files.

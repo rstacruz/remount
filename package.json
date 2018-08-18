@@ -63,6 +63,8 @@
   },
   "scripts": {
     "build": "rollup --config",
+    "prettier": "prettier-eslint '*.js'",
+    "eslint": "eslint '*.js'",
     "flow": "flow",
     "jest": "jest",
     "prepare": "run-s build",

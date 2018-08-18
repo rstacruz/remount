@@ -1,6 +1,11 @@
 language: node_js
 node_js:
   - 10
+script:
+  - yarn test
+  - yarn prettier --list-different
+  - yarn eslint
+  - yarn flow
 cache:
   yarn: true
   directories:

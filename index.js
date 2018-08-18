@@ -31,14 +31,19 @@ export type ElementSpec = {
  * Registers elements.
  */
 
-export function define (components /*: ElementMap */, defaults /*: ?Defaults */) {
+export function define (
+  components /*: ElementMap */,
+  defaults /*: ?Defaults */
+) {
   Object.keys(components).forEach((name /*: string */) => {
     const elSpec /*: ElementSpec */ = toElementSpec(components[name])
     defineOne(Object.assign({}, defaults, elSpec), name)
   })
 }
 
-function toElementSpec (thing /*: ElementSpec | Component */) /*: ElementSpec */ {
+function toElementSpec (
+  thing /*: ElementSpec | Component */
+) /*: ElementSpec */ {
   // $FlowFixMe$
   if (typeof thing === 'object' && thing.component) return thing
   return { component: thing }

@@ -45,3 +45,7 @@ The attributes to listen to.
 ### quiet
 
 If passed, it will warnings will be supressed.
+
+### shadow
+
+Use shadow DOM.

@@ -15,13 +15,15 @@ export type ElementMap = {
 
 export type Defaults = {
   attributes?: Array<string>,
-  quiet?: boolean
+  quiet?: boolean,
+  shadow?: boolean
 }
 
 export type ElementSpec = {
   component: Component,
   attributes?: Array<string>,
-  quiet?: boolean
+  quiet?: boolean,
+  shadow?: boolean
 }
 */
 
@@ -56,7 +58,7 @@ function defineOne (elSpec /*: ElementSpec */, name /*: string */) {
     }
 
     connectedCallback () {
-      this._mountPoint = createMountPoint(this)
+      this._mountPoint = createMountPoint(this, elSpec)
       update(this, elSpec, this._mountPoint)
     }
 
@@ -107,11 +109,17 @@ function ensureSupported () {
  * @private
  */
 
-function createMountPoint (element /*: Element */) {
-  return element
-  // const mountPoint = document.createElement('span')
-  // element.attachShadow({ mode: 'open' }).appendChild(mountPoint)
-  // return mountPoint
+function createMountPoint (
+  element /*: Element */,
+  { shadow } /*: ElementSpec */
+) {
+  if (shadow) {
+    const mountPoint = document.createElement('span')
+    element.attachShadow({ mode: 'open' }).appendChild(mountPoint)
+    return mountPoint
+  } else {
+    return element
+  }
 }
 
 /**

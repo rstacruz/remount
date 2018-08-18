@@ -145,11 +145,32 @@ describe('Remount', () => {
         'x-blueberry': Greeter
       })
 
-      Remount.define({
-        'x-blueberry': Greeter
-      }, {
-        quiet: true
-      })
+      Remount.define(
+        {
+          'x-blueberry': Greeter
+        },
+        {
+          quiet: true
+        }
+      )
+    })
+  })
+
+  describe('Shadow DOM mode', () => {
+    it('will not be seen by .textContent', () => {
+      Remount.define({ 'x-grape': Greeter }, { shadow: true })
+      div.innerHTML = `Grape: <x-grape></x-grape>`
+
+      // It's "shadowed" so we can't see it
+      assert(!div.textContent.match(/Hello/))
+    })
+
+    it('will be seen in .shadowRoot', () => {
+      Remount.define({ 'x-orange': Greeter }, { shadow: true })
+
+      div.innerHTML = `Orange: <x-orange></x-orange>`
+      const shadowHTML = document.querySelector('x-orange').shadowRoot.innerHTML
+      assert(shadowHTML.match(/Hello/))
     })
   })
 })

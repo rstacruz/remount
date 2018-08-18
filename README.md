@@ -103,9 +103,9 @@ More info at the [Polyfills documentation](./docs/polyfills.md).
 
 ## More info
 
-- [Builds](./docs/builds.md) &mdash; ES2015+ and ES Module builds are also provided.
 - [API documentation](./docs/api.md)
-- [Frequently-asked questions](./docs/faq.md)
+- [Builds](./docs/builds.md) &mdash; ES2015+ and ES Module builds are also provided.
+- [FAQ and Troubleshooting](./docs/faq.md) &mdash; Start here if you find any issues.
 - [Comparison with alternatives](./docs/comparison.md)
 - [Polyfills](./docs/polyfills.md)
 

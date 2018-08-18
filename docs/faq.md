@@ -54,10 +54,16 @@ Fork [this template](http://jsfiddle.net/rstacruz/zjov6hdu/).
 
 > Q: Will it work with Preact?
 
-Yes, try it with the `preact-compat` package. Make sure you set up your Webpack configuration as the preact-compat docs [suggests](https://www.npmjs.com/package/preact-compat#usage-with-webpack).
+Yes! Try it with the `preact-compat` package. Make sure you set up your Webpack configuration as the preact-compat docs [suggests](https://www.npmjs.com/package/preact-compat#usage-with-webpack).
 
 ## Happy face
 
 > Q: Who's that guy in the README cover photo?
 
 I stole [@rem](https://twitter.com/rem)'s face from [uifaces.com](https://uifaces.com/).
+
+## Issue tracker
+
+> Q: I have a question not in this FAQ.
+
+Search the [issue tracker](https://github.com/rstacruz/remount/issues) to see if anyone else reported your issue. Feel free to open a new issue if not.

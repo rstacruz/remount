@@ -60,4 +60,4 @@ Yes, try it with the `preact-compat` package. Make sure you set up your Webpack 
 
 > Q: Who's that guy in the README cover photo?
 
-I stole [@rem](htt
+I stole [@rem](https://twitter.com/rem)'s face from [uifaces.com](https://uifaces.com/).

@@ -3,7 +3,8 @@
 [v0.5.0]
 
 - Allow *define()* to accept defaults as a second argument (eg, `define({...}, { quiet: true })`)
-- Support the `quiet: true` option
+- Support the `quiet: true` option (supresses warnings)
+- Support the `shadow: true` option (uses Shadow DOM)
 
 [v0.5.0]: https://github.com/rstacruz/remount/compare/v0.4.1...v0.5.0
 

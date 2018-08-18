@@ -13,6 +13,11 @@ export type ElementMap = {
   [string]: ElementSpec | Component
 }
 
+export type Defaults = {
+  attributes?: Array<string>,
+  quiet?: boolean
+}
+
 export type ElementSpec = {
   component: Component,
   attributes?: Array<string>,
@@ -24,14 +29,15 @@ export type ElementSpec = {
  * Registers elements.
  */
 
-export function define (components /*: ElementMap */) {
+export function define (components /*: ElementMap */, defaults /*: ?Defaults */) {
   Object.keys(components).forEach((name /*: string */) => {
     const elSpec /*: ElementSpec */ = toElementSpec(components[name])
-    defineOne(elSpec, name)
+    defineOne(Object.assign({}, defaults, elSpec), name)
   })
 }
 
 function toElementSpec (thing /*: ElementSpec | Component */) /*: ElementSpec */ {
+  // $FlowFixMe$
   if (typeof thing === 'object' && thing.component) return thing
   return { component: thing }
 }

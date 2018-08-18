@@ -139,5 +139,17 @@ describe('Remount', () => {
         }
       })
     })
+
+    it('can be passed as a second argument', () => {
+      Remount.define({
+        'x-blueberry': Greeter
+      })
+
+      Remount.define({
+        'x-blueberry': Greeter
+      }, {
+        quiet: true
+      })
+    })
   })
 })

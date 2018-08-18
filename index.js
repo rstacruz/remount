@@ -1,22 +1,23 @@
 // @flow
-import React from 'react'
+import * as React from 'react'
 import ReactDOM from 'react-dom'
 
 /*::
+export type Component = React.ComponentType<{}>
+
 export type PropertyMap = {
-  [string]: string
+  [string]: ?string
 }
 
 export type ElementMap = {
-  [string]: ElementSpecArg
+  [string]: ElementSpec | Component
 }
 
 export type ElementSpec = {
-  component: React.Component
-  attributes?: Array<string>
+  component: Component,
+  attributes?: Array<string>,
+  quiet?: boolean
 }
-
-export type ElementSpecArg = ElementSpec | React.Component
 */
 
 /**
@@ -30,9 +31,8 @@ export function define (components /*: ElementMap */) {
   })
 }
 
-function toElementSpec (thing /*: ElementSpecArg */) /*: ElementSpec */ {
-  if (thing.hasOwnProperty('component')) return thing
-
+function toElementSpec (thing /*: ElementSpec | Component */) /*: ElementSpec */ {
+  if (typeof thing === 'object' && thing.component) return thing
   return { component: thing }
 }
 
@@ -122,7 +122,6 @@ function update (
     ? JSON.parse(element.getAttribute('props-json'))
     : getProps(element, attributes)
 
-  // Same as <Component {...props} />
   const reactElement = React.createElement(component, props)
 
   ReactDOM.render(reactElement, mountPoint)

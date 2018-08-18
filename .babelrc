@@ -1,12 +1,5 @@
 {
-  "presets": [
-    [
-      "env",
-      {
-        "modules": false
-      }
-    ]
-  ],
+  "presets": [["env", { "modules": false }], "react"],
   "env": {
     "test": {
       "presets": ["env", "react"]

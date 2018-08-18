@@ -64,21 +64,14 @@ Some ideas on why you might want to consider Remount for your project:
 | <img src='http://source.unsplash.com/400x200?sun'> | 💞 **Interop with other frameworks** <br> Remount lets you use your React components just like any other HTML element. This means you can use React with Vue, Angular, or any other DOM library/framework. |
 |                                                    |                                                                                                                                                                                                            |
 
-## Custom properties
+## Named properties
 
 > `<x-greeter name="John"></x-greeter>`
 
 Only the `props-json` attribute is supported by default. To support custom properties like above, pass the names of attributes you want Remount to use.
 
 ```js
-import { define } from 'remount'
-
-define({
-  'x-greeter': {
-    component: Greeter,
-    attributes: ['name']
-  }
-})
+define({ 'x-greeter': Greeter }, { attributes: ['name'] })
 ```
 
 More at **[API documentation →](docs/api.md)**

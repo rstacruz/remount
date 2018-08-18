@@ -3,7 +3,7 @@
 <p align='center'><img src='docs/images/remount.png' width='500'></p>
 
 <p align='center'>
-⚡ <a href='https://codepen.io/rstacruz/pen/EpBZRv?editors=1010'><b>Demo</b></a> ⚡
+<a href='https://codepen.io/rstacruz/pen/EpBZRv?editors=1010'>Demo</a> ⚡ <a href='https://github.com/rstacruz/remount#remount'>Docs</a>
 <br>
 1kb gzip'd &nbsp;&middot;&nbsp; No dependencies &nbsp;&middot;&nbsp; IE9 support
 </p>

@@ -9,7 +9,7 @@ const Greeter = ({ name }) => {
   return <span className='greeter'>Hello {name || '(unknown)'}!</span>
 }
 
-const Dumper = (props) => {
+const Dumper = props => {
   return <span className='dumper'>[{JSON.stringify(props)}]</span>
 }
 
@@ -126,25 +126,27 @@ describe('Remount', () => {
 
     it('rejects bad component names', () => {
       try {
-        Remount.define({
-          banana: Greeter
-        })
+        Remount.define({ banana: Greeter })
         assert('Failed')
       } catch (e) {
         assert(e.message !== 'Failed')
       }
     })
 
-    it('tag names will fail to be defined twice', () => {
+    it('tag names will fail to be defined twice (case sensitive)', () => {
       try {
-        Remount.define({
-          'x-dragonfruit': Greeter
-        })
+        Remount.define({ 'x-dragonfruit': Greeter })
+        Remount.define({ 'x-dragonfruit': Greeter })
+        assert('Failed')
+      } catch (e) {
+        assert(e.message !== 'Failed')
+      }
+    })
 
-        Remount.define({
-          'x-dragonfruit': Greeter
-        })
-
+    it('tag names will fail to be defined twice (case insensitive)', () => {
+      try {
+        Remount.define({ 'x-currant': Greeter })
+        Remount.define({ 'x-CURRANT': Dumper })
         assert('Failed')
       } catch (e) {
         assert(e.message !== 'Failed')
@@ -203,7 +205,54 @@ describe('Remount', () => {
       assert(shadowHTML.match(/Hello/))
     })
   })
+
+  describe('removing', () => {
+    it('calls componentWillUnmount', () => {
+      let unmounted
+
+      class Removable extends React.Component {
+        componentWillUnmount () {
+          unmounted = true
+        }
+        render () {
+          return <span>Hola</span>
+        }
+      }
+
+      return Promise.resolve()
+        .then(() => {
+          Remount.define({ 'x-watermelon': Removable })
+          div.innerHTML = `<x-watermelon></x-watermelon>`
+          return raf()
+        })
+        .then(() => {
+          assert(div.textContent.includes('Hola'))
+          // Disconnect it
+          div.removeChild(div.children[0])
+          return raf()
+        })
+        .then(() => {
+          // Assert that componentWillUnmount is ran
+          assert(unmounted === true)
+          assert(div.textContent.trim() === '')
+        })
+    })
+  })
 })
 
 // TODO: test disconnection
 // TODO: test moving components
+// TODO: test failed json
+// TODO: test wrong parameter types
+
+/*
+ * Helper: defers until next animation frame
+ */
+
+function raf () {
+  return new Promise((resolve, reject) => {
+    window.requestAnimationFrame(() => {
+      resolve()
+    })
+  })
+}

@@ -114,15 +114,13 @@ Or you can load it via CDN:
 
 More info at the [Polyfills documentation](./docs/polyfills.md).
 
-## Legacy support
+## More info
 
-If you are encountering UglifyJS errors, try the legacy ES5 build.
-
-```js
-import { define } from 'remount/dist/remount.legacy.js'
-```
-
-➡️ More at **[Builds documentation](docs/builds.md)**
+- [Builds](./docs/builds.md) &mdash; ES2015+ and ES Module builds are also provided.
+- [API documentation](./docs/api.md)
+- [Frequently-asked questions](./docs/faq.md)
+- [Comparison with alternatives](./docs/comparison.md)
+- [Polyfills](./docs/polyfills.md)
 
 ## Thanks
 

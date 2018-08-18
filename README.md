@@ -12,9 +12,9 @@
 
 # Remount
 
-> 🔌 Mount React components to the DOM using custom elements
+> 🔀 Mount React components to the DOM using custom elements
 
-_Experimental_ - Remount lets you use your React components anywhere in the page as a web component (custom element).
+Remount lets you use your React components anywhere in the page as a web component (custom element).
 
 [![Status](https://travis-ci.org/rstacruz/remount.svg?branch=master)](https://travis-ci.org/rstacruz/remount 'See test builds')
 
@@ -29,7 +29,7 @@ Be sure to use the [recommended polyfills](#polyfills) below as well!
 
 ## Usage
 
-Given any React component, such as this:
+Let's start with any React component. Here's one:
 
 ```js
 const Greeter = ({ name }) => {
@@ -37,17 +37,15 @@ const Greeter = ({ name }) => {
 }
 ```
 
-You can use _define()_ to define custom elements. Let's define `<x-greeter>` like so:
+Use _define()_ to define custom elements. Let's define a `<x-greeter>` element:
 
 ```js
 import { define } from 'remount'
 
-define({
-  'x-greeter': Greeter
-})
+define({ 'x-greeter': Greeter })
 ```
 
-You can then use it in your HTML, or even in your other React components!
+You can now use it anywhere in your HTML. :boom:
 
 ```html
 <x-greeter props-json='{"name":"John"}'></x-greeter>
@@ -61,9 +59,9 @@ Some ideas on why you might want to consider Remount for your project:
 
 |                                                    |                                                                                                                                                                                                            |
 | -------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| <img src='http://source.unsplash.com/350x250?sea'> | ✨ **Adding React to non-SPA apps** <br> You can use React components on any page of a "regular" HTML site. Great for adding React to apps built on Rails or Phoenix.                                      |
+| <img src='http://source.unsplash.com/400x200?sea'> | ✨ **Adding React to non-SPA apps** <br> You can use React components on any page of a "regular" HTML site. Great for adding React to apps built on Rails or Phoenix.                                      |
 |                                                    |                                                                                                                                                                                                            |
-| <img src='http://source.unsplash.com/350x250?sun'> | 💞 **Interop with other frameworks** <br> Remount lets you use your React components just like any other HTML element. This means you can use React with Vue, Angular, or any other DOM library/framework. |
+| <img src='http://source.unsplash.com/400x200?sun'> | 💞 **Interop with other frameworks** <br> Remount lets you use your React components just like any other HTML element. This means you can use React with Vue, Angular, or any other DOM library/framework. |
 |                                                    |                                                                                                                                                                                                            |
 
 ## Custom properties

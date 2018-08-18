@@ -5,7 +5,7 @@ Each version ships with three variants:
 
 | Version | Description                           |
 | ------- | ------------------------------------- |
-| `es5`   | For legacy browsers (default)         |
+| `es5`   | Supports legacy browsers (default)    |
 | `es6`   | Uses classes and other ES2015+ syntax |
 | `esm`   | es modules .mjs build                 |
 
@@ -31,4 +31,14 @@ module.exports = {
     }
   }
 }
+```
+
+## Using in browser
+
+When used like so, Remount will be available as `window.Remount`.
+
+```js
+<script src='https://cdn.jsdelivr.net/npm/remount'></script>
+<script src='https://cdn.jsdelivr.net/npm/remount/dist/remount.es6.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/remount/dist/remount.esm.js'></script>
 ```

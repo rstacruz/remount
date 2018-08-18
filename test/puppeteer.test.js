@@ -32,7 +32,7 @@ describe('puppeteer tests', () => {
   })
 
   it('mocha tests', async () => {
-    const url = example('../browser_test/index.html')
+    const url = example('../dist/index.html')
     page = await browser.newPage()
     await page.goto(url)
     await page.waitForSelector('#finish')
@@ -45,6 +45,6 @@ describe('puppeteer tests', () => {
   })
 })
 
-const getContent = (page) => {
+const getContent = page => {
   return page.evaluate(() => document.body.textContent)
 }

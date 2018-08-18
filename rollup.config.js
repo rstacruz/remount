@@ -5,6 +5,7 @@ import server from 'rollup-plugin-server'
 import copy from 'rollup-plugin-copy'
 
 const IS_TEST = process.env.NODE_ENV === 'test'
+const IS_WATCH = process.argv.includes('--watch')
 
 const MINIFY = minify({ comments: false })
 
@@ -23,20 +24,26 @@ const UMD = {
   globals: { react: 'React', 'react-dom': 'ReactDOM' }
 }
 
+const SERVE_PLUGINS = IS_WATCH
+  ? [
+    server({
+      open: true,
+      contentBase: 'dist',
+      port: +(process.env.PORT || 10049)
+    })
+  ]
+  : []
+
 const TEST_MODULES = IS_TEST
   ? [
     {
       input: 'browser_test/test.js',
       plugins: [
         BABEL,
-        server({
-          open: true,
-          contentBase: 'dist',
-          port: +(process.env.PORT || 10049)
-        }),
         copy({
           'browser_test/index.html.template': 'dist/index.html'
-        })
+        }),
+        ...SERVE_PLUGINS
       ],
       output: { file: 'dist/test.js', format: 'cjs' }
     }

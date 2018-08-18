@@ -52,12 +52,13 @@
   "scripts": {
     "build": "rollup --config",
     "test": "jest",
-    "watch": "env NODE_ENV=test rollup --config --watch"
+    "watch": "env NODE_ENV=test-rollup rollup --config --watch"
   },
   "jest": {
     "testPathIgnorePatterns": [
       "/node_modules/",
-      "/browser_test/"
+      "/browser_test/",
+      "/dist/"
     ]
   }
 }

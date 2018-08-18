@@ -9,6 +9,9 @@
   ],
   "env": {
     "test": {
+      "presets": ["env", "react"]
+    },
+    "test-rollup": {
       "presets": [["env", { "modules": false }], "react"]
     }
   }

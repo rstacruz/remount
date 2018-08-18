@@ -9,6 +9,10 @@ const Greeter = ({ name }) => {
   return <span className='greeter'>Hello {name || '(unknown)'}!</span>
 }
 
+const Dumper = (props) => {
+  return <span className='dumper'>[{JSON.stringify(props)}]</span>
+}
+
 Remount.define({
   'x-greeter': Greeter
 })
@@ -63,37 +67,61 @@ describe('Remount', () => {
     it('accepts { component, attributes }', () => {
       Remount.define({
         'x-banana': {
-          component: Greeter,
+          component: Dumper,
           attributes: ['name']
         }
       })
 
       div.innerHTML = `<x-banana name='Banana'></x-banana>`
-      assert(div.textContent.match(/Hello Banana/))
+      assert(div.textContent === '[{"name":"Banana"}]')
     })
 
     it('attribute names are case insensitive', () => {
       Remount.define({
         'x-cherry': {
-          component: Greeter,
+          component: Dumper,
           attributes: ['name']
         }
       })
 
       div.innerHTML = `<x-cherry NAME='Cherry'></x-cherry>`
-      assert(div.textContent.match(/Hello Cherry/))
+      assert(div.textContent === '[{"name":"Cherry"}]')
+    })
+
+    it('support blank string values', () => {
+      Remount.define({
+        'x-guava': {
+          component: Dumper,
+          attributes: ['name']
+        }
+      })
+
+      div.innerHTML = `<x-guava name=''></x-guava>`
+      assert(div.textContent === '[{"name":""}]')
+    })
+
+    it('empty values become empty strings', () => {
+      Remount.define({
+        'x-melon': {
+          component: Dumper,
+          attributes: ['name']
+        }
+      })
+
+      div.innerHTML = `<x-melon name></x-melon>`
+      assert(div.textContent === '[{"name":""}]')
     })
 
     it('tag names are case insensitive', () => {
       Remount.define({
         'x-apricot': {
-          component: Greeter,
+          component: Dumper,
           attributes: ['name']
         }
       })
 
       div.innerHTML = `<X-APRICOT name='Apricot'></X-APRICOT>`
-      assert(div.textContent.match(/Hello Apricot/))
+      assert(div.textContent === '[{"name":"Apricot"}]')
     })
 
     it('rejects bad component names', () => {

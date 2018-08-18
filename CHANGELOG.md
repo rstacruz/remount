@@ -1,5 +1,12 @@
 ## Pre-v1.0.0 changes
 
+[v0.5.0]
+
+- Allow *define()* to accept defaults as a second argument (eg, `define({...}, { quiet: true })`)
+- Support the `quiet: true` option
+
+[v0.5.0]: https://github.com/rstacruz/remount/compare/v0.4.1...v0.5.0
+
 [v0.4.1]
 
 - Fix for previous version.

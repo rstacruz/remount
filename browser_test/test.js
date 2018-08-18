@@ -123,4 +123,21 @@ describe('Remount', () => {
       }
     })
   })
+
+  describe('Quiet mode', () => {
+    it('will supress errors', () => {
+      Remount.define({
+        'x-peach': {
+          component: Greeter
+        }
+      })
+
+      Remount.define({
+        'x-peach': {
+          component: Greeter,
+          quiet: true
+        }
+      })
+    })
+  })
 })

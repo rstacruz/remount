@@ -48,7 +48,7 @@ The default Codesandbox React template is based on create-react-app. See the [an
 
 > Q: How do I use Remount on Jsfiddle?
 
-Fork [this template](http://jsfiddle.net/b81mcdno/).
+Fork [this template](http://jsfiddle.net/rstacruz/zjov6hdu/).
 
 ## Preact
 
@@ -60,4 +60,4 @@ Yes, try it with the `preact-compat` package. Make sure you set up your Webpack 
 
 > Q: Who's that guy in the README cover photo?
 
-I stole [@rem](https://twitter.com/rem)'s avatar from [uifaces.com](https://uifaces.com/).
+I stole [@rem](htt

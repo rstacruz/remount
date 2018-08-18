@@ -4,7 +4,7 @@ import minify from 'rollup-plugin-babel-minify'
 import server from 'rollup-plugin-server'
 import copy from 'rollup-plugin-copy'
 
-const IS_TEST = process.env.NODE_ENV === 'test'
+const IS_TEST = process.env.NODE_ENV === 'test-rollup'
 const IS_WATCH = process.argv.includes('--watch')
 
 const MINIFY = minify({ comments: false })

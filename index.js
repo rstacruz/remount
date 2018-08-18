@@ -66,6 +66,12 @@ function defineOne (elSpec /*: ElementSpec */, name /*: string */) {
   }
 
   if (!ensureSupported()) return
+
+  // Supress warning when quiet mode is on
+  if (elSpec.quiet && window.customElements.get(name)) {
+    return
+  }
+
   window.customElements.define(name, ComponentElement)
 }
 

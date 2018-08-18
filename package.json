@@ -31,7 +31,7 @@
   },
   "files": [
     "index.js",
-    "dist"
+    "dist/remount.*"
   ],
   "homepage": "https://github.com/rstacruz/remount#readme",
   "keywords": [

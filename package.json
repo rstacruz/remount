@@ -1,7 +1,7 @@
 {
   "name": "remount",
   "description": "Mount React components to the DOM using custom elements",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "author": "Rico Sta. Cruz <rstacruz@users.noreply.github.com>",
   "bugs": {
     "url": "https://github.com/rstacruz/remount/issues"
@@ -52,6 +52,7 @@
   },
   "scripts": {
     "build": "rollup --config",
+    "prepare": "run-s build",
     "test": "run-p -l --race watch jest",
     "jest": "jest",
     "watch": "env NODE_ENV=test-rollup rollup --config --watch"

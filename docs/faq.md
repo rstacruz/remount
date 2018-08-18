@@ -1,10 +1,20 @@
 # Frequently Asked Questions
 
+## "Please use 'new' operator" error
+
+> TypeError: Failed to construct 'HTMLElement': Please use the 'new' operator, this DOM object constructor cannot be called as a function.
+
+Possible solutions:
+
+- Try adding custom-elements-es5-adapter
+
+- Disable class transforms in Babel
+
 ## The `x-` prefix
 
 > Q: Why are all your example tags prefixed with `x-`?
 
-The `x-` prefix is *not* required. However, it's featured in a lot of Remount's examples for a few reasons:
+The `x-` prefix is _not_ required. However, it's featured in a lot of Remount's examples for a few reasons:
 
 - All custom elements require a `-` in the name ([source](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_custom_elements#High-level_view)). Prefixing with `x-` makes it easy to use single-word elements, which most the examples feature (eg, `x-tooltip`).
 

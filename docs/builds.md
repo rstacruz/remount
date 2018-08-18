@@ -1,22 +1,19 @@
 # Builds
 
-You can see all available builds at [here](https://cdn.jsdelivr.net/npm/remount/dist).
-Each version ships with three variants:
+Remount comes in 3 flavors:
 
-| Version | Description                           |
-| ------- | ------------------------------------- |
-| `es5`   | Supports legacy browsers (default)    |
-| `es6`   | Uses classes and other ES2015+ syntax |
-| `esm`   | es modules .mjs build                 |
-
-Each build also comes with minified versions, putting the total to 6 builds.
+| Version       | Description                           |
+| ------------- | ------------------------------------- |
+| `remount/es5` | Supports legacy browsers (default)    |
+| `remount/es6` | Uses classes and other ES2015+ syntax |
+| `remount/esm` | es modules .mjs build                 |
 
 ## Using builds
 
 You can use them like so:
 
 ```js
-import { define } 'remount/dist/remount.es6.js'
+import { define } from 'remount/es6'
 ```
 
 Or if you're using Webpack:
@@ -27,7 +24,7 @@ module.exports = {
   /* ... */
   resolve: {
     alias: {
-      remount: 'remount/dist/remount.es6.js'
+      remount: 'remount/es6'
     }
   }
 }
@@ -35,7 +32,7 @@ module.exports = {
 
 ## Using in browser
 
-When used like so, Remount will be available as `window.Remount`.
+When used like so, Remount will be available as `window.Remount`. Great for using in JSFiddle/Codepen.
 
 ```js
 <script src='https://cdn.jsdelivr.net/npm/remount'></script>

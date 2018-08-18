@@ -32,6 +32,24 @@ See [Comparison](comparison.md).
 
 Yes, but it'd be better if you just use React. You're sure to have better performance that way.
 
+## create-react-app
+
+> Q: How do I use it with create-react-app?
+
+Use the `remount/es6` variant. See [builds](./builds.md) documentation on how.
+
+## Codesandbox
+
+> Q: How do I use remount on Codesandbox?
+
+The default Codesandbox React template is based on create-react-app. See the [answer above](#create-react-app). You can also fork [this Codesandbox template](https://codesandbox.io/s/yqqv0zz16x).
+
+## Preact
+
+> Q: Will it work with Preact?
+
+Yes, try it with the `preact-compat` package. Make sure you set up your Webpack configuration as the preact-compat docs [suggests](https://www.npmjs.com/package/preact-compat#usage-with-webpack).
+
 ## Happy face
 
 > Q: Who's that guy in the README cover photo?

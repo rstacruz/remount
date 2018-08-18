@@ -2,6 +2,14 @@
 
 /* eslint-env mocha */
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 var root = document.getElementById('debug');
 if (window.location.hash === '#debug') root.classList.add('-visible');
 
@@ -140,25 +148,27 @@ describe('Remount', function () {
 
     it('rejects bad component names', function () {
       try {
-        Remount.define({
-          banana: Greeter
-        });
+        Remount.define({ banana: Greeter });
         assert('Failed');
       } catch (e) {
         assert(e.message !== 'Failed');
       }
     });
 
-    it('tag names will fail to be defined twice', function () {
+    it('tag names will fail to be defined twice (case sensitive)', function () {
       try {
-        Remount.define({
-          'x-dragonfruit': Greeter
-        });
+        Remount.define({ 'x-dragonfruit': Greeter });
+        Remount.define({ 'x-dragonfruit': Greeter });
+        assert('Failed');
+      } catch (e) {
+        assert(e.message !== 'Failed');
+      }
+    });
 
-        Remount.define({
-          'x-dragonfruit': Greeter
-        });
-
+    it('tag names will fail to be defined twice (case insensitive)', function () {
+      try {
+        Remount.define({ 'x-currant': Greeter });
+        Remount.define({ 'x-CURRANT': Dumper });
         assert('Failed');
       } catch (e) {
         assert(e.message !== 'Failed');
@@ -196,7 +206,9 @@ describe('Remount', function () {
   });
 
   describe('Shadow DOM mode', function () {
-    it('will not be seen by .textContent', function () {
+    // Skip this for now; only Chrome supports this.
+    // Polyfilled environments have no way of hiding it from .textContent.
+    it.skip('will not be seen by .textContent', function () {
       Remount.define({ 'x-grape': Greeter }, { shadow: true });
       div.innerHTML = 'Grape: <x-grape></x-grape>';
 
@@ -212,4 +224,68 @@ describe('Remount', function () {
       assert(shadowHTML.match(/Hello/));
     });
   });
+
+  describe('removing', function () {
+    it('calls componentWillUnmount', function () {
+      var unmounted = void 0;
+
+      var Removable = function (_React$Component) {
+        _inherits(Removable, _React$Component);
+
+        function Removable() {
+          _classCallCheck(this, Removable);
+
+          return _possibleConstructorReturn(this, (Removable.__proto__ || Object.getPrototypeOf(Removable)).apply(this, arguments));
+        }
+
+        _createClass(Removable, [{
+          key: 'componentWillUnmount',
+          value: function componentWillUnmount() {
+            unmounted = true;
+          }
+        }, {
+          key: 'render',
+          value: function render() {
+            return React.createElement(
+              'span',
+              null,
+              'Hola'
+            );
+          }
+        }]);
+
+        return Removable;
+      }(React.Component);
+
+      return Promise.resolve().then(function () {
+        Remount.define({ 'x-watermelon': Removable });
+        div.innerHTML = '<x-watermelon></x-watermelon>';
+        return raf();
+      }).then(function () {
+        assert(div.textContent.includes('Hola'));
+        // Disconnect it
+        div.removeChild(div.children[0]);
+        return raf();
+      }).then(function () {
+        // Assert that componentWillUnmount is ran
+        assert(unmounted === true);
+        assert(div.textContent.trim() === '');
+      });
+    });
+  });
 });
+
+// TODO: test disconnection
+// TODO: test moving components
+
+/*
+ * Helper: defers until next animation frame
+ */
+
+function raf() {
+  return new Promise(function (resolve, reject) {
+    window.requestAnimationFrame(function () {
+      resolve();
+    });
+  });
+}

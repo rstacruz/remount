@@ -12,7 +12,12 @@ describe('Remount mode: ' + Remount.adapterName, () => {
       it('Falling back to MutationObserver (native).')
     }
   } else if (Remount.adapterName === 'CustomElements') {
-    it('Custom Elements are supported!')
-    it(':)')
+    it('Custom Elements: supported! :)')
+
+    if (document.body.attachShadow) {
+      it('Shadow DOM: supported! :)')
+    } else {
+      it('Shadow DOM: not supported; skipping shadow DOM tests')
+    }
   }
 })

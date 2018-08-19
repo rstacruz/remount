@@ -233,17 +233,18 @@ describe('Remount', () => {
       // It's "shadowed" so we can't see it
       assert(!div.textContent.match(/Hello/))
     })
-    ;(Remount.adapterName === 'CustomElements' ? it : it.skip)(
-      'will be seen in .shadowRoot',
-      () => {
-        Remount.define({ 'x-orange': Greeter }, { shadow: true })
 
-        div.innerHTML = `Orange: <x-orange></x-orange>`
-        const shadowHTML = document.querySelector('x-orange').shadowRoot
-          .innerHTML
-        assert.match(shadowHTML, /Hello/)
-      }
-    )
+    // Shadow DOM isn't always available
+    const hasShadow =
+      Remount.adapterName === 'CustomElements' && document.body.attachShadow
+
+    ;(hasShadow ? it : it.skip)('will be seen in .shadowRoot', () => {
+      Remount.define({ 'x-orange': Greeter }, { shadow: true })
+
+      div.innerHTML = `Orange: <x-orange></x-orange>`
+      const shadowHTML = document.querySelector('x-orange').shadowRoot.innerHTML
+      assert.match(shadowHTML, /Hello/)
+    })
   })
 
   describe('Removing', () => {

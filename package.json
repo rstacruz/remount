@@ -1,7 +1,7 @@
 {
   "name": "remount",
   "description": "Mount React components to the DOM using custom elements",
-  "version": "0.7.1",
+  "version": "0.7.2",
   "author": "Rico Sta. Cruz <rstacruz@users.noreply.github.com>",
   "bugs": {
     "url": "https://github.com/rstacruz/remount/issues"

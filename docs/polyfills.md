@@ -1,32 +1,23 @@
 # Browser support
 
+Remount supports 2 modes of operations: Custom Elements and Mutation Observers. It will pick whichever is available.
+
+| Feature              |      IE       |      Chrome       |      Firefox       |       iOS       |
+| -------------------- | :-----------: | :---------------: | :----------------: | :-------------: |
+| [Custom elements]    |       -       | Chrome/67+ (2018) |         -          |                 |
+| [Mutation observers] | IE/11+ (2013) | Chrome/18+ (2012) | Firefox/14+ (2012) | iOS 6.1+ (2013) |
+
+[custom elements]: https://caniuse.com/#search=custom%20elements
+[mutation observers]: http://caniuse.com/mutationobserver
+
 Remount supports all modern browsers, including IE11 (Internet Explorer's oldest supported version as of 2016). Remember to use the polyfills below to ensure the best compatibility.
 
-As of August 2018, IE10 only has [0.09%](https://caniuse.com/usage-table) usage share. Microsoft ended official support for IE10 on [January 2016](https://en.wikipedia.org/wiki/Internet_Explorer_10).
+## Legacy IE support
 
-<!-- TODO: talk about what the webcomponentsjs polyfills are and why they're necessary -->
-
-## Option 1: via CDN
-
-```html
-<script crossorigin src='https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2.0.4/custom-elements-es5-adapter.js'></script>
-<script crossorigin src='https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2.0.4/webcomponents-loader.js'></script>
-```
-
-Loads almost nothing if your browser already supports web components. Loads around 30kb otherwise.
-
-## Option 2: in JS
-
-```sh
-yarn add @webcomponents/webcomponentsjs
-```
+To support IE9, add the MutationObserver polyfill for legacy IE support.
 
 ```js
-// load webcomponents bundle, which includes all the necessary polyfills
-import '@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js'
-import '@webcomponents/webcomponentsjs/webcomponents-bundle.js'
+<script src='https://cdn.polyfill.io/v2/polyfill.js?features=MutationObserver'></script>
 ```
 
-Unconditionally loads around 30kb gzip'd. More info [here](https://github.com/webcomponents/webcomponentsjs).
-
-[@webcomponents/webcomponentsjs]: https://github.com/webcomponents/webcomponentsjs
+Also see <https://www.npmjs.com/package/mutation-observer>.

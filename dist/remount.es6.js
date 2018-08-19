@@ -6,6 +6,36 @@
 
   ReactDOM = ReactDOM && ReactDOM.hasOwnProperty('default') ? ReactDOM['default'] : ReactDOM;
 
+  /* global HTMLElement */
+
+  let injected;
+
+  /*
+   * Adapted from https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2.0.4/custom-elements-es5-adapter.js
+   * Rolling this in so we don't need another polyfill.
+   */
+
+  function inject () {
+    if (
+      injected ||
+      void 0 === window.Reflect ||
+      void 0 === window.customElements ||
+      window.customElements.hasOwnProperty('polyfillWrapFlushCallback')
+    ) {
+      return
+    }
+    const a = HTMLElement;
+
+    window.HTMLElement = function () {
+      return Reflect.construct(a, [], this.constructor)
+    };
+
+    HTMLElement.prototype = a.prototype;
+    HTMLElement.prototype.constructor = HTMLElement;
+    Object.setPrototypeOf(HTMLElement, a);
+    injected = true;
+  }
+
   // @flow
 
   /*::
@@ -43,6 +73,7 @@
     name /*: string */,
     { onUpdate, onUnmount } /*: ElementEvents */
   ) {
+    inject();
     const attributes = elSpec.attributes || [];
 
     class ComponentElement extends window.HTMLElement {
@@ -114,7 +145,6 @@
 
     const observer = new window.MutationObserver(mutations => {
       mutations.forEach(mutation => {
-        console.log('mutationobserver: mutation', mutation);
         mutation.addedNodes.forEach(node => {
           if (node.nodeName.toLowerCase() !== name) return
           onUpdate(node, node);

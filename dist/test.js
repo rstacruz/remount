@@ -11,7 +11,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var root = document.getElementById('debug');
-if (window.location.hash === '#debug') root.classList.add('-visible');
+var IS_DEBUG = window.location.search.indexOf('debug') !== -1;
+if (IS_DEBUG) root.classList.add('-visible');
 
 var Greeter = function Greeter(_ref) {
   var name = _ref.name;
@@ -58,7 +59,7 @@ describe('Remount', function () {
   });
 
   afterEach(function () {
-    if (window.location.hash === '#debug') return;
+    if (IS_DEBUG) return;
     root.removeChild(div);
   });
 

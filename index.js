@@ -1,5 +1,6 @@
 // @flow
-import { defineElement } from './lib/custom_elements'
+import * as ElementsAdapter from './lib/custom_elements'
+import * as MutationAdapter from './lib/mutation_observer'
 import * as ReactAdapter from './lib/react'
 
 /*::
@@ -11,6 +12,24 @@ import type {
   ElementSpec
 } from './lib/types'
 */
+
+const Adapter = ElementsAdapter.isSupported()
+  ? ElementsAdapter
+  : MutationAdapter.isSupported()
+    ? MutationAdapter
+    : null
+
+if (!Adapter) {
+  throw new Error('Unsupported platform')
+} else {
+  console.log('Remount: using adapter', Adapter.name)
+}
+
+/**
+ * Inspect `Remount.adapterName` to see what adapter's being used.
+ */
+
+export const adapterName = Adapter.name
 
 /**
  * Registers elements.
@@ -30,7 +49,7 @@ export function define (
     )
 
     // Define a custom element.
-    defineElement(elSpec, name, {
+    Adapter.defineElement(elSpec, name, {
       onUpdate (element /*: Element */, mountPoint /*: Element */) {
         const props = getProps(element, elSpec.attributes)
         ReactAdapter.update(elSpec, mountPoint, props)

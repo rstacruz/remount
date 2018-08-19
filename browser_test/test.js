@@ -45,8 +45,8 @@ describe('Remount', () => {
     it('Mode: ' + Remount.adapterName)
   })
 
-  describe('Basic tests', () => {
-    it('works', () => {
+  describe('Props', () => {
+    it('supports props-json', () => {
       div.innerHTML = `<x-greeter props-json='{"name":"John"}'></x-greeter>`
       return raf().then(() => {
         assert(div.textContent.match(/Hello John/))
@@ -59,6 +59,8 @@ describe('Remount', () => {
         assert(div.textContent.match(/Hello \(unknown\)/))
       })
     })
+
+    it('can handle JSON errors (TODO)')
   })
 
   describe('Remount.define()', () => {
@@ -297,6 +299,8 @@ describe('Remount', () => {
           assert(div.textContent.trim() === '')
         })
     })
+
+    it('is triggered via reordering (TODO)')
   })
 
   describe('Updating', () => {
@@ -319,11 +323,6 @@ describe('Remount', () => {
     })
   })
 })
-
-// TODO: test disconnection
-// TODO: test moving components
-// TODO: test failed json
-// TODO: test wrong parameter types
 
 /*
  * Helper: defers until next animation frame

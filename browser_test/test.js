@@ -145,20 +145,11 @@ describe('Remount', () => {
       })
     })
 
-    it('rejects bad component names', () => {
-      try {
-        Remount.define({ banana: Greeter })
-        assert('Failed')
-      } catch (e) {
-        assert(e.message !== 'Failed')
-      }
-    })
-
     it('tag names will fail to be defined twice (case sensitive)', () => {
       try {
         Remount.define({ 'x-dragonfruit': Greeter })
         Remount.define({ 'x-dragonfruit': Greeter })
-        assert('Failed')
+        throw new Error('Failed')
       } catch (e) {
         assert(e.message !== 'Failed')
       }
@@ -169,6 +160,51 @@ describe('Remount', () => {
         Remount.define({ 'x-currant': Greeter })
         Remount.define({ 'x-CURRANT': Dumper })
         assert('Failed')
+      } catch (e) {
+        assert(e.message !== 'Failed')
+      }
+    })
+  })
+
+  describe('Names', () => {
+    it('rejects no hyphens', () => {
+      try {
+        Remount.define({ banana: Greeter })
+        throw new Error('Failed')
+      } catch (e) {
+        assert(e.message !== 'Failed')
+      }
+    })
+
+    it('allows numbers', () => {
+      Remount.define({ 'element-0': Dumper })
+    })
+
+    it('allows multiple hyphens', () => {
+      Remount.define({ 'element--element': Dumper })
+    })
+
+    it('allows ending with hyphen', () => {
+      Remount.define({ 'element-': Dumper })
+    })
+
+    it('allows a-', () => {
+      Remount.define({ 'a-': Dumper })
+    })
+
+    it('rejects starting with number', () => {
+      try {
+        Remount.define({ '0-element': Greeter })
+        throw new Error('Failed')
+      } catch (e) {
+        assert(e.message !== 'Failed')
+      }
+    })
+
+    it('rejects starting with hyphen', () => {
+      try {
+        Remount.define({ '-element': Greeter })
+        throw new Error('Failed')
       } catch (e) {
         assert(e.message !== 'Failed')
       }

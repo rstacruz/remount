@@ -1,5 +1,11 @@
 ## Pre-v1.0.0 changes
 
+[v0.7.0]
+
+- Significant refactor, and support MutationObserver fallback. This means IE9 support (hopefully)! :tada:
+
+[v0.7.0]: https://github.com/rstacruz/remount/compare/v0.6.0...v0.7.0
+
 [v0.6.0]
 
 - Fix `remount/esm` module.

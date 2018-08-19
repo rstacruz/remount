@@ -1,6 +1,6 @@
 // @flow
-import { defineOne } from './lib/custom_elements'
-import { update, unmount } from './lib/react'
+import { defineElement } from './lib/custom_elements'
+import * as ReactAdapter from './lib/react'
 
 /*::
 import type {
@@ -21,11 +21,39 @@ export function define (
   defaults /*: ?Defaults */
 ) {
   Object.keys(components).forEach((name /*: string */) => {
-    const elSpec /*: ElementSpec */ = toElementSpec(components[name])
-    const newElSpec = Object.assign({}, defaults, elSpec)
-    defineOne(newElSpec, name, { update, unmount })
+    // Construct the specs for the element.
+    // (eg, { component: Tooltip, attributes: ['title'] })
+    const elSpec /*: ElementSpec */ = Object.assign(
+      {},
+      defaults,
+      toElementSpec(components[name])
+    )
+
+    // Define a custom element.
+    defineElement(elSpec, name, {
+      onUpdate (element /*: Element */, mountPoint /*: Element */) {
+        const props = getProps(element, elSpec.attributes)
+        ReactAdapter.update(elSpec, mountPoint, props)
+      },
+
+      onUnmount (element /*: Element */, mountPoint /*: Element */) {
+        ReactAdapter.unmount(elSpec, mountPoint)
+      }
+    })
   })
 }
+
+/**
+ * Coerces something into an `ElementSpec` type.
+ * @private
+ *
+ * @example
+ *     toElementSpec(Tooltip)
+ *     // => { component: Tooltip }
+ *
+ *     toElementSpec({ component: Tooltip })
+ *     // => { component: Tooltip }
+ */
 
 function toElementSpec (
   thing /*: ElementSpec | Component */
@@ -33,4 +61,24 @@ function toElementSpec (
   // $FlowFixMe$
   if (typeof thing === 'object' && thing.component) return thing
   return { component: thing }
+}
+
+/**
+ * Returns properties for a given HTML element.
+ * @private
+ *
+ * @example
+ *     getProps(div, ['name'])
+ *     // => { name: 'Romeo' }
+ */
+
+function getProps (element /*: Element */, attributes /*: ?Array<string> */) {
+  const rawJson = element.getAttribute('props-json')
+  if (rawJson) return JSON.parse(rawJson)
+
+  const names /*: Array<string> */ = attributes || []
+  return names.reduce((result /*: PropertyMap */, attribute /*: string */) => {
+    result[attribute] = element.getAttribute(attribute)
+    return result
+  }, {})
 }

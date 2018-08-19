@@ -14,13 +14,41 @@ function assert(value) {
   if (!value) throw new Error('Assertion failed');
 }
 
+assert.equal = function (left, right) {
+  if (left !== right) {
+    throw new Error('Equal assertion failed\n\n' + ('Left:  ' + JSON.stringify(left) + '\n') + ('Right: ' + JSON.stringify(right) + '\n\n'));
+  }
+};
+
+assert.notEqual = function (left, right) {
+  if (left === right) {
+    throw new Error('Not equal assertion failed\n\n' + ('Left:  ' + JSON.stringify(left) + '\n') + ('Right: ' + JSON.stringify(right) + '\n\n'));
+  }
+};
+
+assert.match = function (haystack, needle) {
+  if (!haystack.match(needle)) {
+    throw new Error('Match assertion failed\n\n' + ('Left:  ' + JSON.stringify(haystack) + '\n') + ('Right: ' + needle.toString() + '\n\n'));
+  }
+};
+
 // Defer until next frame
 function raf() {
-  return new Promise(function (resolve, reject) {
-    window.requestAnimationFrame(function () {
-      resolve();
+  if (window.MutationObserver._period) {
+    // If MutationObserver was polyfilled, it will be
+    // checking with a polling period.
+    return new Promise(function (resolve, reject) {
+      setTimeout(function () {
+        resolve();
+      }, window.MutationObserver._period * 2);
     });
-  });
+  } else {
+    return new Promise(function (resolve, reject) {
+      window.requestAnimationFrame(function () {
+        resolve();
+      });
+    });
+  }
 }
 
 var Remount = window.Remount;
@@ -40,7 +68,13 @@ after(function () {
 describe('Remount mode: ' + Remount.adapterName, function () {
   if (Remount.adapterName === 'MutationObserver') {
     it('Custom Elements are not supported on this platform.');
-    it('Falling back to MutationObserver.');
+
+    var ms = window.MutationObserver._period;
+    if (ms) {
+      it('Falling back to MutationObserver (polyfill, polling ' + ms + 'ms).');
+    } else {
+      it('Falling back to MutationObserver (native).');
+    }
   } else if (Remount.adapterName === 'CustomElements') {
     it('Custom Elements are supported!');
     it(':)');
@@ -94,7 +128,7 @@ describe('Remount', function () {
       Remount.define({ 'x-red': Greeter });
       div.innerHTML = '<x-red props-json=\'{"name":"John"}\'></x-greeter>';
       return raf().then(function () {
-        assert(div.textContent.match(/Hello John/));
+        assert.match(div.textContent, /Hello John/);
       });
     });
 
@@ -102,7 +136,7 @@ describe('Remount', function () {
       Remount.define({ 'x-blue': Greeter });
       div.innerHTML = '<x-blue name=\'Alice\'></x-blue>';
       return raf().then(function () {
-        assert(div.textContent.match(/Hello \(unknown\)/));
+        assert.match(div.textContent, /Hello \(unknown\)/);
       });
     });
 
@@ -119,7 +153,7 @@ describe('Remount', function () {
 
       div.innerHTML = '<x-apple props-json=\'{"name":"Apple"}\'></x-apple>';
       return raf().then(function () {
-        assert(div.textContent.match(/Hello Apple/));
+        assert.match(div.textContent, /Hello Apple/);
       });
     });
 
@@ -133,7 +167,7 @@ describe('Remount', function () {
 
       div.innerHTML = '<x-banana name=\'Banana\'></x-banana>';
       return raf().then(function () {
-        assert(div.textContent === '[{"name":"Banana"}]');
+        assert.equal(div.textContent, '[{"name":"Banana"}]');
       });
     });
 
@@ -147,7 +181,7 @@ describe('Remount', function () {
 
       div.innerHTML = '<x-cherry NAME=\'Cherry\'></x-cherry>';
       return raf().then(function () {
-        assert(div.textContent === '[{"name":"Cherry"}]');
+        assert.equal(div.textContent, '[{"name":"Cherry"}]');
       });
     });
 
@@ -161,7 +195,7 @@ describe('Remount', function () {
 
       div.innerHTML = '<x-guava name=\'\'></x-guava>';
       return raf().then(function () {
-        assert(div.textContent === '[{"name":""}]');
+        assert.equal(div.textContent, '[{"name":""}]');
       });
     });
 
@@ -175,7 +209,7 @@ describe('Remount', function () {
 
       div.innerHTML = '<x-melon name></x-melon>';
       return raf().then(function () {
-        assert(div.textContent === '[{"name":""}]');
+        assert.equal(div.textContent, '[{"name":""}]');
       });
     });
 
@@ -189,7 +223,7 @@ describe('Remount', function () {
 
       div.innerHTML = '<X-APRICOT name=\'Apricot\'></X-APRICOT>';
       return raf().then(function () {
-        assert(div.textContent === '[{"name":"Apricot"}]');
+        assert.equal(div.textContent, '[{"name":"Apricot"}]');
       });
     });
 
@@ -199,7 +233,7 @@ describe('Remount', function () {
         Remount.define({ 'x-dragonfruit': Greeter });
         throw new Error('Failed');
       } catch (e) {
-        assert(e.message !== 'Failed');
+        assert.notEqual(e.message, 'Failed');
       }
     });
 
@@ -207,9 +241,9 @@ describe('Remount', function () {
       try {
         Remount.define({ 'x-currant': Greeter });
         Remount.define({ 'x-CURRANT': Dumper });
-        assert('Failed');
+        throw new Error('Failed');
       } catch (e) {
-        assert(e.message !== 'Failed');
+        assert.notEqual(e.message, 'Failed');
       }
     });
   });
@@ -220,7 +254,7 @@ describe('Remount', function () {
         Remount.define({ banana: Greeter });
         throw new Error('Failed');
       } catch (e) {
-        assert(e.message !== 'Failed');
+        assert.notEqual(e.message, 'Failed');
       }
     });
 
@@ -245,7 +279,7 @@ describe('Remount', function () {
         Remount.define({ '0-element': Greeter });
         throw new Error('Failed');
       } catch (e) {
-        assert(e.message !== 'Failed');
+        assert.notEqual(e.message, 'Failed');
       }
     });
 
@@ -254,7 +288,7 @@ describe('Remount', function () {
         Remount.define({ '-element': Greeter });
         throw new Error('Failed');
       } catch (e) {
-        assert(e.message !== 'Failed');
+        assert.notEqual(e.message, 'Failed');
       }
     });
   });
@@ -302,7 +336,7 @@ describe('Remount', function () {
 
       div.innerHTML = 'Orange: <x-orange></x-orange>';
       var shadowHTML = document.querySelector('x-orange').shadowRoot.innerHTML;
-      assert(shadowHTML.match(/Hello/));
+      assert.match(shadowHTML, /Hello/);
     });
   });
 
@@ -349,8 +383,8 @@ describe('Remount', function () {
         return raf();
       }).then(function () {
         // Assert that componentWillUnmount is ran
-        assert(unmounted === true);
-        assert(div.textContent.trim() === '');
+        assert.equal(unmounted, true);
+        assert.equal(div.textContent.trim(), '');
       });
     });
 
@@ -364,12 +398,12 @@ describe('Remount', function () {
         div.innerHTML = '<x-lemon props-json=\'{"value":123}\'></x-lemon>';
         return raf();
       }).then(function () {
-        assert(div.textContent.trim() === '[{"value":123}]');
+        assert.equal(div.textContent.trim(), '[{"value":123}]');
         var el = div.querySelector('x-lemon');
         el.setAttribute('props-json', '{"value":456}');
         return raf();
       }).then(function () {
-        assert(div.textContent.trim() === '[{"value":456}]');
+        assert.equal(div.textContent.trim(), '[{"value":456}]');
       });
     });
   });
@@ -419,8 +453,7 @@ describe('Inception mode', function () {
     ReactDOM.render(React.createElement(Outer, null), div);
 
     return raf().then(function () {
-      console.log(div.textContent);
-      assert(div.textContent === 'OutsideInsideHello');
+      assert.equal(div.textContent, 'OutsideInsideHello');
     });
   });
 });
@@ -458,7 +491,7 @@ describe('Appearance', function () {
       div.innerHTML = '<x-white value="abc"></x-white>';
 
       return raf().then(function () {
-        assert(div.textContent === '[{"value":"abc"}]');
+        assert.equal(div.textContent, '[{"value":"abc"}]');
       });
     });
 
@@ -466,7 +499,7 @@ describe('Appearance', function () {
       div.innerHTML = '<span><x-white value="ABC"></x-white></span>';
 
       return raf().then(function () {
-        assert(div.textContent === '[{"value":"ABC"}]');
+        assert.equal(div.textContent, '[{"value":"ABC"}]');
       });
     });
 
@@ -474,7 +507,7 @@ describe('Appearance', function () {
       div.innerHTML = '<p><x-white value="abcd"></x-white></p>';
 
       return raf().then(function () {
-        assert(div.textContent === '[{"value":"abcd"}]');
+        assert.equal(div.textContent, '[{"value":"abcd"}]');
       });
     });
 
@@ -482,7 +515,7 @@ describe('Appearance', function () {
       div.innerHTML = '\n        <x-white value="def"></x-white><x-white value="ghi"></x-white>\n      ';
 
       return raf().then(function () {
-        assert(div.textContent.trim() === '[{"value":"def"}][{"value":"ghi"}]');
+        assert.equal(div.textContent.trim(), '[{"value":"def"}][{"value":"ghi"}]');
       });
     });
 
@@ -490,7 +523,7 @@ describe('Appearance', function () {
       div.innerHTML = '\n        <p><x-white value="def"></x-white><span><x-white value="ghi"></x-white></span></p>\n      ';
 
       return raf().then(function () {
-        assert(div.textContent.trim() === '[{"value":"def"}][{"value":"ghi"}]');
+        assert.equal(div.textContent.trim(), '[{"value":"def"}][{"value":"ghi"}]');
       });
     });
   });

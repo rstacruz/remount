@@ -171,15 +171,15 @@
     name = name.toLowerCase();
 
     var observer = new window.MutationObserver(function (mutations) {
-      mutations.forEach(function (mutation) {
-        mutation.addedNodes.forEach(function (node) {
+      each(mutations, function (mutation) {
+        each(mutation.addedNodes, function (node) {
           if (node.nodeName.toLowerCase() !== name) return;
           onUpdate(node, node);
         });
 
         // todo handle update
 
-        mutation.removedNodes.forEach(function (node) {
+        each(mutation.removedNodes, function (node) {
           if (node.nodeName.toLowerCase() !== name) return;
           onUnmount(node, node);
         });
@@ -191,6 +191,20 @@
       childList: true,
       subtree: true
     });
+  }
+
+  /**
+   * Some implementations of MutationObserver don't have .forEach,
+   * so we need our own `forEach` shim. This is usually the case with
+   * polyfilled environments.
+   *
+   * @private
+   */
+
+  function each(list, fn) {
+    for (var i = 0, len = list.length; i < len; i++) {
+      fn(list[i]);
+    }
   }
 
   var name$1 = 'MutationObserver';

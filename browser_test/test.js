@@ -3,7 +3,8 @@
 'use strict'
 
 const root = document.getElementById('debug')
-if (window.location.hash === '#debug') root.classList.add('-visible')
+const IS_DEBUG = (window.location.search.indexOf('debug') !== -1)
+if (IS_DEBUG) root.classList.add('-visible')
 
 const Greeter = ({ name }) => {
   return <span className='greeter'>Hello {name || '(unknown)'}!</span>
@@ -36,7 +37,7 @@ describe('Remount', () => {
   })
 
   afterEach(() => {
-    if (window.location.hash === '#debug') return
+    if (IS_DEBUG) return
     root.removeChild(div)
   })
 

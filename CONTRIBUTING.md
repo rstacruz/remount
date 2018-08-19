@@ -9,6 +9,11 @@ yarn watch
 # This opens your browser
 ```
 
+- <http://localhost:10049/> - Tests
+- <http://localhost:10049/?polyfill> - Tests + enable CustomElements polyfill
+- <http://localhost:10049/?debug> - Tests + Debug mode
+- <http://localhost:10049/?polyfill,debug> - Both
+
 ## CI tests
 
 `yarn test` will will spawn a headless browser in your CLI to check if the browser tests pass or fail. This is only useful in CI; just use `yarn watch` locally.

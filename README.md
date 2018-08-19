@@ -81,16 +81,7 @@ Remount supports all modern browsers, including IE11 (Internet Explorer's oldest
 
 ## Polyfills
 
-We recommend these two polyfills provided by the *@webcomponents/webcomponentsjs* package<sup>[#][webcomponentsjs]</sup>.
-
-```html
-<script crossorigin src='https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2.0.4/custom-elements-es5-adapter.js'></script>
-<script crossorigin src='https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2.0.4/webcomponents-loader.js'></script>
-```
-
 More info on this on the [Polyfill docs](./docs/polyfills.md).
-
-[webcomponentsjs]: https://yarn.pm/@webcomponents/webcomponentsjs
 
 ## Documentation
 

@@ -6,4 +6,27 @@ As of August 2018, IE10 only has [0.09%](https://caniuse.com/usage-table) usage 
 
 <!-- TODO: talk about what the webcomponentsjs polyfills are and why they're necessary -->
 
-[@webcomponents/webcomponentsjs]: https://yarn.pm/@webcomponents/webcomponentsjs
+## Option 1: via CDN
+
+```html
+<script crossorigin src='https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2.0.4/custom-elements-es5-adapter.js'></script>
+<script crossorigin src='https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2.0.4/webcomponents-loader.js'></script>
+```
+
+Loads almost nothing if your browser already supports web components. Loads around 30kb otherwise.
+
+## Option 2: in JS
+
+```sh
+yarn add @webcomponents/webcomponentsjs
+```
+
+```js
+// load webcomponents bundle, which includes all the necessary polyfills
+import '@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js'
+import '@webcomponents/webcomponentsjs/webcomponents-bundle.js'
+```
+
+Unconditionally loads around 30kb gzip'd. More info [here](https://github.com/webcomponents/webcomponentsjs).
+
+[@webcomponents/webcomponentsjs]: https://github.com/webcomponents/webcomponentsjs

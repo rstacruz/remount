@@ -77,25 +77,18 @@ Some ideas on why you might want to consider Remount for your project:
 
 Remount supports all modern browsers, including IE11 (Internet Explorer's oldest supported version as of 2016). Remember to use the polyfills below to ensure the best compatibility.
 
-⚡ [Polyfill docs →](./docs/polyfills.md)
+⚡ [Browser support docs →](./docs/polyfills.md)
 
 ## Polyfills
 
-We recommend these two polyfills provided by the *@webcomponents/webcomponentsjs* package<sup>[#][webcomponentsjs]</sup>. Load it via JavaScript in your app's entry point.
-
-```js
-// Add the package via: yarn add @webcomponents/webcomponentsjs
-import '@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js'
-import '@webcomponents/webcomponentsjs/webcomponents-loader.js'
-```
+We recommend these two polyfills provided by the *@webcomponents/webcomponentsjs* package<sup>[#][webcomponentsjs]</sup>.
 
 ```html
-<!-- or via CDN: -->
 <script crossorigin src='https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2.0.4/custom-elements-es5-adapter.js'></script>
 <script crossorigin src='https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2.0.4/webcomponents-loader.js'></script>
 ```
 
-⚡ [Polyfill docs →](./docs/polyfills.md)
+More info on this on the [Polyfill docs](./docs/polyfills.md).
 
 [webcomponentsjs]: https://yarn.pm/@webcomponents/webcomponentsjs
 

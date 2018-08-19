@@ -69,7 +69,9 @@ Some ideas on why you might want to consider Remount for your project:
 
 - JSON props (eg, `<x-greeter props-json="{...}">`) ([docs](./docs/api.md))
 - Named attributes (eg, `<x-greeter name="John">`) ([docs](./docs/api.md))
-- Shadow DOM ([docs](./docs/api.md))
+- Uses Custom Elements API (when available)
+- Fallback to compatible API for other browers
+- Shadow DOM mode (when available)
 
 ## Browser support
 

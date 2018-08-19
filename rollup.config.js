@@ -27,7 +27,7 @@ const UMD = {
 const SERVE_PLUGINS = IS_WATCH
   ? [
     server({
-      open: true,
+      // open: true,
       contentBase: 'dist',
       port: +(process.env.PORT || 10049)
     })

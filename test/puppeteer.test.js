@@ -40,6 +40,16 @@ describe('puppeteer tests', () => {
     expect(text).toContain('failures: 0')
   })
 
+  // TODO: support { mode: 'MutationObserver' } for tests
+  it.skip('mocha tests, mutation observer mode', async () => {
+    const url = 'http://localhost:10049/?mutation'
+    page = await browser.newPage()
+    await page.goto(url)
+    await page.waitForSelector('#finish')
+    const text = await getContent(page)
+    expect(text).toContain('failures: 0')
+  })
+
   afterEach(async () => {
     await page.close()
   })

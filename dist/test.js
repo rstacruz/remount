@@ -2,6 +2,42 @@
 
 /* eslint-env mocha */
 
+var IS_DEBUG = window.location.search.indexOf('debug') !== -1;
+
+function assert(value) {
+  if (!value) throw new Error('Assertion failed');
+}
+
+/*
+ * Helper: defers until next animation frame
+ */
+
+function raf() {
+  return new Promise(function (resolve, reject) {
+    window.requestAnimationFrame(function () {
+      resolve();
+    });
+  });
+}
+
+var Remount = window.Remount;
+
+var React = window.React;
+
+var root = document.getElementById('debug');
+if (IS_DEBUG) root.classList.add('-visible');
+
+/* eslint-env mocha */
+
+describe('Remount mode: ' + Remount.adapterName, function () {
+  if (Remount.adapterName === 'MutationObserver') {
+    it('... Custom Elements are not supported on this platform.');
+    it('... falling back to MutationObserver.');
+  } else if (Remount.adapterName === 'CustomElements') {
+    it('... Custom Elements are supported!');
+  }
+});
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -10,9 +46,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var root = document.getElementById('debug');
-var IS_DEBUG = window.location.search.indexOf('debug') !== -1;
-if (IS_DEBUG) root.classList.add('-visible');
+var root$1 = document.getElementById('debug');
 
 var Greeter = function Greeter(_ref) {
   var name = _ref.name;
@@ -36,14 +70,6 @@ var Dumper = function Dumper(props) {
   );
 };
 
-Remount.define({
-  'x-greeter': Greeter
-});
-
-function assert(value) {
-  if (!value) throw new Error('Assertion failed');
-}
-
 after(function () {
   var div = document.createElement('div');
   div.id = 'finish';
@@ -55,32 +81,32 @@ describe('Remount', function () {
 
   beforeEach(function () {
     div = document.createElement('div');
-    root.appendChild(div);
+    root$1.appendChild(div);
   });
 
   afterEach(function () {
     if (IS_DEBUG) return;
-    root.removeChild(div);
+    root$1.removeChild(div);
   });
 
-  describe('Meta', function () {
-    it('Mode: ' + Remount.adapterName);
-  });
-
-  describe('Basic tests', function () {
-    it('works', function () {
-      div.innerHTML = '<x-greeter props-json=\'{"name":"John"}\'></x-greeter>';
+  describe('Props', function () {
+    it('supports props-json', function () {
+      Remount.define({ 'x-red': Greeter });
+      div.innerHTML = '<x-red props-json=\'{"name":"John"}\'></x-greeter>';
       return raf().then(function () {
         assert(div.textContent.match(/Hello John/));
       });
     });
 
     it('ignores other props', function () {
-      div.innerHTML = '<x-greeter name=\'Alice\'></x-greeter>';
+      Remount.define({ 'x-blue': Greeter });
+      div.innerHTML = '<x-blue name=\'Alice\'></x-blue>';
       return raf().then(function () {
         assert(div.textContent.match(/Hello \(unknown\)/));
       });
     });
+
+    it('can handle JSON errors (TODO)');
   });
 
   describe('Remount.define()', function () {
@@ -327,6 +353,8 @@ describe('Remount', function () {
         assert(div.textContent.trim() === '');
       });
     });
+
+    it('is triggered via reordering (TODO)');
   });
 
   describe('Updating', function () {
@@ -347,19 +375,4 @@ describe('Remount', function () {
   });
 });
 
-// TODO: test disconnection
-// TODO: test moving components
-// TODO: test failed json
-// TODO: test wrong parameter types
-
-/*
- * Helper: defers until next animation frame
- */
-
-function raf() {
-  return new Promise(function (resolve, reject) {
-    window.requestAnimationFrame(function () {
-      resolve();
-    });
-  });
-}
+/* eslint-env mocha */

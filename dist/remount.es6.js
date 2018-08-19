@@ -143,9 +143,26 @@
     return !!window.MutationObserver
   }
 
+  /**
+   * Defines a custom element.
+   *
+   * @example
+   *     defineElement(
+   *       { component: MyComponent },
+   *       'my-div',
+   *       {
+   *         onUpdate: () => {},
+   *         onUnmount: () => {},
+   *       }
+   *     )
+   *
+   * @private
+   */
+
   function defineElement$1 (elSpec, name, { onUpdate, onUnmount }) {
     name = name.toLowerCase();
 
+    // Maintain parity with what would happen in Custom Elements mode
     if (!isValidName(name)) {
       if (elSpec.quiet) return
       throw new Error(`Remount: "${name}" is not a valid custom element name`)
@@ -161,28 +178,54 @@
         each(mutation.addedNodes, node => {
           if (node.nodeName.toLowerCase() !== name) return
           onUpdate(node, node);
-        });
 
-        each(mutation.removedNodes, node => {
-          if (node.nodeName.toLowerCase() !== name) return
-          onUnmount(node, node);
+          observeForUpdates(node, onUpdate);
+          observeForRemoval(node, onUnmount);
         });
-
-        if (mutation.type === 'attributes') {
-          const node = mutation.target;
-          if (node.nodeName.toLowerCase() !== name) return
-          onUpdate(node, node);
-        }
       });
     });
 
     observer.observe(document.body, {
-      attributes: true,
       childList: true,
       subtree: true
     });
 
-    observers[name] = observer;
+    observers[name] = true;
+  }
+
+  /**
+   * Observes for any changes in attributes
+   */
+
+  function observeForUpdates (node /*: Element */, onUpdate) {
+    const observer = new window.MutationObserver(mutations => {
+      each(mutations, mutation => {
+        const node = mutation.target;
+        onUpdate(node, node);
+      });
+    });
+
+    observer.observe(node, { attributes: true });
+  }
+
+  /**
+   * Observes a node's parent to wait until the node is removed
+   */
+
+  function observeForRemoval (node /*: Element */, onUnmount) {
+    const parent = node.parentNode;
+
+    const observer = new window.MutationObserver(mutations => {
+      each(mutations, mutation => {
+        each(mutation.removedNodes, subnode => {
+          if (node !== subnode) return
+          observer.disconnect(parent);
+          onUnmount(node, node);
+        });
+      });
+    });
+
+    observer.observe(parent, { childList: true, subtree: true });
   }
 
   /**
@@ -199,10 +242,24 @@
     }
   }
 
-  function isValidName (name) {
-    return (
-      name.indexOf('-') !== -1 && name.match(/^[a-z][a-z0-9-]*$/)
-    )
+  /**
+   * Validate a custom tag.
+   *
+   * Since Remount can work with either Custom Elements or MutationObserver API's,
+   * it'd be wise if we rejected element names that won't work in Custom Elements
+   * mode (even if we're using MutationObserver mode).
+   *
+   * @example
+   *     isValidName('div')      // => false
+   *     isValidName('my-div')   // => true
+   *     isValidName('123-456')  // => false
+   *     isValidName('my-123')   // => true
+   *
+   * @private
+   */
+
+  function isValidName (name /*: string */) /*: boolean */ {
+    return name.indexOf('-') !== -1 && name.match(/^[a-z][a-z0-9-]*$/)
   }
 
   const name$1 = 'MutationObserver';
@@ -238,7 +295,7 @@
    * @private
    */
 
-  function unmount (_ /*: any */, mountPoint /*: Element */) {
+  function unmount (_ /*: ElementSpec */, mountPoint /*: Element */) {
     ReactDOM.unmountComponentAtNode(mountPoint);
   }
 

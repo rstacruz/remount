@@ -13,9 +13,13 @@ Remount is built upon the ideas of other libraries that have similar goals.
 
 ### API used
 
-|          |                    Remount                    |             [React docs example]              |             [react-web-component]             |            [react-mount]            |              [reactive-elements]              |
-| -------- | :-------------------------------------------: | :-------------------------------------------: | :-------------------------------------------: | :---------------------------------: | :-------------------------------------------: |
-| API used | :white_check_mark: <br> Web Components (fast) | :white_check_mark: <br> Web components (fast) | :white_check_mark: <br> Web components (fast) | :warning: <br> DOM traversal (slow) | :white_check_mark: <br> Web components (fast) |
+|                           |      Remount       | [React docs example] | [react-web-component] | [react-mount] | [reactive-elements] |
+| ------------------------- | :----------------: | :------------------: | :-------------------: | :-----------: | :-----------------: |
+| Web Components API (2018) | :white_check_mark: |  :white_check_mark:  |  :white_check_mark:   |       -       | :white_check_mark:  |
+| MutationObserver (2012)   | :white_check_mark: |                      |                       |               |                     |
+| Slow DOM traversal        |         -          |          -           |           -           | :warning: Yes |          -          |
+
+Remount supports Web Components API and MutationObserver API for maximum compatibility.
 
 ### Shadow DOM
 
@@ -24,7 +28,7 @@ Remount is built upon the ideas of other libraries that have similar goals.
 | a. Shadow DOM mode     | :white_check_mark: |                      |                       |               |          ?          |
 | b. Non-shadow DOM mode | :white_check_mark: |  :white_check_mark:  |  :white_check_mark:   |               |          ?          |
 
-Remount doesn't use Shadow DOM by default, but can be enabled using `shadow: true`.
+Remount doesn't use Shadow DOM by default, but can be enabled using `shadow: true` (experimental).
 
 ### Properties
 

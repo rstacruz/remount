@@ -101,6 +101,8 @@ If a `props-json` property exists, all other named attributes will be ignored.
 
 Remount doesn't use Shadow DOM by default. To enable it, pass the `shadow: true` option.
 
+Shadow DOM mode is only available when Remount is using Custom Elements (check `Remount.adapterName`).
+
 [The Shadow DOM API](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM) should be available anywhere custom elements are, but keep in mind that your React elements will be "hidden" from JavaScript. Depending on your situation, this may be a good or bad thing.
 
 ```js
@@ -121,4 +123,4 @@ define({
 
 - `quiet` - If *true*, warnings will be supressed.
 
-- `shadow` - If *true*, uses shadow DOM.
+- `shadow` - If *true*, uses shadow DOM. Only available for Custom Elements mode.

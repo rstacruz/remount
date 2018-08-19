@@ -1,7 +1,5 @@
 /* eslint-env mocha */
-import { assert, React, Remount, IS_DEBUG, raf } from './setup'
-
-const root = document.getElementById('debug')
+import { assert, React, Remount, IS_DEBUG, raf, root } from './setup'
 
 const Greeter = ({ name }) => {
   return <span className='greeter'>Hello {name || '(unknown)'}!</span>
@@ -10,12 +8,6 @@ const Greeter = ({ name }) => {
 const Dumper = props => {
   return <span className='dumper'>[{JSON.stringify(props)}]</span>
 }
-
-after(() => {
-  const div = document.createElement('div')
-  div.id = 'finish'
-  document.body.appendChild(div)
-})
 
 describe('Remount', () => {
   let div
@@ -26,8 +18,7 @@ describe('Remount', () => {
   })
 
   afterEach(() => {
-    if (IS_DEBUG) return
-    root.removeChild(div)
+    if (!IS_DEBUG) root.removeChild(div)
   })
 
   describe('Props', () => {

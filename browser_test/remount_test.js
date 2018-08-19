@@ -26,7 +26,7 @@ describe('Remount', () => {
       Remount.define({ 'x-red': Greeter })
       div.innerHTML = `<x-red props-json='{"name":"John"}'></x-greeter>`
       return raf().then(() => {
-        assert(div.textContent.match(/Hello John/))
+        assert.match(div.textContent, /Hello John/)
       })
     })
 
@@ -34,7 +34,7 @@ describe('Remount', () => {
       Remount.define({ 'x-blue': Greeter })
       div.innerHTML = `<x-blue name='Alice'></x-blue>`
       return raf().then(() => {
-        assert(div.textContent.match(/Hello \(unknown\)/))
+        assert.match(div.textContent, /Hello \(unknown\)/)
       })
     })
 
@@ -51,7 +51,7 @@ describe('Remount', () => {
 
       div.innerHTML = `<x-apple props-json='{"name":"Apple"}'></x-apple>`
       return raf().then(() => {
-        assert(div.textContent.match(/Hello Apple/))
+        assert.match(div.textContent, /Hello Apple/)
       })
     })
 
@@ -65,7 +65,7 @@ describe('Remount', () => {
 
       div.innerHTML = `<x-banana name='Banana'></x-banana>`
       return raf().then(() => {
-        assert(div.textContent === '[{"name":"Banana"}]')
+        assert.equal(div.textContent, '[{"name":"Banana"}]')
       })
     })
 
@@ -79,7 +79,7 @@ describe('Remount', () => {
 
       div.innerHTML = `<x-cherry NAME='Cherry'></x-cherry>`
       return raf().then(() => {
-        assert(div.textContent === '[{"name":"Cherry"}]')
+        assert.equal(div.textContent, '[{"name":"Cherry"}]')
       })
     })
 
@@ -93,7 +93,7 @@ describe('Remount', () => {
 
       div.innerHTML = `<x-guava name=''></x-guava>`
       return raf().then(() => {
-        assert(div.textContent === '[{"name":""}]')
+        assert.equal(div.textContent, '[{"name":""}]')
       })
     })
 
@@ -107,7 +107,7 @@ describe('Remount', () => {
 
       div.innerHTML = `<x-melon name></x-melon>`
       return raf().then(() => {
-        assert(div.textContent === '[{"name":""}]')
+        assert.equal(div.textContent, '[{"name":""}]')
       })
     })
 
@@ -121,7 +121,7 @@ describe('Remount', () => {
 
       div.innerHTML = `<X-APRICOT name='Apricot'></X-APRICOT>`
       return raf().then(() => {
-        assert(div.textContent === '[{"name":"Apricot"}]')
+        assert.equal(div.textContent, '[{"name":"Apricot"}]')
       })
     })
 
@@ -131,7 +131,7 @@ describe('Remount', () => {
         Remount.define({ 'x-dragonfruit': Greeter })
         throw new Error('Failed')
       } catch (e) {
-        assert(e.message !== 'Failed')
+        assert.notEqual(e.message, 'Failed')
       }
     })
 
@@ -139,9 +139,9 @@ describe('Remount', () => {
       try {
         Remount.define({ 'x-currant': Greeter })
         Remount.define({ 'x-CURRANT': Dumper })
-        assert('Failed')
+        throw new Error('Failed')
       } catch (e) {
-        assert(e.message !== 'Failed')
+        assert.notEqual(e.message, 'Failed')
       }
     })
   })
@@ -152,7 +152,7 @@ describe('Remount', () => {
         Remount.define({ banana: Greeter })
         throw new Error('Failed')
       } catch (e) {
-        assert(e.message !== 'Failed')
+        assert.notEqual(e.message, 'Failed')
       }
     })
 
@@ -177,7 +177,7 @@ describe('Remount', () => {
         Remount.define({ '0-element': Greeter })
         throw new Error('Failed')
       } catch (e) {
-        assert(e.message !== 'Failed')
+        assert.notEqual(e.message, 'Failed')
       }
     })
 
@@ -186,7 +186,7 @@ describe('Remount', () => {
         Remount.define({ '-element': Greeter })
         throw new Error('Failed')
       } catch (e) {
-        assert(e.message !== 'Failed')
+        assert.notEqual(e.message, 'Failed')
       }
     })
   })
@@ -241,7 +241,7 @@ describe('Remount', () => {
         div.innerHTML = `Orange: <x-orange></x-orange>`
         const shadowHTML = document.querySelector('x-orange').shadowRoot
           .innerHTML
-        assert(shadowHTML.match(/Hello/))
+        assert.match(shadowHTML, /Hello/)
       }
     )
   })
@@ -273,8 +273,8 @@ describe('Remount', () => {
         })
         .then(() => {
           // Assert that componentWillUnmount is ran
-          assert(unmounted === true)
-          assert(div.textContent.trim() === '')
+          assert.equal(unmounted, true)
+          assert.equal(div.textContent.trim(), '')
         })
     })
 
@@ -290,13 +290,13 @@ describe('Remount', () => {
           return raf()
         })
         .then(() => {
-          assert(div.textContent.trim() === '[{"value":123}]')
+          assert.equal(div.textContent.trim(), '[{"value":123}]')
           const el = div.querySelector('x-lemon')
           el.setAttribute('props-json', '{"value":456}')
           return raf()
         })
         .then(() => {
-          assert(div.textContent.trim() === '[{"value":456}]')
+          assert.equal(div.textContent.trim(), '[{"value":456}]')
         })
     })
   })

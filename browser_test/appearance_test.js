@@ -26,7 +26,7 @@ describe('Appearance', () => {
       div.innerHTML = '<x-white value="abc"></x-white>'
 
       return raf().then(() => {
-        assert(div.textContent === '[{"value":"abc"}]')
+        assert.equal(div.textContent, '[{"value":"abc"}]')
       })
     })
 
@@ -34,7 +34,7 @@ describe('Appearance', () => {
       div.innerHTML = '<span><x-white value="ABC"></x-white></span>'
 
       return raf().then(() => {
-        assert(div.textContent === '[{"value":"ABC"}]')
+        assert.equal(div.textContent, '[{"value":"ABC"}]')
       })
     })
 
@@ -42,7 +42,7 @@ describe('Appearance', () => {
       div.innerHTML = '<p><x-white value="abcd"></x-white></p>'
 
       return raf().then(() => {
-        assert(div.textContent === '[{"value":"abcd"}]')
+        assert.equal(div.textContent, '[{"value":"abcd"}]')
       })
     })
 
@@ -52,7 +52,7 @@ describe('Appearance', () => {
       `
 
       return raf().then(() => {
-        assert(div.textContent.trim() === '[{"value":"def"}][{"value":"ghi"}]')
+        assert.equal(div.textContent.trim(), '[{"value":"def"}][{"value":"ghi"}]')
       })
     })
 
@@ -62,7 +62,7 @@ describe('Appearance', () => {
       `
 
       return raf().then(() => {
-        assert(div.textContent.trim() === '[{"value":"def"}][{"value":"ghi"}]')
+        assert.equal(div.textContent.trim(), '[{"value":"def"}][{"value":"ghi"}]')
       })
     })
   })

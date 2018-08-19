@@ -37,8 +37,7 @@ describe('Inception mode', () => {
     ReactDOM.render(<Outer />, div)
 
     return raf().then(() => {
-      console.log(div.textContent)
-      assert(div.textContent === 'OutsideInsideHello')
+      assert.equal(div.textContent, 'OutsideInsideHello')
     })
   })
 })

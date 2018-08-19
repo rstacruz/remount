@@ -20,8 +20,16 @@ Remount supports all modern browsers, including IE11 (Internet Explorer's oldest
 
 To support IE9, add the MutationObserver polyfill for legacy IE support.
 
-```js
-<script src="https://cdn.polyfill.io/v2/polyfill.js?features=MutationObserver" />
-```
+- Via polyfill.io:
+
+  ```js
+  <script src="https://cdn.polyfill.io/v2/polyfill.js?features=MutationObserver" />
+  ```
+
+- via Jsdelivr CDN (conditional):
+
+  ```js
+  <script>if(!window.MutationObserver){document.write('<script src="https://cdn.jsdelivr.net/g/mutationobserver/"></scr'+'ipt>')}</script>
+  ```
 
 Also see <https://www.npmjs.com/package/mutation-observer>.

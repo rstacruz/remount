@@ -59,6 +59,8 @@ export function define (
   components /*: ElementMap */,
   defaults /*: ?Defaults */
 ) {
+  if (!Adapter) return
+
   Object.keys(components).forEach((name /*: string */) => {
     // Construct the specs for the element.
     // (eg, { component: Tooltip, attributes: ['title'] })

@@ -279,27 +279,44 @@
   } from './lib/types'
   */
 
+  /*
+   * Detect what API can be used; die otherwise.
+   */
+
   var Adapter = isSupported() ? ElementsAdapter : isSupported$1() ? MutationAdapter : null;
 
   if (!Adapter) {
-    throw new Error('Unsupported platform');
-  } else {
-    console.log('Remount: using adapter', Adapter.name);
+    console.warn("Remount: This browser doesn't support the " + 'MutationObserver API or the Custom Elements API. Including ' + 'polyfills might fix this. Remount elements will not work. ' + 'https://github.com/rstacruz/remount');
   }
 
   /**
    * Inspect `Remount.adapterName` to see what adapter's being used.
+   *
+   * @example
+   *     import * as Remount from 'remount'
+   *     console.log(Remount.adapterName)
    */
 
-  var adapterName = Adapter.name;
+  var adapterName = Adapter && Adapter.name;
 
   /**
-   * Registers elements.
+   * Registers custom elements and links them to React components.
+   *
+   * @example
+   *     define({ 'x-tooltip': Tooltip })
+   *
+   * @example
+   *     define(
+   *       { 'x-tooltip': Tooltip },
+   *       { attributes: ['title', 'body'] }
+   *     )
    */
 
   function define(components /*: ElementMap */
   , defaults /*: ?Defaults */
   ) {
+    if (!Adapter) return;
+
     Object.keys(components).forEach(function (name$$1 /*: string */) {
       // Construct the specs for the element.
       // (eg, { component: Tooltip, attributes: ['title'] })

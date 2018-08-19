@@ -2,16 +2,19 @@
 
 /* eslint-env mocha */
 
+// Root element
+
+var root = document.getElementById('debug');
+
+// True if in ?debug mode
 var IS_DEBUG = window.location.search.indexOf('debug') !== -1;
 
+// Crappy knock-off of an assertion library
 function assert(value) {
   if (!value) throw new Error('Assertion failed');
 }
 
-/*
- * Helper: defers until next animation frame
- */
-
+// Defer until next frame
 function raf() {
   return new Promise(function (resolve, reject) {
     window.requestAnimationFrame(function () {
@@ -21,20 +24,26 @@ function raf() {
 }
 
 var Remount = window.Remount;
-
 var React = window.React;
+var ReactDOM = window.ReactDOM;
 
-var root = document.getElementById('debug');
 if (IS_DEBUG) root.classList.add('-visible');
+
+after(function () {
+  var div = document.createElement('div');
+  div.id = 'finish';
+  document.body.appendChild(div);
+});
 
 /* eslint-env mocha */
 
 describe('Remount mode: ' + Remount.adapterName, function () {
   if (Remount.adapterName === 'MutationObserver') {
-    it('... Custom Elements are not supported on this platform.');
-    it('... falling back to MutationObserver.');
+    it('Custom Elements are not supported on this platform.');
+    it('Falling back to MutationObserver.');
   } else if (Remount.adapterName === 'CustomElements') {
-    it('... Custom Elements are supported!');
+    it('Custom Elements are supported!');
+    it(':)');
   }
 });
 
@@ -45,8 +54,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var root$1 = document.getElementById('debug');
 
 var Greeter = function Greeter(_ref) {
   var name = _ref.name;
@@ -70,23 +77,16 @@ var Dumper = function Dumper(props) {
   );
 };
 
-after(function () {
-  var div = document.createElement('div');
-  div.id = 'finish';
-  document.body.appendChild(div);
-});
-
 describe('Remount', function () {
   var div = void 0;
 
   beforeEach(function () {
     div = document.createElement('div');
-    root$1.appendChild(div);
+    root.appendChild(div);
   });
 
   afterEach(function () {
-    if (IS_DEBUG) return;
-    root$1.removeChild(div);
+    if (!IS_DEBUG) root.removeChild(div);
   });
 
   describe('Props', function () {
@@ -370,6 +370,167 @@ describe('Remount', function () {
         return raf();
       }).then(function () {
         assert(div.textContent.trim() === '[{"value":456}]');
+      });
+    });
+  });
+});
+
+/* eslint-env mocha */
+
+describe('Inception mode', function () {
+  var div = void 0;
+
+  beforeEach(function () {
+    div = document.createElement('div');
+    root.appendChild(div);
+  });
+
+  afterEach(function () {
+    if (!IS_DEBUG) root.removeChild(div);
+  });
+
+  it('works', function () {
+    var Inner = function Inner(_ref) {
+      var name = _ref.name;
+
+      return React.createElement(
+        'span',
+        null,
+        'Inside',
+        name
+      );
+    };
+
+    Remount.define({ 'x-mauve': Inner }, { attributes: ['name'] });
+
+    var Outer = function Outer() {
+      return React.createElement(
+        'blockquote',
+        null,
+        React.createElement(
+          'span',
+          null,
+          'Outside'
+        ),
+        React.createElement('x-mauve', { name: 'Hello' })
+      );
+    };
+
+    ReactDOM.render(React.createElement(Outer, null), div);
+
+    return raf().then(function () {
+      console.log(div.textContent);
+      assert(div.textContent === 'OutsideInsideHello');
+    });
+  });
+});
+
+/* eslint-env mocha */
+
+var Dumper$1 = function Dumper(props) {
+  return React.createElement(
+    'span',
+    { className: 'dumper' },
+    '[',
+    JSON.stringify(props),
+    ']'
+  );
+};
+
+describe('Appearance', function () {
+  var div = void 0;
+
+  beforeEach(function () {
+    div = document.createElement('div');
+    root.appendChild(div);
+  });
+
+  afterEach(function () {
+    if (!IS_DEBUG) root.removeChild(div);
+  });
+
+  before(function () {
+    Remount.define({ 'x-white': Dumper$1 }, { attributes: ['value'] });
+  });
+
+  describe('via innerHTML', function () {
+    it('works with 1 appearance', function () {
+      div.innerHTML = '<x-white value="abc"></x-white>';
+
+      return raf().then(function () {
+        assert(div.textContent === '[{"value":"abc"}]');
+      });
+    });
+
+    it('works in a deep appearance (inline)', function () {
+      div.innerHTML = '<span><x-white value="ABC"></x-white></span>';
+
+      return raf().then(function () {
+        assert(div.textContent === '[{"value":"ABC"}]');
+      });
+    });
+
+    it('works in a deep appearance (block)', function () {
+      div.innerHTML = '<p><x-white value="abcd"></x-white></p>';
+
+      return raf().then(function () {
+        assert(div.textContent === '[{"value":"abcd"}]');
+      });
+    });
+
+    it('works with 2 appearances', function () {
+      div.innerHTML = '\n        <x-white value="def"></x-white><x-white value="ghi"></x-white>\n      ';
+
+      return raf().then(function () {
+        assert(div.textContent.trim() === '[{"value":"def"}][{"value":"ghi"}]');
+      });
+    });
+
+    it('works with 2 appearances (deep)', function () {
+      div.innerHTML = '\n        <p><x-white value="def"></x-white><span><x-white value="ghi"></x-white></span></p>\n      ';
+
+      return raf().then(function () {
+        assert(div.textContent.trim() === '[{"value":"def"}][{"value":"ghi"}]');
+      });
+    });
+  });
+
+  describe('via appendChild', function () {
+    it('works with 1 appearance', function () {
+      var el = document.createElement('x-white');
+      el.setAttribute('value', 'abc');
+      div.appendChild(el);
+
+      return raf().then(function () {
+        assert(div.textContent === '[{"value":"abc"}]');
+      });
+    });
+
+    it('via with deep appearance (container first)', function () {
+      var el = document.createElement('x-white');
+      el.setAttribute('value', 'def');
+
+      var container = document.createElement('span');
+
+      container.appendChild(el);
+      div.appendChild(container);
+
+      return raf().then(function () {
+        assert(div.textContent === '[{"value":"def"}]');
+      });
+    });
+
+    it('via with deep appearance (late append)', function () {
+      var el = document.createElement('x-white');
+      el.setAttribute('value', 'ghi');
+
+      var container = document.createElement('span');
+
+      div.appendChild(container);
+      container.appendChild(el);
+
+      return raf().then(function () {
+        assert(div.textContent === '[{"value":"ghi"}]');
       });
     });
   });

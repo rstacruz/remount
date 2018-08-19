@@ -171,11 +171,7 @@ function defineElement$1 (elSpec, name, { onUpdate, onUnmount }) {
   const observer = new window.MutationObserver(mutations => {
     each(mutations, mutation => {
       each(mutation.addedNodes, node => {
-        if (node.nodeName.toLowerCase() !== name) return
-        onUpdate(node, node);
-
-        observeForUpdates(node, onUpdate);
-        observeForRemoval(node, onUnmount);
+        checkForMount(node, name, onUpdate, onUnmount);
       });
     });
   });
@@ -186,6 +182,20 @@ function defineElement$1 (elSpec, name, { onUpdate, onUnmount }) {
   });
 
   observers[name] = true;
+}
+
+function checkForMount (node, name, onUpdate, onUnmount) {
+  if (node.nodeName.toLowerCase() === name) {
+    // It's a match!
+    onUpdate(node, node);
+    observeForUpdates(node, onUpdate);
+    observeForRemoval(node, onUnmount);
+  } else if (node.children && node.children.length) {
+    // Recurse down into the other additions
+    each(node.children, subnode => {
+      checkForMount(subnode, name, onUpdate, onUnmount);
+    });
+  }
 }
 
 /**

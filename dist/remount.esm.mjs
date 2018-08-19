@@ -131,12 +131,25 @@ var ElementsAdapter = /*#__PURE__*/Object.freeze({
   name: name
 });
 
+/* List of observers tags */
+let observers = {};
+
 function isSupported$1 () {
   return !!window.MutationObserver
 }
 
 function defineElement$1 (elSpec, name, { onUpdate, onUnmount }) {
   name = name.toLowerCase();
+
+  if (!isValidName(name)) {
+    if (elSpec.quiet) return
+    throw new Error(`Remount: "${name}" is not a valid custom element name`)
+  }
+
+  if (observers[name]) {
+    if (elSpec.quiet) return
+    throw new Error(`Remount: "${name}" is already registered`)
+  }
 
   const observer = new window.MutationObserver(mutations => {
     each(mutations, mutation => {
@@ -145,12 +158,16 @@ function defineElement$1 (elSpec, name, { onUpdate, onUnmount }) {
         onUpdate(node, node);
       });
 
-      // todo handle update
-
       each(mutation.removedNodes, node => {
         if (node.nodeName.toLowerCase() !== name) return
         onUnmount(node, node);
       });
+
+      if (mutation.type === 'attributes') {
+        const node = mutation.target;
+        if (node.nodeName.toLowerCase() !== name) return
+        onUpdate(node, node);
+      }
     });
   });
 
@@ -159,6 +176,8 @@ function defineElement$1 (elSpec, name, { onUpdate, onUnmount }) {
     childList: true,
     subtree: true
   });
+
+  observers[name] = observer;
 }
 
 /**
@@ -173,6 +192,12 @@ function each (list, fn) {
   for (let i = 0, len = list.length; i < len; i++) {
     fn(list[i]);
   }
+}
+
+function isValidName (name) {
+  return (
+    name.indexOf('-') !== -1 && name.match(/^[a-z][a-z0-9-]*$/)
+  )
 }
 
 const name$1 = 'MutationObserver';

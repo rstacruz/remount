@@ -160,6 +160,9 @@
     name: name
   });
 
+  /* List of observers tags */
+  var observers = {};
+
   function isSupported$1() {
     return !!window.MutationObserver;
   }
@@ -170,6 +173,16 @@
 
     name = name.toLowerCase();
 
+    if (!isValidName(name)) {
+      if (elSpec.quiet) return;
+      throw new Error('Remount: "' + name + '" is not a valid custom element name');
+    }
+
+    if (observers[name]) {
+      if (elSpec.quiet) return;
+      throw new Error('Remount: "' + name + '" is already registered');
+    }
+
     var observer = new window.MutationObserver(function (mutations) {
       each(mutations, function (mutation) {
         each(mutation.addedNodes, function (node) {
@@ -177,12 +190,16 @@
           onUpdate(node, node);
         });
 
-        // todo handle update
-
         each(mutation.removedNodes, function (node) {
           if (node.nodeName.toLowerCase() !== name) return;
           onUnmount(node, node);
         });
+
+        if (mutation.type === 'attributes') {
+          var node = mutation.target;
+          if (node.nodeName.toLowerCase() !== name) return;
+          onUpdate(node, node);
+        }
       });
     });
 
@@ -191,6 +208,8 @@
       childList: true,
       subtree: true
     });
+
+    observers[name] = observer;
   }
 
   /**
@@ -205,6 +224,10 @@
     for (var i = 0, len = list.length; i < len; i++) {
       fn(list[i]);
     }
+  }
+
+  function isValidName(name) {
+    return name.indexOf('-') !== -1 && name.match(/^[a-z][a-z0-9-]*$/);
   }
 
   var name$1 = 'MutationObserver';

@@ -167,20 +167,11 @@ describe('Remount', function () {
       });
     });
 
-    it('rejects bad component names', function () {
-      try {
-        Remount.define({ banana: Greeter });
-        assert('Failed');
-      } catch (e) {
-        assert(e.message !== 'Failed');
-      }
-    });
-
     it('tag names will fail to be defined twice (case sensitive)', function () {
       try {
         Remount.define({ 'x-dragonfruit': Greeter });
         Remount.define({ 'x-dragonfruit': Greeter });
-        assert('Failed');
+        throw new Error('Failed');
       } catch (e) {
         assert(e.message !== 'Failed');
       }
@@ -191,6 +182,51 @@ describe('Remount', function () {
         Remount.define({ 'x-currant': Greeter });
         Remount.define({ 'x-CURRANT': Dumper });
         assert('Failed');
+      } catch (e) {
+        assert(e.message !== 'Failed');
+      }
+    });
+  });
+
+  describe('Names', function () {
+    it('rejects no hyphens', function () {
+      try {
+        Remount.define({ banana: Greeter });
+        throw new Error('Failed');
+      } catch (e) {
+        assert(e.message !== 'Failed');
+      }
+    });
+
+    it('allows numbers', function () {
+      Remount.define({ 'element-0': Dumper });
+    });
+
+    it('allows multiple hyphens', function () {
+      Remount.define({ 'element--element': Dumper });
+    });
+
+    it('allows ending with hyphen', function () {
+      Remount.define({ 'element-': Dumper });
+    });
+
+    it('allows a-', function () {
+      Remount.define({ 'a-': Dumper });
+    });
+
+    it('rejects starting with number', function () {
+      try {
+        Remount.define({ '0-element': Greeter });
+        throw new Error('Failed');
+      } catch (e) {
+        assert(e.message !== 'Failed');
+      }
+    });
+
+    it('rejects starting with hyphen', function () {
+      try {
+        Remount.define({ '-element': Greeter });
+        throw new Error('Failed');
       } catch (e) {
         assert(e.message !== 'Failed');
       }
@@ -244,7 +280,7 @@ describe('Remount', function () {
     });
   });
 
-  describe('removing', function () {
+  describe('Removing', function () {
     it('calls componentWillUnmount', function () {
       var unmounted = void 0;
 
@@ -289,6 +325,23 @@ describe('Remount', function () {
         // Assert that componentWillUnmount is ran
         assert(unmounted === true);
         assert(div.textContent.trim() === '');
+      });
+    });
+  });
+
+  describe('Updating', function () {
+    it('works', function () {
+      return Promise.resolve().then(function () {
+        Remount.define({ 'x-lemon': Dumper });
+        div.innerHTML = '<x-lemon props-json=\'{"value":123}\'></x-lemon>';
+        return raf();
+      }).then(function () {
+        assert(div.textContent.trim() === '[{"value":123}]');
+        var el = div.querySelector('x-lemon');
+        el.setAttribute('props-json', '{"value":456}');
+        return raf();
+      }).then(function () {
+        assert(div.textContent.trim() === '[{"value":456}]');
       });
     });
   });

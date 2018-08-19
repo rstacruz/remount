@@ -4,58 +4,40 @@ import ReactDOM from 'react-dom';
 // @flow
 
 /*::
-export type Component = React.ComponentType<{}>
-
-export type PropertyMap = {
-  [string]: ?string
-}
-
-export type ElementMap = {
-  [string]: ElementSpec | Component
-}
-
-export type Defaults = {
-  attributes?: Array<string>,
-  quiet?: boolean,
-  shadow?: boolean
-}
-
-export type ElementSpec = {
-  component: Component,
-  attributes?: Array<string>,
-  quiet?: boolean,
-  shadow?: boolean
-}
+import type {
+  Component,
+  PropertyMap,
+  ElementMap,
+  Defaults,
+  ElementSpec,
+  ReactAdapter,
+  ElementEvents
+} from './types'
 */
 
 /**
- * Registers elements.
- */
-
-function define (
-  components /*: ElementMap */,
-  defaults /*: ?Defaults */
-) {
-  Object.keys(components).forEach((name /*: string */) => {
-    const elSpec /*: ElementSpec */ = toElementSpec(components[name]);
-    defineOne(Object.assign({}, defaults, elSpec), name);
-  });
-}
-
-function toElementSpec (
-  thing /*: ElementSpec | Component */
-) /*: ElementSpec */ {
-  // $FlowFixMe$
-  if (typeof thing === 'object' && thing.component) return thing
-  return { component: thing }
-}
-
-/**
- * Registers one element.
+ * Registers a custom element.
+ *
+ * This creates a custom element (ie, a subclass of `window.HTMLElement`) and
+ * registers it (ie, `window.customElements.define`).
+ *
+ * Events will be triggered when something interesting happens.
+ *
+ * @example
+ *     defineElement(
+ *       { component: Tooltip },
+ *       'x-tooltip',
+ *       { onUpdate, onUnmount }
+ *     )
+ *
  * @private
  */
 
-function defineOne (elSpec /*: ElementSpec */, name /*: string */) {
+function defineElement (
+  elSpec /*: ElementSpec */,
+  name /*: string */,
+  { onUpdate, onUnmount } /*: ElementEvents */
+) {
   const attributes = elSpec.attributes || [];
 
   class ComponentElement extends window.HTMLElement {
@@ -65,21 +47,19 @@ function defineOne (elSpec /*: ElementSpec */, name /*: string */) {
 
     connectedCallback () {
       this._mountPoint = createMountPoint(this, elSpec);
-      update(this, elSpec, this._mountPoint);
+      onUpdate(this, this._mountPoint);
     }
 
     disconnectedCallback () {
       if (!this._mountPoint) return
-      ReactDOM.unmountComponentAtNode(this._mountPoint);
+      onUnmount(this, this._mountPoint);
     }
 
     attributeChangedCallback () {
       if (!this._mountPoint) return
-      update(this, elSpec, this._mountPoint);
+      onUpdate(this, this._mountPoint);
     }
   }
-
-  if (!ensureSupported()) return
 
   // Supress warning when quiet mode is on
   if (elSpec.quiet && window.customElements.get(name)) {
@@ -89,29 +69,13 @@ function defineOne (elSpec /*: ElementSpec */, name /*: string */) {
   window.customElements.define(name, ComponentElement);
 }
 
-/**
- * Ensures that custom elements are supported
- * @private
- */
-
-function ensureSupported () {
-  if (!window.customElements || !window.customElements.define) {
-    console.error(
-      "remount: Custom elements aren't support in this browser. " +
-        'Remount will not work. ' +
-        'Including polyfills will likely fix this. ' +
-        'See Remount documentation for more info: ' +
-        'https://github.com/rstacruz/remount'
-    );
-    return false
-  }
-
-  return true
+function isSupported () {
+  return window.customElements && window.customElements.define
 }
 
 /**
  * Creates a `<span>` element that serves as the mounting point for React
- * components.
+ * components. If `shadow: true` is requested, it'll attach a shadow node.
  * @private
  */
 
@@ -128,39 +92,181 @@ function createMountPoint (
   }
 }
 
+const name = 'CustomElements';
+
+var ElementsAdapter = /*#__PURE__*/Object.freeze({
+  defineElement: defineElement,
+  isSupported: isSupported,
+  name: name
+});
+
+function isSupported$1 () {
+  return !!window.MutationObserver
+}
+
+function defineElement$1 (elSpec, name, { onUpdate, onUnmount }) {
+  name = name.toLowerCase();
+
+  const observer = new window.MutationObserver(mutations => {
+    mutations.forEach(mutation => {
+      console.log('mutationobserver: mutation', mutation);
+      mutation.addedNodes.forEach(node => {
+        if (node.nodeName.toLowerCase() !== name) return
+        onUpdate(node, node);
+      });
+
+      // todo handle update
+
+      mutation.removedNodes.forEach(node => {
+        if (node.nodeName.toLowerCase() !== name) return
+        onUnmount(node, node);
+      });
+    });
+  });
+
+  observer.observe(document.body, {
+    attributes: true,
+    childList: true,
+    subtree: true
+  });
+}
+
+const name$1 = 'MutationObserver';
+
+var MutationAdapter = /*#__PURE__*/Object.freeze({
+  isSupported: isSupported$1,
+  defineElement: defineElement$1,
+  name: name$1
+});
+
+// @flow
+
+/*::
+import type { ElementSpec } from './types'
+*/
+
 /**
  * Updates a custom element by calling `ReactDOM.render()`.
  * @private
  */
 
 function update (
-  element /* Element */,
   { component, attributes } /*: ElementSpec */,
-  mountPoint /* Element */
+  mountPoint /*: Element */,
+  props /*: {} */
 ) {
-  const props = element.hasAttribute('props-json')
-    ? JSON.parse(element.getAttribute('props-json'))
-    : getProps(element, attributes);
-
   const reactElement = createElement(component, props);
-
   ReactDOM.render(reactElement, mountPoint);
+}
+
+/**
+ * Unmounts a component.
+ * @private
+ */
+
+function unmount (_ /*: any */, mountPoint /*: Element */) {
+  ReactDOM.unmountComponentAtNode(mountPoint);
+}
+
+// @flow
+
+/*::
+import type {
+  Component,
+  PropertyMap,
+  ElementMap,
+  Defaults,
+  ElementSpec
+} from './lib/types'
+*/
+
+const Adapter = isSupported()
+  ? ElementsAdapter
+  : isSupported$1()
+    ? MutationAdapter
+    : null;
+
+if (!Adapter) {
+  throw new Error('Unsupported platform')
+} else {
+  console.log('Remount: using adapter', Adapter.name);
+}
+
+/**
+ * Inspect `Remount.adapterName` to see what adapter's being used.
+ */
+
+const adapterName = Adapter.name;
+
+/**
+ * Registers elements.
+ */
+
+function define (
+  components /*: ElementMap */,
+  defaults /*: ?Defaults */
+) {
+  Object.keys(components).forEach((name$$1 /*: string */) => {
+    // Construct the specs for the element.
+    // (eg, { component: Tooltip, attributes: ['title'] })
+    const elSpec /*: ElementSpec */ = Object.assign(
+      {},
+      defaults,
+      toElementSpec(components[name$$1])
+    );
+
+    // Define a custom element.
+    Adapter.defineElement(elSpec, name$$1, {
+      onUpdate (element /*: Element */, mountPoint /*: Element */) {
+        const props = getProps(element, elSpec.attributes);
+        update(elSpec, mountPoint, props);
+      },
+
+      onUnmount (element /*: Element */, mountPoint /*: Element */) {
+        unmount(elSpec, mountPoint);
+      }
+    });
+  });
+}
+
+/**
+ * Coerces something into an `ElementSpec` type.
+ * @private
+ *
+ * @example
+ *     toElementSpec(Tooltip)
+ *     // => { component: Tooltip }
+ *
+ *     toElementSpec({ component: Tooltip })
+ *     // => { component: Tooltip }
+ */
+
+function toElementSpec (
+  thing /*: ElementSpec | Component */
+) /*: ElementSpec */ {
+  // $FlowFixMe$
+  if (typeof thing === 'object' && thing.component) return thing
+  return { component: thing }
 }
 
 /**
  * Returns properties for a given HTML element.
  * @private
+ *
+ * @example
+ *     getProps(div, ['name'])
+ *     // => { name: 'Romeo' }
  */
 
 function getProps (element /*: Element */, attributes /*: ?Array<string> */) {
+  const rawJson = element.getAttribute('props-json');
+  if (rawJson) return JSON.parse(rawJson)
+
   const names /*: Array<string> */ = attributes || [];
   return names.reduce((result /*: PropertyMap */, attribute /*: string */) => {
     result[attribute] = element.getAttribute(attribute);
     return result
   }, {})
-
-  // By the way, did you know el.getAttributeNames()
-  // will not work in IE11? Now you do.
 }
 
-export { define };
+export { adapterName, define };

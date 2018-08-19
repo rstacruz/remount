@@ -62,15 +62,23 @@ describe('Remount', function () {
     root.removeChild(div);
   });
 
+  describe('Meta', function () {
+    it('Mode: ' + Remount.adapterName);
+  });
+
   describe('Basic tests', function () {
     it('works', function () {
       div.innerHTML = '<x-greeter props-json=\'{"name":"John"}\'></x-greeter>';
-      assert(div.textContent.match(/Hello John/));
+      return raf().then(function () {
+        assert(div.textContent.match(/Hello John/));
+      });
     });
 
     it('ignores other props', function () {
       div.innerHTML = '<x-greeter name=\'Alice\'></x-greeter>';
-      assert(div.textContent.match(/Hello \(unknown\)/));
+      return raf().then(function () {
+        assert(div.textContent.match(/Hello \(unknown\)/));
+      });
     });
   });
 
@@ -83,7 +91,9 @@ describe('Remount', function () {
       });
 
       div.innerHTML = '<x-apple props-json=\'{"name":"Apple"}\'></x-apple>';
-      assert(div.textContent.match(/Hello Apple/));
+      return raf().then(function () {
+        assert(div.textContent.match(/Hello Apple/));
+      });
     });
 
     it('accepts { component, attributes }', function () {
@@ -95,7 +105,9 @@ describe('Remount', function () {
       });
 
       div.innerHTML = '<x-banana name=\'Banana\'></x-banana>';
-      assert(div.textContent === '[{"name":"Banana"}]');
+      return raf().then(function () {
+        assert(div.textContent === '[{"name":"Banana"}]');
+      });
     });
 
     it('attribute names are case insensitive', function () {
@@ -107,7 +119,9 @@ describe('Remount', function () {
       });
 
       div.innerHTML = '<x-cherry NAME=\'Cherry\'></x-cherry>';
-      assert(div.textContent === '[{"name":"Cherry"}]');
+      return raf().then(function () {
+        assert(div.textContent === '[{"name":"Cherry"}]');
+      });
     });
 
     it('support blank string values', function () {
@@ -119,7 +133,9 @@ describe('Remount', function () {
       });
 
       div.innerHTML = '<x-guava name=\'\'></x-guava>';
-      assert(div.textContent === '[{"name":""}]');
+      return raf().then(function () {
+        assert(div.textContent === '[{"name":""}]');
+      });
     });
 
     it('empty values become empty strings', function () {
@@ -131,7 +147,9 @@ describe('Remount', function () {
       });
 
       div.innerHTML = '<x-melon name></x-melon>';
-      assert(div.textContent === '[{"name":""}]');
+      return raf().then(function () {
+        assert(div.textContent === '[{"name":""}]');
+      });
     });
 
     it('tag names are case insensitive', function () {
@@ -143,7 +161,9 @@ describe('Remount', function () {
       });
 
       div.innerHTML = '<X-APRICOT name=\'Apricot\'></X-APRICOT>';
-      assert(div.textContent === '[{"name":"Apricot"}]');
+      return raf().then(function () {
+        assert(div.textContent === '[{"name":"Apricot"}]');
+      });
     });
 
     it('rejects bad component names', function () {
@@ -214,9 +234,7 @@ describe('Remount', function () {
 
       // It's "shadowed" so we can't see it
       assert(!div.textContent.match(/Hello/));
-    });
-
-    it('will be seen in .shadowRoot', function () {
+    });(Remount.adapterName === 'CustomElements' ? it : it.skip)('will be seen in .shadowRoot', function () {
       Remount.define({ 'x-orange': Greeter }, { shadow: true });
 
       div.innerHTML = 'Orange: <x-orange></x-orange>';
@@ -277,6 +295,8 @@ describe('Remount', function () {
 
 // TODO: test disconnection
 // TODO: test moving components
+// TODO: test failed json
+// TODO: test wrong parameter types
 
 /*
  * Helper: defers until next animation frame

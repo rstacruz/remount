@@ -3,7 +3,7 @@
 'use strict'
 
 const root = document.getElementById('debug')
-const IS_DEBUG = (window.location.search.indexOf('debug') !== -1)
+const IS_DEBUG = window.location.search.indexOf('debug') !== -1
 if (IS_DEBUG) root.classList.add('-visible')
 
 const Greeter = ({ name }) => {
@@ -266,7 +266,7 @@ describe('Remount', () => {
     )
   })
 
-  describe('removing', () => {
+  describe('Removing', () => {
     it('calls componentWillUnmount', () => {
       let unmounted
 
@@ -295,6 +295,26 @@ describe('Remount', () => {
           // Assert that componentWillUnmount is ran
           assert(unmounted === true)
           assert(div.textContent.trim() === '')
+        })
+    })
+  })
+
+  describe('Updating', () => {
+    it('works', () => {
+      return Promise.resolve()
+        .then(() => {
+          Remount.define({ 'x-lemon': Dumper })
+          div.innerHTML = `<x-lemon props-json='{"value":123}'></x-lemon>`
+          return raf()
+        })
+        .then(() => {
+          assert(div.textContent.trim() === '[{"value":123}]')
+          const el = div.querySelector('x-lemon')
+          el.setAttribute('props-json', '{"value":456}')
+          return raf()
+        })
+        .then(() => {
+          assert(div.textContent.trim() === '[{"value":456}]')
         })
     })
   })

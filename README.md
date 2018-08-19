@@ -29,8 +29,6 @@ Remount is available through the npm package repository.
 - Via yarn: `yarn add remount`
 - or npm: `npm install remount`
 
-Be sure to use the recommended polyfills below as well. [#](#polyfills)
-
 ## Usage
 
 Let's start with any React component. Here's one:
@@ -75,13 +73,13 @@ Some ideas on why you might want to consider Remount for your project:
 
 ## Browser support
 
-Remount supports all modern browsers, including IE11 (Internet Explorer's oldest supported version as of 2016). Remember to use the polyfills below to ensure the best compatibility.
+Remount supports all browsers that React support, which includes IE11. Legacy IE support (IE9) is available using polyfills.
 
-⚡ [Browser support docs →](./docs/polyfills.md)
+Custom Elements API<sup>[#][custom-elements]</sup> ("Web Components") will be used if it's available (Chrome/67+), and will fallback to a compatible API otherwise.
 
-## Polyfills
+⚡ [Browser support docs →](./docs/browser_support.md)
 
-More info on this on the [Polyfill docs](./docs/polyfills.md).
+[custom-elements]: https://caniuse.com/#search=custom%20elements
 
 ## Documentation
 
@@ -89,7 +87,7 @@ More info on this on the [Polyfill docs](./docs/polyfills.md).
 - [Builds](./docs/builds.md) &mdash; ES2015+ and ES Module builds are also provided.
 - [FAQ and Troubleshooting](./docs/faq.md) &mdash; Start here if you find any issues.
 - [Comparison with alternatives](./docs/comparison.md)
-- [Polyfills](./docs/polyfills.md)
+- [Browser support](./docs/browser_support.md)
 
 ## Thanks
 

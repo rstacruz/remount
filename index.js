@@ -117,7 +117,7 @@ function getProps (element /*: Element */, attributes /*: ?Array<string> */) {
   const rawJson = element.getAttribute('props-json')
   if (rawJson) return JSON.parse(rawJson)
 
-  const names /*: Array<string> */ = attributes || []
+  const names = attributes || []
   return names.reduce((result /*: PropertyMap */, attribute /*: string */) => {
     result[attribute] = element.getAttribute(attribute)
     return result

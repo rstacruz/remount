@@ -1,8 +1,10 @@
 /* eslint-env mocha */
 import { Remount } from './setup'
 
-describe('Remount mode: ' + Remount.adapterName, () => {
-  if (Remount.adapterName === 'MutationObserver') {
+const name = Remount.getAdapter().name
+
+describe('Remount mode: ' + name, () => {
+  if (name === 'MutationObserver') {
     it('Custom Elements are not supported on this platform.')
 
     const ms = window.MutationObserver._period
@@ -11,7 +13,7 @@ describe('Remount mode: ' + Remount.adapterName, () => {
     } else {
       it('Falling back to MutationObserver (native).')
     }
-  } else if (Remount.adapterName === 'CustomElements') {
+  } else if (name === 'CustomElements') {
     it('Custom Elements: supported! :)')
 
     if (document.body.attachShadow) {

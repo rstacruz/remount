@@ -13,34 +13,37 @@ import type {
 } from './lib/types'
 */
 
-/*
- * Detect what API can be used; die otherwise.
- */
-
-const Adapter = ElementsAdapter.isSupported()
-  ? ElementsAdapter
-  : MutationAdapter.isSupported()
-    ? MutationAdapter
-    : null
-
-if (!Adapter) {
-  console.warn(
-    "Remount: This browser doesn't support the " +
-      'MutationObserver API or the Custom Elements API. Including ' +
-      'polyfills might fix this. Remount elements will not work. ' +
-      'https://github.com/rstacruz/remount'
-  )
-}
-
 /**
- * Inspect `Remount.adapterName` to see what adapter's being used.
+ * Detect what API can be used; die otherwise.
  *
  * @example
- *     import * as Remount from 'remount'
- *     console.log(Remount.adapterName)
+ *     Remount.getAdapter().name
  */
 
-export const adapterName = Adapter && Adapter.name
+export function getAdapter () {
+  // $FlowFixMe$ obviously
+  if (getAdapter._result !== undefined) {
+    return getAdapter._result
+  }
+
+  const Adapter = ElementsAdapter.isSupported()
+    ? ElementsAdapter
+    : MutationAdapter.isSupported()
+      ? MutationAdapter
+      : null
+
+  if (!Adapter) {
+    console.warn(
+      "Remount: This browser doesn't support the " +
+        'MutationObserver API or the Custom Elements API. Including ' +
+        'polyfills might fix this. Remount elements will not work. ' +
+        'https://github.com/rstacruz/remount'
+    )
+  }
+
+  getAdapter._result = Adapter
+  return Adapter
+}
 
 /**
  * Registers custom elements and links them to React components.
@@ -59,6 +62,7 @@ export function define (
   components /*: ElementMap */,
   defaults /*: ?Defaults */
 ) {
+  const Adapter = getAdapter()
   if (!Adapter) return
 
   Object.keys(components).forEach((name /*: string */) => {

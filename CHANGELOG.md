@@ -1,5 +1,11 @@
 ## Pre-v1.0.0 changes
 
+[v0.8.0]
+
+- Significant performance improvements for MutationObserver support
+
+[v0.8.0]: https://github.com/rstacruz/remount/compare/v0.7.1...v0.8.0
+
 [v0.7.1]
 
 - Improve IE compatibility

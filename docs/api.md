@@ -6,14 +6,7 @@ import { define } from 'remount'
 
 <!-- TOC depthFrom:2 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
 
-- [define()](#define)
-	- [Multiple elements](#multiple-elements)
-	- [Passing options](#passing-options)
-	- [Per-element options](#per-element-options)
-	- [Named attributes](#named-attributes)
-	- [props-json](#props-json)
-	- [Shadow DOM](#shadow-dom)
-	- [Options](#options)
+- [define()](#define) - [Multiple elements](#multiple-elements) - [Passing options](#passing-options) - [Per-element options](#per-element-options) - [Named attributes](#named-attributes) - [props-json](#props-json) - [Shadow DOM](#shadow-dom) - [Options](#options)
 
 <!-- /TOC -->
 
@@ -31,7 +24,7 @@ define({
 
 ### Multiple elements
 
-You can pass as many elements to *define()* as you need.
+You can pass as many elements to _define()_ as you need.
 
 ```js
 define({
@@ -42,7 +35,7 @@ define({
 
 ### Passing options
 
-You can pass options as the second parameter of *define()*. This example below will apply the `attributes: ['name']` option to the 2 components defined:
+You can pass options as the second parameter of _define()_. This example below will apply the `attributes: ['name']` option to the 2 components defined:
 
 ```js
 define({
@@ -69,7 +62,6 @@ define({
   }
 })
 ```
-
 
 ### Named attributes
 
@@ -115,12 +107,39 @@ define({
 
 ### Options
 
-*define()* accepts these options:
+_define()_ accepts these options:
 
 - `component` - The React component to bind to. This is only required if you use the [per-element options](#per-element-options) syntax.
 
 - `attributes` - The attributes to listen to (see [Named attributes](#named-attributes)).
 
-- `quiet` - If *true*, warnings will be supressed.
+- `quiet` - If _true_, warnings will be supressed.
 
-- `shadow` - If *true*, uses shadow DOM. Only available for Custom Elements mode.
+- `shadow` - If _true_, uses shadow DOM. Only available for Custom Elements mode.
+
+- `adapter` - Provides a custom adapter (experimental)
+
+### Custom adapters
+
+```js
+const ElmAdapter = {
+  update ({ component }, mountPoint, props) {
+    // This function will be called on the first appearance of the custom
+    // element, and any subsequent updates afterwards (ie, if attributes were
+    // changed).
+    component.embed(mountPoint, props)
+  }
+  unmount ({ component }, mountPoint) {
+    // This function will be called when a custom element is removed from the
+    // DOM (eg, `parent.removeChild()`).
+  }
+}
+```
+
+```js
+define({
+  'x-elm-tooltip': Elm.Tooltip
+}, {
+  adapter: ElmAdapter
+})
+```

@@ -75,15 +75,17 @@ export function define (
       toElementSpec(components[name])
     )
 
+    const adapter = elSpec.adapter || ReactAdapter
+
     // Define a custom element.
     Strategy.defineElement(elSpec, name, {
       onUpdate (element /*: Element */, mountPoint /*: Element */) {
         const props = getProps(element, elSpec.attributes)
-        ReactAdapter.update(elSpec, mountPoint, props)
+        adapter.update(elSpec, mountPoint, props)
       },
 
       onUnmount (element /*: Element */, mountPoint /*: Element */) {
-        ReactAdapter.unmount(elSpec, mountPoint)
+        adapter.unmount(elSpec, mountPoint)
       }
     })
   })

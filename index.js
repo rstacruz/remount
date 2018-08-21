@@ -15,7 +15,7 @@ import type {
 */
 
 /**
- * Detect what API can be used; die otherwise.
+ * Detect what API can be used.
  *
  * @example
  *     Remount.getStrategy().name

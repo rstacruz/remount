@@ -1,10 +1,11 @@
 /* eslint-env mocha */
 import { Remount } from './setup'
 
-const name = Remount.getAdapter().name
+const strat = Remount.getStrategy()
+const name = Remount.getStrategy().name
 
-describe('Remount mode: ' + name, () => {
-  if (name === 'MutationObserver') {
+describe('Remount strategy: ' + strat.name, () => {
+  if (strat.name === 'MutationObserver') {
     it('Custom Elements are not supported on this platform.')
 
     const ms = window.MutationObserver._period
@@ -13,13 +14,13 @@ describe('Remount mode: ' + name, () => {
     } else {
       it('Falling back to MutationObserver (native).')
     }
-  } else if (name === 'CustomElements') {
+  } else if (strat.name === 'CustomElements') {
     it('Custom Elements: supported! :)')
+  }
 
-    if (document.body.attachShadow) {
-      it('Shadow DOM: supported! :)')
-    } else {
-      it('Shadow DOM: not supported; skipping shadow DOM tests')
-    }
+  if (strat.supportsShadow()) {
+    it('Shadow DOM: supported! :)')
+  } else {
+    it('Shadow DOM: not supported; skipping shadow DOM tests.')
   }
 })

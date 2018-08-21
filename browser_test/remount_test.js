@@ -236,8 +236,8 @@ describe('Remount', () => {
 
     // Shadow DOM isn't always available
     const hasShadow =
-      Remount.adapterName === 'CustomElements' && document.body.attachShadow
-
+      Remount.getStrategy().name === 'CustomElements' &&
+      document.body.attachShadow
     ;(hasShadow ? it : it.skip)('will be seen in .shadowRoot', () => {
       Remount.define({ 'x-orange': Greeter }, { shadow: true })
 

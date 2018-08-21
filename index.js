@@ -1,6 +1,6 @@
 // @flow
-import * as ElementsAdapter from './lib/custom_elements'
-import * as MutationAdapter from './lib/mutation_observer'
+import * as CustomElementsStrategy from './lib/strategies/custom_elements'
+import * as MutationObserverStrategy from './lib/strategies/mutation_observer'
 import * as ReactAdapter from './lib/react'
 
 /*::
@@ -17,22 +17,23 @@ import type {
  * Detect what API can be used; die otherwise.
  *
  * @example
- *     Remount.getAdapter().name
+ *     Remount.getStrategy().name
  */
 
-export function getAdapter () {
+export function getStrategy () {
   // $FlowFixMe$ obviously
-  if (getAdapter._result !== undefined) {
-    return getAdapter._result
+  if (getStrategy._result !== undefined) {
+    return getStrategy._result
   }
 
-  const Adapter = ElementsAdapter.isSupported()
-    ? ElementsAdapter
-    : MutationAdapter.isSupported()
-      ? MutationAdapter
-      : null
+  const Strategy = [CustomElementsStrategy, MutationObserverStrategy].reduce(
+    (result, strat) => {
+      return result || (strat.isSupported() && strat)
+    },
+    null
+  )
 
-  if (!Adapter) {
+  if (!Strategy) {
     console.warn(
       "Remount: This browser doesn't support the " +
         'MutationObserver API or the Custom Elements API. Including ' +
@@ -41,8 +42,8 @@ export function getAdapter () {
     )
   }
 
-  getAdapter._result = Adapter
-  return Adapter
+  getStrategy._result = Strategy
+  return Strategy
 }
 
 /**
@@ -62,8 +63,8 @@ export function define (
   components /*: ElementMap */,
   defaults /*: ?Defaults */
 ) {
-  const Adapter = getAdapter()
-  if (!Adapter) return
+  const Strategy = getStrategy()
+  if (!Strategy) return
 
   Object.keys(components).forEach((name /*: string */) => {
     // Construct the specs for the element.
@@ -75,7 +76,7 @@ export function define (
     )
 
     // Define a custom element.
-    Adapter.defineElement(elSpec, name, {
+    Strategy.defineElement(elSpec, name, {
       onUpdate (element /*: Element */, mountPoint /*: Element */) {
         const props = getProps(element, elSpec.attributes)
         ReactAdapter.update(elSpec, mountPoint, props)

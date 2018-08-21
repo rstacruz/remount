@@ -5,11 +5,12 @@ import * as ReactAdapter from './lib/react'
 
 /*::
 import type {
+  Adapter,
   Component,
-  PropertyMap,
-  ElementMap,
   Defaults,
-  ElementSpec
+  ElementMap,
+  ElementSpec,
+  PropertyMap
 } from './lib/types'
 */
 
@@ -75,7 +76,7 @@ export function define (
       toElementSpec(components[name])
     )
 
-    const adapter = elSpec.adapter || ReactAdapter
+    const adapter /*: Adapter */ = elSpec.adapter || ReactAdapter
 
     // Define a custom element.
     Strategy.defineElement(elSpec, name, {

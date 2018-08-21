@@ -19,6 +19,9 @@ describe('Custom adapters', () => {
   beforeEach(() => {
     calls = []
     MyCustomAdapter = {
+      mount (a, b) {
+        calls.push({ method: 'mount', args: [a, b] })
+      },
       update (a, b) {
         calls.push({ method: 'update', args: [a, b] })
       },
@@ -28,7 +31,7 @@ describe('Custom adapters', () => {
     }
   })
 
-  it('calls update()', () => {
+  it('calls mount()', () => {
     Remount.define({ 'x-coconut': 'MyComponent' }, { adapter: MyCustomAdapter })
 
     const el = document.createElement('x-coconut')
@@ -36,9 +39,30 @@ describe('Custom adapters', () => {
 
     return raf().then(() => {
       assert(calls[0])
-      assert.equal(calls[0].method, 'update')
+      assert.equal(calls[0].method, 'mount')
       assert.equal(calls[0].args[0].component, 'MyComponent')
     })
+  })
+
+  it('calls update()', () => {
+    Remount.define(
+      { 'x-kumquat': 'MyComponent' },
+      { attributes: ['title'], adapter: MyCustomAdapter }
+    )
+
+    const el = document.createElement('x-kumquat')
+    div.appendChild(el)
+
+    return raf()
+      .then(() => {
+        el.setAttribute('title', 'hello')
+        return raf()
+      })
+      .then(() => {
+        assert(calls[1])
+        assert.equal(calls[1].method, 'update')
+        assert.equal(calls[1].args[0].component, 'MyComponent')
+      })
   })
 
   it('calls unmount()', () => {
@@ -76,17 +100,30 @@ describe('Example vanilla adapter', () => {
     root.removeChild(div)
   })
 
+  // A simple adapter that delegates to the component
   const VanillaAdapter = {
-    update ({ component }, el) {
-      component(el)
+    mount (spec, el, props) {
+      spec.component.mount(spec, el, props)
     },
-    unmount (_, _el) {
+    update (spec, el, props) {
+      spec.component.update(spec, el, props)
+    },
+    unmount (spec, el) {
+      spec.component.unmount(spec, el)
     }
   }
 
   it('calls update()', () => {
-    function MyComponent (el) {
-      el.innerHTML = 'Hey :)'
+    const MyComponent = {
+      mount (_, el) {
+        el.innerHTML = 'Hey :)'
+      },
+      update (_, el) {
+        // pass
+      },
+      unmount (_, el) {
+        // pass
+      }
     }
 
     Remount.define({ 'x-chocolate': MyComponent }, { adapter: VanillaAdapter })

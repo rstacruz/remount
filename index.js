@@ -80,6 +80,11 @@ export function define (
 
     // Define a custom element.
     Strategy.defineElement(elSpec, name, {
+      onMount (element /*: Element */, mountPoint /*: Element */) {
+        const props = getProps(element, elSpec.attributes)
+        adapter.mount(elSpec, mountPoint, props)
+      },
+
       onUpdate (element /*: Element */, mountPoint /*: Element */) {
         const props = getProps(element, elSpec.attributes)
         adapter.update(elSpec, mountPoint, props)

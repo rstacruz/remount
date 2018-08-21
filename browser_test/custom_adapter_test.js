@@ -63,3 +63,39 @@ describe('Custom adapters', () => {
       })
   })
 })
+
+describe('Example vanilla adapter', () => {
+  let div
+
+  beforeEach(() => {
+    div = document.createElement('div')
+    root.appendChild(div)
+  })
+
+  afterEach(() => {
+    root.removeChild(div)
+  })
+
+  const VanillaAdapter = {
+    update ({ component }, el) {
+      component(el)
+    },
+    unmount (_, _el) {
+    }
+  }
+
+  it('calls update()', () => {
+    function MyComponent (el) {
+      el.innerHTML = 'Hey :)'
+    }
+
+    Remount.define({ 'x-chocolate': MyComponent }, { adapter: VanillaAdapter })
+
+    const el = document.createElement('x-chocolate')
+    div.appendChild(el)
+
+    return raf().then(() => {
+      assert.equal(el.textContent, 'Hey :)')
+    })
+  })
+})

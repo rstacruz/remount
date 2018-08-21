@@ -65,8 +65,11 @@ after(function () {
 
 /* eslint-env mocha */
 
-describe('Remount mode: ' + Remount.adapterName, function () {
-  if (Remount.adapterName === 'MutationObserver') {
+var strat = Remount.getStrategy();
+var name = Remount.getStrategy().name;
+
+describe('Remount strategy: ' + strat.name, function () {
+  if (strat.name === 'MutationObserver') {
     it('Custom Elements are not supported on this platform.');
 
     var ms = window.MutationObserver._period;
@@ -75,9 +78,14 @@ describe('Remount mode: ' + Remount.adapterName, function () {
     } else {
       it('Falling back to MutationObserver (native).');
     }
-  } else if (Remount.adapterName === 'CustomElements') {
-    it('Custom Elements are supported!');
-    it(':)');
+  } else if (strat.name === 'CustomElements') {
+    it('Custom Elements: supported! :)');
+  }
+
+  if (strat.supportsShadow()) {
+    it('Shadow DOM: supported! :)');
+  } else {
+    it('Shadow DOM: not supported; skipping shadow DOM tests.');
   }
 });
 
@@ -331,7 +339,10 @@ describe('Remount', function () {
 
       // It's "shadowed" so we can't see it
       assert(!div.textContent.match(/Hello/));
-    });(Remount.adapterName === 'CustomElements' ? it : it.skip)('will be seen in .shadowRoot', function () {
+    });
+
+    // Shadow DOM isn't always available
+    var hasShadow = Remount.getStrategy().name === 'CustomElements' && document.body.attachShadow;(hasShadow ? it : it.skip)('will be seen in .shadowRoot', function () {
       Remount.define({ 'x-orange': Greeter }, { shadow: true });
 
       div.innerHTML = 'Orange: <x-orange></x-orange>';
@@ -565,6 +576,135 @@ describe('Appearance', function () {
       return raf().then(function () {
         assert(div.textContent === '[{"value":"ghi"}]');
       });
+    });
+  });
+});
+
+/* eslint-env mocha */
+
+var Dumper$2 = function Dumper(props) {
+  return React.createElement(
+    'span',
+    { className: 'dumper' },
+    '[',
+    JSON.stringify(props),
+    ']'
+  );
+};
+
+describe('Children', function () {
+  var div = void 0;
+
+  beforeEach(function () {
+    div = document.createElement('div');
+    root.appendChild(div);
+  });
+
+  before(function () {
+    Remount.define({ 'x-indigo': Dumper$2 }, { attributes: ['value'] });
+  });
+
+  describe('with cleanups', function () {
+    afterEach(function () {
+      if (!IS_DEBUG) root.removeChild(div);
+    });
+
+    it('will be overridden by React', function () {
+      var el = document.createElement('x-indigo');
+      el.setAttribute('value', 'abc');
+      el.innerHTML = '<span>I will be overridden by React</span>';
+
+      // After appending it, it will trigger the custom element handler,
+      // which will pass control over to React. ReactDOM.render() will override
+      // whatever HTML we had earlier.
+      div.appendChild(el);
+
+      return raf().then(function () {
+        assert.equal(div.textContent, '[{"value":"abc"}]');
+      });
+    });
+  });
+
+  describe('without cleanups', function () {
+    it('can be forced via innerHTML', function () {
+      var el = document.createElement('x-indigo');
+      el.setAttribute('value', 'abc');
+
+      div.appendChild(el);
+
+      return raf().then(function () {
+        assert.equal(div.textContent, '[{"value":"abc"}]');
+        el.innerHTML = '<span>I am overridding React</span>';
+        return raf();
+      }).then(function () {
+        assert.equal(div.textContent, 'I am overridding React');
+        // At this point, we lose the mutation observer, because we did an evil thing
+        // of overriding innerHTML. This new attribute change will now not be detected.
+        el.setAttribute('value', 'def');
+        return raf();
+      }).then(function () {
+        assert.equal(div.textContent, 'I am overridding React');
+      });
+    });
+  });
+});
+
+/* eslint-env mocha */
+
+describe('Custom adapters', function () {
+  var div = void 0;
+
+  beforeEach(function () {
+    div = document.createElement('div');
+    root.appendChild(div);
+  });
+
+  afterEach(function () {
+    root.removeChild(div);
+  });
+
+  var calls = void 0,
+      MyCustomAdapter = void 0;
+
+  beforeEach(function () {
+    calls = [];
+    MyCustomAdapter = {
+      update: function update(a, b) {
+        calls.push({ method: 'update', args: [a, b] });
+      },
+      unmount: function unmount(a, b, c) {
+        calls.push({ method: 'unmount', args: [a, b, c] });
+      }
+    };
+  });
+
+  it('calls update()', function () {
+    Remount.define({ 'x-coconut': 'MyComponent' }, { adapter: MyCustomAdapter });
+
+    var el = document.createElement('x-coconut');
+    div.appendChild(el);
+
+    return raf().then(function () {
+      assert(calls[0]);
+      assert.equal(calls[0].method, 'update');
+      assert.equal(calls[0].args[0].component, 'MyComponent');
+    });
+  });
+
+  it('calls unmount()', function () {
+    Remount.define({ 'x-raspberry': 'MyComponent' }, { adapter: MyCustomAdapter });
+
+    var el = document.createElement('x-raspberry');
+    div.appendChild(el);
+
+    return raf().then(function () {
+      div.removeChild(el);
+      return raf();
+    }).then(function () {
+      assert(calls[1]);
+      assert.equal(calls[1].method, 'unmount');
+      assert.equal(calls[1].args[0].component, 'MyComponent');
+      assert.equal(calls[1].args[1].nodeName.toLowerCase(), 'x-raspberry');
     });
   });
 });

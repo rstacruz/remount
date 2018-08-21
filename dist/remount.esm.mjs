@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom';
 
 /* global HTMLElement */
 
-let injected;
-
 /*
  * Adapted from https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2.0.4/custom-elements-es5-adapter.js
  * Rolling this in so we don't need another polyfill.
@@ -12,7 +10,7 @@ let injected;
 
 function inject () {
   if (
-    injected ||
+    (window.HTMLElement && window.HTMLElement._babelES5Adapter) ||
     void 0 === window.Reflect ||
     void 0 === window.customElements ||
     window.customElements.hasOwnProperty('polyfillWrapFlushCallback')
@@ -28,7 +26,7 @@ function inject () {
   HTMLElement.prototype = a.prototype;
   HTMLElement.prototype.constructor = HTMLElement;
   Object.setPrototypeOf(HTMLElement, a);
-  injected = true;
+  HTMLElement._babelES5Adapter = true;
 }
 
 // @flow
@@ -42,8 +40,10 @@ import type {
   ElementSpec,
   ReactAdapter,
   ElementEvents
-} from './types'
+} from '../types'
 */
+
+const name = 'CustomElements';
 
 /**
  * Registers a custom element.
@@ -114,7 +114,7 @@ function createMountPoint (
   element /*: Element */,
   { shadow } /*: ElementSpec */
 ) {
-  if (shadow) {
+  if (shadow && element.attachShadow) {
     const mountPoint = document.createElement('span');
     element.attachShadow({ mode: 'open' }).appendChild(mountPoint);
     return mountPoint
@@ -123,16 +123,33 @@ function createMountPoint (
   }
 }
 
-const name = 'CustomElements';
+/**
+ * Check if Shadow DOM is supported.
+ */
 
-var ElementsAdapter = /*#__PURE__*/Object.freeze({
+function supportsShadow () {
+  return !!(document && document.body && document.body.attachShadow)
+}
+
+var CustomElementsStrategy = /*#__PURE__*/Object.freeze({
+  name: name,
   defineElement: defineElement,
   isSupported: isSupported,
-  name: name
+  supportsShadow: supportsShadow
 });
 
-/* List of observers tags */
-let observers = {};
+// @flow
+/*::
+import type {
+  ElementSpec,
+  ElementEvents
+} from '../types'
+*/
+
+const name$1 = 'MutationObserver';
+
+// List of observers tags
+const observers = {};
 
 function isSupported$1 () {
   return !!window.MutationObserver
@@ -154,7 +171,11 @@ function isSupported$1 () {
  * @private
  */
 
-function defineElement$1 (elSpec, name, { onUpdate, onUnmount }) {
+function defineElement$1 (
+  elSpec /*: ElementSpec */,
+  name /*: string */,
+  { onUpdate, onUnmount } /*: ElementEvents */
+) {
   name = name.toLowerCase();
 
   // Maintain parity with what would happen in Custom Elements mode
@@ -169,9 +190,9 @@ function defineElement$1 (elSpec, name, { onUpdate, onUnmount }) {
   }
 
   const observer = new window.MutationObserver(mutations => {
-    each(mutations, mutation => {
-      each(mutation.addedNodes, node => {
-        checkForMount(node, name, onUpdate, onUnmount);
+    each(mutations, (mutation /*: { addedNodes: HTMLCollection<*> } */) => {
+      each(mutation.addedNodes, (node /*: Element */) => {
+        checkForMount(node, name, { onUpdate, onUnmount });
       });
     });
   });
@@ -184,16 +205,25 @@ function defineElement$1 (elSpec, name, { onUpdate, onUnmount }) {
   observers[name] = true;
 }
 
-function checkForMount (node, name, onUpdate, onUnmount) {
+/**
+ * Checks if this new element should fire an `onUpdate` hook.
+ * Recurses down to its descendant nodes.
+ */
+
+function checkForMount (
+  node /*: Element */,
+  name /*: string */,
+  events /*: ElementEvents */
+) {
   if (node.nodeName.toLowerCase() === name) {
     // It's a match!
-    onUpdate(node, node);
-    observeForUpdates(node, onUpdate);
-    observeForRemoval(node, onUnmount);
+    events.onUpdate(node, node);
+    observeForUpdates(node, events);
+    observeForRemoval(node, events);
   } else if (node.children && node.children.length) {
     // Recurse down into the other additions
-    each(node.children, subnode => {
-      checkForMount(subnode, name, onUpdate, onUnmount);
+    each(node.children, (subnode /*: Element */) => {
+      checkForMount(subnode, name, events);
     });
   }
 }
@@ -202,9 +232,12 @@ function checkForMount (node, name, onUpdate, onUnmount) {
  * Observes for any changes in attributes
  */
 
-function observeForUpdates (node /*: Element */, onUpdate) {
+function observeForUpdates (
+  node /*: Element */,
+  { onUpdate } /*: ElementEvents */
+) {
   const observer = new window.MutationObserver(mutations => {
-    each(mutations, mutation => {
+    each(mutations, (mutation /*: { target: Element } */) => {
       const node = mutation.target;
       onUpdate(node, node);
     });
@@ -217,12 +250,15 @@ function observeForUpdates (node /*: Element */, onUpdate) {
  * Observes a node's parent to wait until the node is removed
  */
 
-function observeForRemoval (node /*: Element */, onUnmount) {
+function observeForRemoval (
+  node /*: Element */,
+  { onUnmount } /*: ElementEvents */
+) {
   const parent = node.parentNode;
 
   const observer = new window.MutationObserver(mutations => {
-    each(mutations, mutation => {
-      each(mutation.removedNodes, subnode => {
+    each(mutations, (mutation /*: { removedNodes: HTMLCollection<*> } */) => {
+      each(mutation.removedNodes, (subnode /*: Element */) => {
         if (node !== subnode) return
         observer.disconnect(parent);
         onUnmount(node, node);
@@ -241,7 +277,10 @@ function observeForRemoval (node /*: Element */, onUnmount) {
  * @private
  */
 
-function each (list, fn) {
+function each /*:: <Item> */(
+  list /*: Array<Item> | HTMLCollection<*> */,
+  fn /*: Item => any */
+) {
   for (let i = 0, len = list.length; i < len; i++) {
     fn(list[i]);
   }
@@ -264,15 +303,23 @@ function each (list, fn) {
  */
 
 function isValidName (name /*: string */) /*: boolean */ {
-  return name.indexOf('-') !== -1 && name.match(/^[a-z][a-z0-9-]*$/)
+  return !!(name.indexOf('-') !== -1 && name.match(/^[a-z][a-z0-9-]*$/))
 }
 
-const name$1 = 'MutationObserver';
+/**
+ * Shadow DOM is not supported with the Mutation Observer strategy.
+ */
 
-var MutationAdapter = /*#__PURE__*/Object.freeze({
+function supportsShadow$1 () {
+  return false
+}
+
+var MutationObserverStrategy = /*#__PURE__*/Object.freeze({
+  name: name$1,
+  observers: observers,
   isSupported: isSupported$1,
   defineElement: defineElement$1,
-  name: name$1
+  supportsShadow: supportsShadow$1
 });
 
 // @flow
@@ -304,46 +351,56 @@ function unmount (_ /*: ElementSpec */, mountPoint /*: Element */) {
   ReactDOM.unmountComponentAtNode(mountPoint);
 }
 
+var ReactAdapter = /*#__PURE__*/Object.freeze({
+  update: update,
+  unmount: unmount
+});
+
 // @flow
 
 /*::
 import type {
+  Adapter,
   Component,
-  PropertyMap,
-  ElementMap,
   Defaults,
-  ElementSpec
+  ElementMap,
+  ElementSpec,
+  PropertyMap
 } from './lib/types'
 */
 
-/*
- * Detect what API can be used; die otherwise.
- */
-
-const Adapter = isSupported()
-  ? ElementsAdapter
-  : isSupported$1()
-    ? MutationAdapter
-    : null;
-
-if (!Adapter) {
-  console.warn(
-    "Remount: This browser doesn't support the " +
-      'MutationObserver API or the Custom Elements API. Including ' +
-      'polyfills might fix this. Remount elements will not work. ' +
-      'https://github.com/rstacruz/remount'
-  );
-}
-
 /**
- * Inspect `Remount.adapterName` to see what adapter's being used.
+ * Detect what API can be used.
  *
  * @example
- *     import * as Remount from 'remount'
- *     console.log(Remount.adapterName)
+ *     Remount.getStrategy().name
  */
 
-const adapterName = Adapter && Adapter.name;
+function getStrategy () {
+  // $FlowFixMe$ obviously
+  if (getStrategy._result !== undefined) {
+    return getStrategy._result
+  }
+
+  const Strategy = [CustomElementsStrategy, MutationObserverStrategy].reduce(
+    (result, strat) => {
+      return result || (strat.isSupported() && strat)
+    },
+    null
+  );
+
+  if (!Strategy) {
+    console.warn(
+      "Remount: This browser doesn't support the " +
+        'MutationObserver API or the Custom Elements API. Including ' +
+        'polyfills might fix this. Remount elements will not work. ' +
+        'https://github.com/rstacruz/remount'
+    );
+  }
+
+  getStrategy._result = Strategy;
+  return Strategy
+}
 
 /**
  * Registers custom elements and links them to React components.
@@ -362,7 +419,8 @@ function define (
   components /*: ElementMap */,
   defaults /*: ?Defaults */
 ) {
-  if (!Adapter) return
+  const Strategy = getStrategy();
+  if (!Strategy) return
 
   Object.keys(components).forEach((name$$1 /*: string */) => {
     // Construct the specs for the element.
@@ -373,15 +431,17 @@ function define (
       toElementSpec(components[name$$1])
     );
 
+    const adapter /*: Adapter */ = elSpec.adapter || ReactAdapter;
+
     // Define a custom element.
-    Adapter.defineElement(elSpec, name$$1, {
+    Strategy.defineElement(elSpec, name$$1, {
       onUpdate (element /*: Element */, mountPoint /*: Element */) {
         const props = getProps(element, elSpec.attributes);
-        update(elSpec, mountPoint, props);
+        adapter.update(elSpec, mountPoint, props);
       },
 
       onUnmount (element /*: Element */, mountPoint /*: Element */) {
-        unmount(elSpec, mountPoint);
+        adapter.unmount(elSpec, mountPoint);
       }
     });
   });
@@ -420,11 +480,11 @@ function getProps (element /*: Element */, attributes /*: ?Array<string> */) {
   const rawJson = element.getAttribute('props-json');
   if (rawJson) return JSON.parse(rawJson)
 
-  const names /*: Array<string> */ = attributes || [];
+  const names = attributes || [];
   return names.reduce((result /*: PropertyMap */, attribute /*: string */) => {
     result[attribute] = element.getAttribute(attribute);
     return result
   }, {})
 }
 
-export { adapterName, define };
+export { getStrategy, define };

@@ -6,7 +6,16 @@ import { define } from 'remount'
 
 <!-- TOC depthFrom:2 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
 
-- [define()](#define) - [Multiple elements](#multiple-elements) - [Passing options](#passing-options) - [Per-element options](#per-element-options) - [Named attributes](#named-attributes) - [props-json](#props-json) - [Shadow DOM](#shadow-dom) - [Options](#options)
+- [define()](#define)
+	- [Multiple elements](#multiple-elements)
+	- [Passing options](#passing-options)
+	- [Per-element options](#per-element-options)
+	- [Named attributes](#named-attributes)
+	- [props-json](#props-json)
+	- [Shadow DOM](#shadow-dom)
+	- [Options](#options)
+	- [Custom adapters](#custom-adapters)
+- [getStrategy()](#getstrategy)
 
 <!-- /TOC -->
 
@@ -121,6 +130,8 @@ _define()_ accepts these options:
 
 ### Custom adapters
 
+You can specify custom adapters to integrate Remount with other non-React frameworks.
+
 ```js
 const ElmAdapter = {
   update ({ component }, mountPoint, props) {
@@ -142,4 +153,20 @@ define({
 }, {
   adapter: ElmAdapter
 })
+```
+
+## getStrategy()
+
+Returns the default strategy that will be used.
+
+```js
+import { getStrategy } from 'remount'
+```
+
+```js
+getStrategy().name
+// => 'CustomElements' or 'MutationObserver'
+
+getStrategy().supportsShadow()
+// => true | false
 ```

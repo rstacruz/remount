@@ -1,5 +1,11 @@
 ## Pre-v1.0.0 changes
 
+[v0.9.1]
+
+- Fix possible issue with mounting with MutationObserver
+
+[v0.9.0]: https://github.com/rstacruz/remount/compare/v0.9.0...v0.9.1
+
 [v0.9.0]
 
 - Add support for custom adapters to support non-React setups

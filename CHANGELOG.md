@@ -1,5 +1,11 @@
 ## Pre-v1.0.0 changes
 
+[v0.9.0]
+
+- Add support for custom adapters to support non-React setups
+
+[v0.9.0]: https://github.com/rstacruz/remount/compare/v0.8.0...v0.9.0
+
 [v0.8.0]
 
 - Significant performance improvements for MutationObserver support
@@ -26,7 +32,7 @@
 
 [v0.5.0]
 
-- Allow *define()* to accept defaults as a second argument (eg, `define({...}, { quiet: true })`)
+- Allow _define()_ to accept defaults as a second argument (eg, `define({...}, { quiet: true })`)
 - Support the `quiet: true` option (supresses warnings)
 - Support the `shadow: true` option (uses Shadow DOM)
 

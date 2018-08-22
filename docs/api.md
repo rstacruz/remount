@@ -104,7 +104,7 @@ Remount doesn't use Shadow DOM by default. To enable it, pass the `shadow: true`
 
 Shadow DOM mode is only available when Remount is using Custom Elements (check [getStrategy()] below).
 
-[The Shadow DOM API](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM) should be available anywhere custom elements are, but keep in mind that your React elements will be "hidden" from JavaScript. Depending on your situation, this may be a good or bad thing.
+[The Shadow DOM API](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM) should be available anywhere custom elements are, but keep in mind that your React elements will be "hidden" from JavaScript. Depending on your situation, this may be a good or bad thing. For better compatibility with older browsers, leave this option _off_, since older browsers don't support the Shadow DOM API.
 
 ```js
 define({
@@ -126,9 +126,9 @@ _define()_ accepts these options:
 
 - `quiet` - If _true_, warnings will be supressed.
 
-- `shadow` - If _true_, uses shadow DOM. Only available for Custom Elements mode.
+- `shadow` - If _true_, uses shadow DOM. Only available for Custom Elements mode. (experimental)
 
-- `adapter` - Provides a custom adapter (experimental)
+- `adapter` - Provides a custom adapter
 
 ### Custom adapters
 
@@ -136,13 +136,16 @@ You can specify custom adapters to integrate Remount with other non-React framew
 
 ```js
 const ElmAdapter = {
-  update ({ component }, mountPoint, props) {
+  mount({ component }, mountPoint, props) {
     // This function will be called on the first appearance of the custom
-    // element, and any subsequent updates afterwards (ie, if attributes were
-    // changed).
+    // element.
     component.embed(mountPoint, props)
-  }
-  unmount ({ component }, mountPoint) {
+  },
+  update({ component }, mountPoint, props) {
+    // This function will be called on any subsequent updates afterwards (ie,
+    // if attributes were changed).
+  },
+  unmount({ component }, mountPoint) {
     // This function will be called when a custom element is removed from the
     // DOM (eg, `parent.removeChild()`).
   }

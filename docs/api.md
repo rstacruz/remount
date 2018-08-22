@@ -4,17 +4,17 @@
 import { define } from 'remount'
 ```
 
-<!-- TOC depthFrom:2 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
+<!-- TOC depthFrom:2 depthTo:6 withLinks:1 updateOnSave:0 orderedList:0 -->
 
 - [define()](#define)
-	- [Multiple elements](#multiple-elements)
-	- [Passing options](#passing-options)
-	- [Per-element options](#per-element-options)
-	- [Named attributes](#named-attributes)
-	- [props-json](#props-json)
-	- [Shadow DOM](#shadow-dom)
-	- [Options](#options)
-	- [Custom adapters](#custom-adapters)
+  - [Multiple elements](#multiple-elements)
+  - [Passing options](#passing-options)
+  - [Per-element options](#per-element-options)
+  - [Named attributes](#named-attributes)
+  - [props-json](#props-json)
+  - [Shadow DOM](#shadow-dom)
+  - [Options](#options)
+  - [Custom adapters](#custom-adapters)
 - [getStrategy()](#getstrategy)
 
 <!-- /TOC -->
@@ -102,7 +102,7 @@ If a `props-json` property exists, all other named attributes will be ignored.
 
 Remount doesn't use Shadow DOM by default. To enable it, pass the `shadow: true` option.
 
-Shadow DOM mode is only available when Remount is using Custom Elements (check `Remount.adapterName`).
+Shadow DOM mode is only available when Remount is using Custom Elements (check [getStrategy()] below).
 
 [The Shadow DOM API](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM) should be available anywhere custom elements are, but keep in mind that your React elements will be "hidden" from JavaScript. Depending on your situation, this may be a good or bad thing.
 
@@ -113,6 +113,8 @@ define({
   shadow: true
 })
 ```
+
+[getstrategy()]: #getstrategy
 
 ### Options
 

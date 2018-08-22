@@ -180,7 +180,7 @@
   function defineElement$1 (
     elSpec /*: ElementSpec */,
     name /*: string */,
-    { onUpdate, onUnmount } /*: ElementEvents */
+    events /*: ElementEvents */
   ) {
     name = name.toLowerCase();
 
@@ -198,7 +198,7 @@
     const observer = new window.MutationObserver(mutations => {
       each(mutations, (mutation /*: { addedNodes: HTMLCollection<*> } */) => {
         each(mutation.addedNodes, (node /*: Element */) => {
-          checkForMount(node, name, { onUpdate, onUnmount });
+          checkForMount(node, name, events);
         });
       });
     });

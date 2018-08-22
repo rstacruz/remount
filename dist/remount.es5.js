@@ -203,11 +203,8 @@
 
   function defineElement$1(elSpec /*: ElementSpec */
   , name /*: string */
-  , _ref /*: ElementEvents */
+  , events /*: ElementEvents */
   ) {
-    var onUpdate = _ref.onUpdate,
-        onUnmount = _ref.onUnmount;
-
     name = name.toLowerCase();
 
     // Maintain parity with what would happen in Custom Elements mode
@@ -224,7 +221,7 @@
     var observer = new window.MutationObserver(function (mutations) {
       each(mutations, function (mutation /*: { addedNodes: HTMLCollection<*> } */) {
         each(mutation.addedNodes, function (node /*: Element */) {
-          checkForMount(node, name, { onUpdate: onUpdate, onUnmount: onUnmount });
+          checkForMount(node, name, events);
         });
       });
     });
@@ -264,9 +261,9 @@
    */
 
   function observeForUpdates(node /*: Element */
-  , _ref2 /*: ElementEvents */
+  , _ref /*: ElementEvents */
   ) {
-    var onMount = _ref2.onMount;
+    var onMount = _ref.onMount;
 
     var observer = new window.MutationObserver(function (mutations) {
       each(mutations, function (mutation /*: { target: Element } */) {
@@ -283,9 +280,9 @@
    */
 
   function observeForRemoval(node /*: Element */
-  , _ref3 /*: ElementEvents */
+  , _ref2 /*: ElementEvents */
   ) {
-    var onUnmount = _ref3.onUnmount;
+    var onUnmount = _ref2.onUnmount;
 
     var parent = node.parentNode;
 

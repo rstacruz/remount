@@ -175,7 +175,7 @@ function isSupported$1 () {
 function defineElement$1 (
   elSpec /*: ElementSpec */,
   name /*: string */,
-  { onUpdate, onUnmount } /*: ElementEvents */
+  events /*: ElementEvents */
 ) {
   name = name.toLowerCase();
 
@@ -193,7 +193,7 @@ function defineElement$1 (
   const observer = new window.MutationObserver(mutations => {
     each(mutations, (mutation /*: { addedNodes: HTMLCollection<*> } */) => {
       each(mutation.addedNodes, (node /*: Element */) => {
-        checkForMount(node, name, { onUpdate, onUnmount });
+        checkForMount(node, name, events);
       });
     });
   });

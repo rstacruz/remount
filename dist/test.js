@@ -669,6 +669,9 @@ describe('Custom adapters', function () {
   beforeEach(function () {
     calls = [];
     MyCustomAdapter = {
+      mount: function mount(a, b) {
+        calls.push({ method: 'mount', args: [a, b] });
+      },
       update: function update(a, b) {
         calls.push({ method: 'update', args: [a, b] });
       },
@@ -678,7 +681,7 @@ describe('Custom adapters', function () {
     };
   });
 
-  it('calls update()', function () {
+  it('calls mount()', function () {
     Remount.define({ 'x-coconut': 'MyComponent' }, { adapter: MyCustomAdapter });
 
     var el = document.createElement('x-coconut');
@@ -686,8 +689,24 @@ describe('Custom adapters', function () {
 
     return raf().then(function () {
       assert(calls[0]);
-      assert.equal(calls[0].method, 'update');
+      assert.equal(calls[0].method, 'mount');
       assert.equal(calls[0].args[0].component, 'MyComponent');
+    });
+  });
+
+  it('calls update()', function () {
+    Remount.define({ 'x-kumquat': 'MyComponent' }, { attributes: ['title'], adapter: MyCustomAdapter });
+
+    var el = document.createElement('x-kumquat');
+    div.appendChild(el);
+
+    return raf().then(function () {
+      el.setAttribute('title', 'hello');
+      return raf();
+    }).then(function () {
+      assert(calls[1]);
+      assert.equal(calls[1].method, 'update');
+      assert.equal(calls[1].args[0].component, 'MyComponent');
     });
   });
 
@@ -705,6 +724,55 @@ describe('Custom adapters', function () {
       assert.equal(calls[1].method, 'unmount');
       assert.equal(calls[1].args[0].component, 'MyComponent');
       assert.equal(calls[1].args[1].nodeName.toLowerCase(), 'x-raspberry');
+    });
+  });
+});
+
+describe('Example vanilla adapter', function () {
+  var div = void 0;
+
+  beforeEach(function () {
+    div = document.createElement('div');
+    root.appendChild(div);
+  });
+
+  afterEach(function () {
+    root.removeChild(div);
+  });
+
+  // A simple adapter that delegates to the component
+  var VanillaAdapter = {
+    mount: function mount(spec, el, props) {
+      spec.component.mount(spec, el, props);
+    },
+    update: function update(spec, el, props) {
+      spec.component.update(spec, el, props);
+    },
+    unmount: function unmount(spec, el) {
+      spec.component.unmount(spec, el);
+    }
+  };
+
+  it('calls update()', function () {
+    var MyComponent = {
+      mount: function mount(_, el) {
+        el.innerHTML = 'Hey :)';
+      },
+      update: function update(_, el) {
+        // pass
+      },
+      unmount: function unmount(_, el) {
+        // pass
+      }
+    };
+
+    Remount.define({ 'x-chocolate': MyComponent }, { adapter: VanillaAdapter });
+
+    var el = document.createElement('x-chocolate');
+    div.appendChild(el);
+
+    return raf().then(function () {
+      assert.equal(el.textContent, 'Hey :)');
     });
   });
 });

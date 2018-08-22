@@ -76,7 +76,8 @@
   , _ref /*: ElementEvents */
   ) {
     var onUpdate = _ref.onUpdate,
-        onUnmount = _ref.onUnmount;
+        onUnmount = _ref.onUnmount,
+        onMount = _ref.onMount;
 
     inject();
     var attributes = elSpec.attributes || [];
@@ -94,7 +95,7 @@
         key: 'connectedCallback',
         value: function connectedCallback() {
           this._mountPoint = createMountPoint(this, elSpec);
-          onUpdate(this, this._mountPoint);
+          onMount(this, this._mountPoint);
         }
       }, {
         key: 'disconnectedCallback',
@@ -191,6 +192,7 @@
    *       { component: MyComponent },
    *       'my-div',
    *       {
+   *         onMount: () => {},
    *         onUpdate: () => {},
    *         onUnmount: () => {},
    *       }
@@ -264,12 +266,12 @@
   function observeForUpdates(node /*: Element */
   , _ref2 /*: ElementEvents */
   ) {
-    var onUpdate = _ref2.onUpdate;
+    var onMount = _ref2.onMount;
 
     var observer = new window.MutationObserver(function (mutations) {
       each(mutations, function (mutation /*: { target: Element } */) {
         var node = mutation.target;
-        onUpdate(node, node);
+        onMount(node, node);
       });
     });
 
@@ -356,6 +358,13 @@
   import type { ElementSpec } from './types'
   */
 
+  function mount(elSpec /*: ElementSpec */
+  , mountPoint /*: Element */
+  , props /*: {} */
+  ) {
+    return update(elSpec, mountPoint, props);
+  }
+
   /**
    * Updates a custom element by calling `ReactDOM.render()`.
    * @private
@@ -382,6 +391,7 @@
   }
 
   var ReactAdapter = /*#__PURE__*/Object.freeze({
+    mount: mount,
     update: update,
     unmount: unmount
   });
@@ -452,6 +462,10 @@
 
       // Define a custom element.
       Strategy.defineElement(elSpec, name$$1, {
+        onMount: function onMount(element /*: Element */, mountPoint /*: Element */) {
+          var props = getProps(element, elSpec.attributes);
+          adapter.mount(elSpec, mountPoint, props);
+        },
         onUpdate: function onUpdate(element /*: Element */, mountPoint /*: Element */) {
           var props = getProps(element, elSpec.attributes);
           adapter.update(elSpec, mountPoint, props);

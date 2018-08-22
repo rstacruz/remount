@@ -71,7 +71,7 @@
   function defineElement (
     elSpec /*: ElementSpec */,
     name /*: string */,
-    { onUpdate, onUnmount } /*: ElementEvents */
+    { onUpdate, onUnmount, onMount } /*: ElementEvents */
   ) {
     inject();
     const attributes = elSpec.attributes || [];
@@ -83,7 +83,7 @@
 
       connectedCallback () {
         this._mountPoint = createMountPoint(this, elSpec);
-        onUpdate(this, this._mountPoint);
+        onMount(this, this._mountPoint);
       }
 
       disconnectedCallback () {
@@ -168,6 +168,7 @@
    *       { component: MyComponent },
    *       'my-div',
    *       {
+   *         onMount: () => {},
    *         onUpdate: () => {},
    *         onUnmount: () => {},
    *       }
@@ -239,12 +240,12 @@
 
   function observeForUpdates (
     node /*: Element */,
-    { onUpdate } /*: ElementEvents */
+    { onMount } /*: ElementEvents */
   ) {
     const observer = new window.MutationObserver(mutations => {
       each(mutations, (mutation /*: { target: Element } */) => {
         const node = mutation.target;
-        onUpdate(node, node);
+        onMount(node, node);
       });
     });
 
@@ -333,6 +334,14 @@
   import type { ElementSpec } from './types'
   */
 
+  function mount (
+    elSpec /*: ElementSpec */,
+    mountPoint /*: Element */,
+    props /*: {} */
+  ) {
+    return update(elSpec, mountPoint, props)
+  }
+
   /**
    * Updates a custom element by calling `ReactDOM.render()`.
    * @private
@@ -357,6 +366,7 @@
   }
 
   var ReactAdapter = /*#__PURE__*/Object.freeze({
+    mount: mount,
     update: update,
     unmount: unmount
   });
@@ -440,6 +450,11 @@
 
       // Define a custom element.
       Strategy.defineElement(elSpec, name$$1, {
+        onMount (element /*: Element */, mountPoint /*: Element */) {
+          const props = getProps(element, elSpec.attributes);
+          adapter.mount(elSpec, mountPoint, props);
+        },
+
         onUpdate (element /*: Element */, mountPoint /*: Element */) {
           const props = getProps(element, elSpec.attributes);
           adapter.update(elSpec, mountPoint, props);

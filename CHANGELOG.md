@@ -1,5 +1,11 @@
 ## Pre-v1.0.0 changes
 
+[v0.9.3]
+
+- Add react-dom as a peer dependency
+
+[v0.9.3]: https://github.com/rstacruz/remount/compare/v0.9.2...v0.9.3
+
 [v0.9.2]
 
 - Fix MutationObserver support for custom adapters

@@ -7,11 +7,11 @@
 <h1 align='center'>Remount</h1>
 
 <p align='center'>
-<a href='https://travis-ci.org/rstacruz/remount'><img src='https://api.travis-ci.org/rstacruz/remount.svg?branch=master' alt='Travis CI' /></a>
+<a href='https://travis-ci.org/rstacruz/remount'><img src='https://img.shields.io/travis/rstacruz/remount/master.svg?colorA=234' alt='Travis CI' /></a>
 &nbsp;
-<a href='https://npmjs.com/package/remount'><img src='https://img.shields.io/npm/v/remount.svg' alt='version'></a>
+<a href='https://npmjs.com/package/remount'><img src='https://img.shields.io/npm/v/remount.svg?colorA=234&colorB=83e' alt='version'></a>
 &nbsp;
-<a href='./LICENSE.md'><img src='https://img.shields.io/badge/license-MIT-brightgreen.svg' alt='MIT license'></a>
+<a href='./LICENSE.md'><img src='https://img.shields.io/badge/license-MIT-brightgreen.svg?colorA=345&colorB=89a' alt='MIT license'></a>
 </p>
 
 <p align='center'>Use your React components anywhere in your <br> HTML as web components (custom elements).</p>

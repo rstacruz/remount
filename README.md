@@ -8,6 +8,10 @@
 
 <p align='center'>
 <a href='https://travis-ci.org/rstacruz/remount'><img src='https://api.travis-ci.org/rstacruz/remount.svg?branch=master' alt='Travis CI' /></a>
+&nbsp;
+<a href='https://npmjs.com/package/remount'><img src='https://img.shields.io/npm/v/remount.svg' alt='version'></a>
+&nbsp;
+<a href='./LICENSE.md'><img src='https://img.shields.io/badge/license-MIT-brightgreen.svg' alt='MIT license'></a>
 </p>
 
 <p align='center'>Use your React components anywhere in your <br> HTML as web components (custom elements).</p>
@@ -59,10 +63,10 @@ You can now use it anywhere in your HTML! :boom:
 
 Some ideas on why you might want to consider Remount for your project:
 
-|                                                    |                                                                                                                                                                                                            |
-| -------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|                                                               |                                                                                                                                                                                                            |
+| ------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | <br><img src='./docs/images/non-spa.png' width='400'><br><br> | ✨ **Adding React to non-SPA apps** <br> You can use React components on any page of a "regular" HTML site. Great for adding React to apps built on Rails or Phoenix.                                      |
-|                                                    |                                                                                                                                                                                                            |
+|                                                               |                                                                                                                                                                                                            |
 | <br><img src='./docs/images/interop.png' width='400'><br><br> | 💞 **Interop with other frameworks** <br> Remount lets you use your React components just like any other HTML element. This means you can use React with Vue, Angular, or any other DOM library/framework. |
 
 ## More features

@@ -11,7 +11,7 @@
 &nbsp;
 <a href='https://npmjs.com/package/remount'><img src='https://img.shields.io/npm/v/remount.svg?colorA=234&colorB=83e' alt='version'></a>
 &nbsp;
-<a href='./LICENSE.md'><img src='https://img.shields.io/badge/license-MIT-brightgreen.svg?colorA=345&colorB=89a' alt='MIT license'></a>
+<a href='https://bundlephobia.com/result?p=remount'><img src='https://img.shields.io/bundlephobia/minzip/remount.svg?colorA=345&colorB=89a&label=size' alt='Bundle size'></a>
 </p>
 
 <p align='center'>Use your React components anywhere in your <br> HTML as web components (custom elements).</p>

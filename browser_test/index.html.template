@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Remount test</title>
+  <script>if(!window.Promise||!window.Map){window.LEGACY=true}</script>
   <script>if(!window.Promise||!window.Map){document.write('<scr'+'ipt src="https://cdn.jsdelivr.net/npm/babel-polyfill@6.26.0/dist/polyfill.js"></scr'+'ipt>')}</script>
   <script>if(!window.MutationObserver){document.write('<scr'+'ipt src="https://cdn.jsdelivr.net/g/mutationobserver/"></scr'+'ipt>')}</script>
   <script src='https://cdn.jsdelivr.net/npm/mocha@5.2.0/mocha.js'></script>

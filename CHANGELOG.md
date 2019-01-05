@@ -1,5 +1,11 @@
 ## Pre-v1.0.0 changes
 
+[v0.9.4]
+
+- Add `module` entry point in package.json
+
+[v0.9.4]: https://github.com/rstacruz/remount/compare/v0.9.3...v0.9.4
+
 [v0.9.3]
 
 - Add react-dom as a peer dependency

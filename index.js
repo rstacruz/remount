@@ -21,7 +21,7 @@ import type {
  *     Remount.getStrategy().name
  */
 
-export function getStrategy () {
+export function getStrategy() {
   // $FlowFixMe$ obviously
   if (getStrategy._result !== undefined) {
     return getStrategy._result
@@ -35,6 +35,7 @@ export function getStrategy () {
   )
 
   if (!Strategy) {
+    /* eslint-disable no-console */
     console.warn(
       "Remount: This browser doesn't support the " +
         'MutationObserver API or the Custom Elements API. Including ' +
@@ -60,7 +61,7 @@ export function getStrategy () {
  *     )
  */
 
-export function define (
+export function define(
   components /*: ElementMap */,
   defaults /*: ?Defaults */
 ) {
@@ -80,17 +81,17 @@ export function define (
 
     // Define a custom element.
     Strategy.defineElement(elSpec, name, {
-      onMount (element /*: Element */, mountPoint /*: Element */) {
+      onMount(element /*: Element */, mountPoint /*: Element */) {
         const props = getProps(element, elSpec.attributes)
         adapter.mount(elSpec, mountPoint, props)
       },
 
-      onUpdate (element /*: Element */, mountPoint /*: Element */) {
+      onUpdate(element /*: Element */, mountPoint /*: Element */) {
         const props = getProps(element, elSpec.attributes)
         adapter.update(elSpec, mountPoint, props)
       },
 
-      onUnmount (element /*: Element */, mountPoint /*: Element */) {
+      onUnmount(element /*: Element */, mountPoint /*: Element */) {
         adapter.unmount(elSpec, mountPoint)
       }
     })
@@ -109,7 +110,7 @@ export function define (
  *     // => { component: Tooltip }
  */
 
-function toElementSpec (
+function toElementSpec(
   thing /*: ElementSpec | Component */
 ) /*: ElementSpec */ {
   // $FlowFixMe$
@@ -126,7 +127,7 @@ function toElementSpec (
  *     // => { name: 'Romeo' }
  */
 
-function getProps (element /*: Element */, attributes /*: ?Array<string> */) {
+function getProps(element /*: Element */, attributes /*: ?Array<string> */) {
   const rawJson = element.getAttribute('props-json')
   if (rawJson) return JSON.parse(rawJson)
 

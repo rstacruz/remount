@@ -66,8 +66,8 @@
   },
   "scripts": {
     "build": "rollup --config",
-    "prettier": "prettier-eslint '*.js'",
-    "eslint": "eslint '*.js'",
+    "prettier": "prettier-eslint '*.js' 'lib/**/*.js'",
+    "eslint": "eslint '*.js' 'lib/**/*.js'",  
     "deploy": "gh-pages -d . -s 'dist/**/*'",
     "flow": "flow",
     "jest": "jest",

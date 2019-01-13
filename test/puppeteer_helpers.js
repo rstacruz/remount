@@ -18,5 +18,7 @@ global.beforeAll(async () => {
 })
 
 global.afterAll(async () => {
-  await global.browser.close()
+  if (global.browser) {
+    await global.browser.close()
+  }
 })

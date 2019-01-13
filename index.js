@@ -113,8 +113,8 @@ export function define(
 function toElementSpec(
   thing /*: ElementSpec | Component */
 ) /*: ElementSpec */ {
-  // $FlowFixMe$
   if (typeof thing === 'object' && thing.component) return thing
+  /* $FlowFixMe$ */
   return { component: thing }
 }
 

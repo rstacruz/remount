@@ -5,7 +5,7 @@
       "presets": ["@babel/env", "@babel/react"]
     },
     "test-rollup": {
-      "presets": [["env", { "modules": false }], "react"]
+      "presets": [["@babel/env", { "modules": false }], "@babel/react"]
     }
   }
 }

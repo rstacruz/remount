@@ -1,11 +1,17 @@
 {
-  "presets": [["@babel/env", { "modules": false }], "@babel/react"],
+  "presets": [
+    ["@babel/preset-env", { "modules": false }],
+    "@babel/preset-react"
+  ],
   "env": {
     "test": {
-      "presets": ["@babel/env", "@babel/react"]
+      "presets": ["@babel/preset-env", "@babel/preset-react"]
     },
     "test-rollup": {
-      "presets": [["@babel/env", { "modules": false }], "@babel/react"]
+      "presets": [
+        ["@babel/preset-env", { "modules": false }],
+        "@babel/preset-react"
+      ]
     }
   }
 }

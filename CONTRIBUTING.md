@@ -11,6 +11,7 @@ yarn watch
 - <http://localhost:10049/?polyfill> - Tests + enable CustomElements polyfill
 - <http://localhost:10049/?debug> - Tests + Debug mode
 - <http://localhost:10049/?polyfill,debug> - Both
+- `yarn run jest` - Run test via Puppeteer
 
 ## CI tests
 

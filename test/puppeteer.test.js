@@ -1,7 +1,7 @@
 /* eslint-env jest */
 /* global browser */
 import './puppeteer_helpers'
-jest.setTimeout(18000)
+jest.setTimeout(50000)
 
 function example (what) {
   const url = require('path').join('file://', __dirname, '..', 'examples', what)

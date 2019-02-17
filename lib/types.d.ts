@@ -1,15 +1,15 @@
 import React from 'react'
 
-export type Component = React.Component<*, *> | React.FunctionComponent<*>
+export type Component = React.Component<any, any> | React.FunctionComponent<any>
 
 export interface Adapter {
-  mount: (spec: ElementSpec, mountPoint: Element, props: {}) => void,
-  update: (spec: ElementSpec, mountPoint: Element, props: {}) => void,
-  unmount: (spec: ElementSpec, mountPoint: Element) => void
+  mount: (spec: ElementSpec, mountPoint: HTMLElement, props: {}) => void
+  update: (spec: ElementSpec, mountPoint: HTMLElement, props: {}) => void
+  unmount: (spec: ElementSpec, mountPoint: HTMLElement) => void
 }
 
 export interface PropertyMap {
-  [key: string]: ?string
+  [key: string]: string | null
 }
 
 export interface ElementMap {
@@ -18,26 +18,37 @@ export interface ElementMap {
 
 export interface Defaults {
   attributes?: string[]
-  quiet?: boolean,
+  quiet?: boolean
   shadow?: boolean
 }
 
 export interface ElementSpec {
-  component: Component,
-  adapter?: Adapter,
-  attributes?: Array<string>,
-  quiet?: boolean,
+  component: Component
+  adapter?: Adapter
+  attributes?: Array<string>
+  quiet?: boolean
   shadow?: boolean
 }
 
 export type ReactAdapter = Adapter
 
 export interface ElementEvents {
-  onMount: (source: Element, mountPoint: Element) => void,
-  onUpdate: (source: Element, mountPoint: Element) => void,
-  onUnmount: (source: Element, mountPoint: Element) => void
+  onMount: (source: HTMLElement, mountPoint: HTMLElement) => void
+  onUpdate: (source: HTMLElement, mountPoint: HTMLElement) => void
+  onUnmount: (source: HTMLElement, mountPoint: HTMLElement) => void
 }
 
 export interface Strategy {
+  name: string
+  defineElement: (
+    elSpec: ElementSpec,
+    name: string,
+    events: ElementEvents
+  ) => void
   isSupported: () => boolean
+  supportsShadow: () => boolean
+}
+
+export interface ObserverList {
+  [key: string]: MutationObserver
 }

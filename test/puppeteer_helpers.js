@@ -8,7 +8,7 @@ const OPTIONS = {
 
 const CI_OPTIONS = {
   headless: true,
-  exitOnPageError: true
+  //exitOnPageError: true
 }
 
 global.beforeAll(async () => {

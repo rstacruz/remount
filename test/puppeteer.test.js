@@ -1,9 +1,10 @@
 /* eslint-env jest */
+/* eslint-disable no-console */
 /* global browser */
 import './puppeteer_helpers'
-jest.setTimeout(50000)
+jest.setTimeout(20000)
 
-function example (what) {
+function example(what) {
   const url = require('path').join('file://', __dirname, '..', 'examples', what)
   return url
 }
@@ -35,9 +36,7 @@ describe('puppeteer tests', () => {
     const url = 'http://localhost:10049/'
     page = await browser.newPage()
     await page.goto(url)
-    await page.waitForSelector('#finish')
-    const text = await getContent(page)
-    expect(text).toContain('failures: 0')
+    await assertSuccess(page)
   })
 
   // TODO: support { mode: 'MutationObserver' } for tests
@@ -45,15 +44,35 @@ describe('puppeteer tests', () => {
     const url = 'http://localhost:10049/?mutation'
     page = await browser.newPage()
     await page.goto(url)
-    await page.waitForSelector('#finish')
-    const text = await getContent(page)
-    expect(text).toContain('failures: 0')
+    await assertSuccess(page)
   })
 
   afterEach(async () => {
     await page.close()
   })
 })
+
+const assertSuccess = async page => {
+  let text
+
+  try {
+    await page.waitForSelector('#finish')
+  } catch (e) {
+    text = await getContent(page)
+    console.warn('Mocha did not finish.')
+    console.warn(text)
+    throw e
+  }
+
+  try {
+    text = await getContent(page)
+    expect(text).toContain('failures: 0')
+  } catch (e) {
+    console.warn('Mocha finished with errors.')
+    console.warn(text)
+    throw e
+  }
+}
 
 const getContent = page => {
   return page.evaluate(() => document.body.textContent)

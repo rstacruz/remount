@@ -34,11 +34,11 @@ export const name = 'CustomElements'
  *
  * @private
  * @param {ElementSpec} elSpec
- * @param {string} name
+ * @param {string} elName
  * @param {ElementEvents} events
  */
 
-export function defineElement(elSpec, name, events) {
+export function defineElement(elSpec, elName, events) {
   const { onUpdate, onUnmount, onMount } = events
   enableBabelClasses()
   const attributes = elSpec.attributes || []
@@ -54,22 +54,26 @@ export function defineElement(elSpec, name, events) {
     }
 
     disconnectedCallback() {
-      if (!this._mountPoint) return
+      if (!this._mountPoint) {
+        return
+      }
       onUnmount(this, this._mountPoint)
     }
 
     attributeChangedCallback() {
-      if (!this._mountPoint) return
+      if (!this._mountPoint) {
+        return
+      }
       onUpdate(this, this._mountPoint)
     }
   }
 
   // Supress warning when quiet mode is on
-  if (elSpec.quiet && window.customElements.get(name)) {
+  if (elSpec.quiet && window.customElements.get(elName)) {
     return
   }
 
-  window.customElements.define(name, ComponentElement)
+  window.customElements.define(elName, ComponentElement)
 }
 
 export function isSupported() {

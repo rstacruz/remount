@@ -43,18 +43,22 @@ export function isSupported() {
  * @param {ElementEvents} events
  */
 
-export function defineElement(elSpec, name, events) {
-  name = name.toLowerCase()
+export function defineElement(elSpec, elName, events) {
+  elName = elName.toLowerCase()
 
   // Maintain parity with what would happen in Custom Elements mode
-  if (!isValidName(name)) {
-    if (elSpec.quiet) return
-    throw new Error(`Remount: "${name}" is not a valid custom element name`)
+  if (!isValidName(elName)) {
+    if (elSpec.quiet) {
+      return
+    }
+    throw new Error(`Remount: "${elName}" is not a valid custom element elName`)
   }
 
-  if (observers[name]) {
-    if (elSpec.quiet) return
-    throw new Error(`Remount: "${name}" is already registered`)
+  if (observers[elName]) {
+    if (elSpec.quiet) {
+      return
+    }
+    throw new Error(`Remount: "${elName}" is already registered`)
   }
 
   const observer = new MutationObserver(
@@ -62,7 +66,7 @@ export function defineElement(elSpec, name, events) {
       each(mutations, (/** @type MutationRecord */ mutation) => {
         each(mutation.addedNodes, (/** @type Node */ node) => {
           if (isElement(node)) {
-            checkForMount(node, name, events)
+            checkForMount(node, elName, events)
           }
         })
       })
@@ -89,12 +93,12 @@ export function defineElement(elSpec, name, events) {
  * Recurses down to its descendant nodes.
  *
  * @param {HTMLElement} node
- * @param {string} name
+ * @param {string} elName
  * @param {ElementEvents} events
  */
 
-function checkForMount(node, name, events) {
-  if (node.nodeName.toLowerCase() === name) {
+function checkForMount(node, elName, events) {
+  if (node.nodeName.toLowerCase() === elName) {
     // It's a match!
     events.onMount(node, node)
     observeForUpdates(node, events)
@@ -103,7 +107,7 @@ function checkForMount(node, name, events) {
     // Recurse down into the other additions
     each(node.children, (/** @type HTMLElement */ subnode) => {
       if (isElement(subnode)) {
-        checkForMount(subnode, name, events)
+        checkForMount(subnode, elName, events)
       }
     })
   }
@@ -121,9 +125,9 @@ function observeForUpdates(node, events) {
   const observer = new MutationObserver(
     /** @type MutationCallback */ mutations => {
       each(mutations, (/** @type MutationRecord */ mutation) => {
-        const node = mutation.target
-        if (isElement(node)) {
-          onUpdate(node, node)
+        const targetNode = mutation.target
+        if (isElement(targetNode)) {
+          onUpdate(targetNode, targetNode)
         }
       })
     }
@@ -143,13 +147,17 @@ function observeForRemoval(node, events) {
   const parent = node.parentNode
 
   // Not sure when this can happen, but let's add this for type safety
-  if (!parent) return
+  if (!parent) {
+    return
+  }
 
   const observer = new MutationObserver(
     /** @type MutationCallback */ mutations => {
       each(mutations, (/** @type MutationRecord */ mutation) => {
         each(mutation.removedNodes, (/** @type Node */ subnode) => {
-          if (node !== subnode) return
+          if (node !== subnode) {
+            return
+          }
           if (isElement(node)) {
             // @ts-ignore TypeScript expects 0 arguments...?
             observer.disconnect(parent)
@@ -170,7 +178,7 @@ function observeForRemoval(node, events) {
  * it'd be wise if we rejected element names that won't work in Custom Elements
  * mode (even if we're using MutationObserver mode).
  *
- * @param {string} name
+ * @param {string} elName
  * @returns {boolean}
  *
  * @example
@@ -182,8 +190,8 @@ function observeForRemoval(node, events) {
  * @private
  */
 
-function isValidName(name) {
-  return !!(name.indexOf('-') !== -1 && name.match(/^[a-z][a-z0-9-]*$/))
+function isValidName(elName) {
+  return !!(elName.indexOf('-') !== -1 && elName.match(/^[a-z][a-z0-9-]*$/))
 }
 
 /**
@@ -205,6 +213,8 @@ export function supportsShadow() {
  */
 
 function isElement(node) {
-  if (node) return true
+  if (node) {
+    return true
+  }
   return false
 }

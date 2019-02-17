@@ -15,9 +15,7 @@
     "@types/react": "^16.8.3",
     "@types/react-dom": "^16.8.2",
     "babel-core": "^7.0.0-bridge.0",
-    "babel-eslint": "^10.0.1",
     "babel-jest": "^23.6.0",
-    "eslint": "^5.12.0",
     "expect-puppeteer": "3.5.1",
     "gh-pages": "^2.0.1",
     "jest": "^23.6.0",
@@ -32,6 +30,8 @@
     "rollup-plugin-copy": "^0.2.3",
     "rollup-plugin-server": "^0.7.0",
     "start-server-and-test": "^1.7.11",
+    "tslint": "^5.12.1",
+    "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.3.3"
   },
   "directories": {
@@ -74,7 +74,7 @@
   "scripts": {
     "build": "rollup --config",
     "prettier": "prettier '*.js' 'src/**/*.{js,ts}'",
-    "eslint": "eslint '*.js' 'src/**/*.js'",
+    "lint": "tslint --project .",
     "deploy": "gh-pages -d . -s 'dist/**/*'",
     "tsc": "tsc",
     "jest": "jest",

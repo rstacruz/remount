@@ -26,7 +26,7 @@ import * as ReactAdapter from './react'
  * @type {Strategy | null | undefined}
  */
 
-let strategy
+let cachedStrategy
 
 /**
  * Detect what API can be used.
@@ -36,8 +36,8 @@ let strategy
  */
 
 export function getStrategy() {
-  if (strategy) {
-    return strategy
+  if (cachedStrategy) {
+    return cachedStrategy
   }
 
   const StrategyUsed = [CustomElementsStrategy, MutationObserverStrategy].find(
@@ -45,7 +45,7 @@ export function getStrategy() {
   )
 
   if (!StrategyUsed) {
-    /* eslint-disable no-console */
+    /* tslint:disable no-console */
     console.warn(
       "Remount: This browser doesn't support the " +
         'MutationObserver API or the Custom Elements API. Including ' +
@@ -54,7 +54,7 @@ export function getStrategy() {
     )
   }
 
-  strategy = StrategyUsed
+  cachedStrategy = StrategyUsed
   return StrategyUsed
 }
 
@@ -75,7 +75,7 @@ export function getStrategy() {
 
 export function define(components, defaults) {
   const Strategy = getStrategy()
-  if (!Strategy) return
+  if (!Strategy) { return }
 
   Object.keys(components).forEach((/** @type string */ name) => {
     // Construct the specs for the element.
@@ -135,7 +135,7 @@ export function define(components, defaults) {
  */
 
 function toElementSpec(thing) {
-  if (isElementSpec(thing)) return thing
+  if (isElementSpec(thing)) { return thing }
   return { component: thing }
 }
 
@@ -161,7 +161,7 @@ function isElementSpec(spec) {
 
 function getProps(element, attributes) {
   const rawJson = element.getAttribute('props-json')
-  if (rawJson) return JSON.parse(rawJson)
+  if (rawJson) { return JSON.parse(rawJson) }
 
   const names = attributes || []
   return names.reduce((

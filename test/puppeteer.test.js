@@ -1,5 +1,5 @@
 /* eslint-env jest */
-/* eslint-disable no-console */
+/* tslist:disable no-console */
 /* global browser */
 import './puppeteer_helpers'
 jest.setTimeout(20000)

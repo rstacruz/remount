@@ -10,6 +10,10 @@
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.2.3",
     "@babel/preset-react": "^7.0.0",
+    "@types/jest": "^24.0.5",
+    "@types/puppeteer": "^1.12.1",
+    "@types/react": "^16.8.3",
+    "@types/react-dom": "^16.8.2",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^23.6.0",
@@ -28,7 +32,8 @@
     "rollup-plugin-babel-minify": "^7.0.0",
     "rollup-plugin-copy": "^0.2.3",
     "rollup-plugin-server": "^0.7.0",
-    "start-server-and-test": "^1.7.11"
+    "start-server-and-test": "^1.7.11",
+    "typescript": "^3.3.3"
   },
   "directories": {
     "doc": "docs",
@@ -77,5 +82,8 @@
     "prepare": "run-s build",
     "test": "start-server-and-test watch http://127.0.0.1:10049/ jest",
     "watch": "env NODE_ENV=test-rollup rollup --config --watch"
+  },
+  "dependencies": {
+    "@babel/preset-typescript": "^7.3.3"
   }
 }

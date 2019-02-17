@@ -1,17 +1,19 @@
-// @flow
+// @ts-check
+/** @typedef { import('../types').Adapter } Adapter */
+/** @typedef { import('../types').Component } Component */
+/** @typedef { import('../types').Defaults } Defaults */
+/** @typedef { import('../types').ElementMap } ElementMap */
+/** @typedef { import('../types').ElementSpec } ElementSpec */
+/** @typedef { import('../types').ElementEvents } ElementEvents */
+/** @typedef { import('../types').ReactAdapter } ReactAdapter */
+/** @typedef { import('../types').PropertyMap } PropertyMap */
+
 import { inject as enableBabelClasses } from '../helpers/babel_es5_adapter'
 
-/*::
-import type {
-  Component,
-  PropertyMap,
-  ElementMap,
-  Defaults,
-  ElementSpec,
-  ReactAdapter,
-  ElementEvents
-} from '../types'
-*/
+/**
+ * The name of this strategy.
+ * @type string
+ */
 
 export const name = 'CustomElements'
 
@@ -31,17 +33,17 @@ export const name = 'CustomElements'
  *     )
  *
  * @private
+ * @param {ElementSpec} elSpec
+ * @param {string} elName
+ * @param {ElementEvents} events
  */
 
-export function defineElement(
-  elSpec /*: ElementSpec */,
-  name /*: string */,
-  { onUpdate, onUnmount, onMount } /*: ElementEvents */
-) {
+export function defineElement(elSpec, elName, events) {
+  const { onUpdate, onUnmount, onMount } = events
   enableBabelClasses()
   const attributes = elSpec.attributes || []
 
-  class ComponentElement extends window.HTMLElement {
+  class ComponentElement extends HTMLElement {
     static get observedAttributes() {
       return ['props-json', ...attributes]
     }
@@ -52,38 +54,43 @@ export function defineElement(
     }
 
     disconnectedCallback() {
-      if (!this._mountPoint) return
+      if (!this._mountPoint) {
+        return
+      }
       onUnmount(this, this._mountPoint)
     }
 
     attributeChangedCallback() {
-      if (!this._mountPoint) return
+      if (!this._mountPoint) {
+        return
+      }
       onUpdate(this, this._mountPoint)
     }
   }
 
   // Supress warning when quiet mode is on
-  if (elSpec.quiet && window.customElements.get(name)) {
+  if (elSpec.quiet && window.customElements.get(elName)) {
     return
   }
 
-  window.customElements.define(name, ComponentElement)
+  window.customElements.define(elName, ComponentElement)
 }
 
 export function isSupported() {
-  return window.customElements && window.customElements.define
+  return !!(window.customElements && window.customElements.define)
 }
 
 /**
  * Creates a `<span>` element that serves as the mounting point for React
  * components. If `shadow: true` is requested, it'll attach a shadow node.
+ *
  * @private
+ * @param {HTMLElement} element
+ * @param {ElementSpec} elSpec
  */
 
-function createMountPoint(
-  element /*: Element */,
-  { shadow } /*: ElementSpec */
-) {
+function createMountPoint(element, elSpec) {
+  const { shadow } = elSpec
   if (shadow && element.attachShadow) {
     const mountPoint = document.createElement('span')
     element.attachShadow({ mode: 'open' }).appendChild(mountPoint)

@@ -11,8 +11,8 @@ addons:
 script:
   - yarn test
   - yarn prettier --list-different
-  - yarn eslint
-  - yarn flow
+  - yarn lint
+  - yarn tsc
 cache:
   yarn: true
   directories:

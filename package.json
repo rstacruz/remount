@@ -10,12 +10,13 @@
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.2.3",
     "@babel/preset-react": "^7.0.0",
+    "@types/jest": "^24.0.5",
+    "@types/puppeteer": "^1.12.1",
+    "@types/react": "^16.8.3",
+    "@types/react-dom": "^16.8.2",
     "babel-core": "^7.0.0-bridge.0",
-    "babel-eslint": "^10.0.1",
     "babel-jest": "^23.6.0",
-    "eslint": "^5.12.0",
     "expect-puppeteer": "3.5.1",
-    "flow-bin": "^0.90.0",
     "gh-pages": "^2.0.1",
     "jest": "^23.6.0",
     "npm-run-all": "^4.1.5",
@@ -28,7 +29,10 @@
     "rollup-plugin-babel-minify": "^7.0.0",
     "rollup-plugin-copy": "^0.2.3",
     "rollup-plugin-server": "^0.7.0",
-    "start-server-and-test": "^1.7.11"
+    "start-server-and-test": "^1.7.11",
+    "tslint": "^5.12.1",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.3.3"
   },
   "directories": {
     "doc": "docs",
@@ -69,13 +73,16 @@
   },
   "scripts": {
     "build": "rollup --config",
-    "prettier": "prettier '*.js' 'lib/**/*.js'",
-    "eslint": "eslint '*.js' 'lib/**/*.js'",
+    "prettier": "prettier '*.js' 'src/**/*.{js,ts}'",
+    "lint": "tslint --project .",
     "deploy": "gh-pages -d . -s 'dist/**/*'",
-    "flow": "flow",
+    "tsc": "tsc",
     "jest": "jest",
     "prepare": "run-s build",
     "test": "start-server-and-test watch http://127.0.0.1:10049/ jest",
     "watch": "env NODE_ENV=test-rollup rollup --config --watch"
+  },
+  "dependencies": {
+    "@babel/preset-typescript": "^7.3.3"
   }
 }

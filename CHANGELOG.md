@@ -1,5 +1,12 @@
 ## Pre-v1.0.0 changes
 
+[v0.9.5]
+
+- Fix issue when multiple components exist when Remount is booted after DOM is initialized. ([@paulovitin])
+
+[@paulovitin]: https://github.com/paulovitin
+[v0.9.5]: https://github.com/rstacruz/remount/compare/v0.9.4...v0.9.5
+
 [v0.9.4]
 
 - Add `module` entry point in package.json

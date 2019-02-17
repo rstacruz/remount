@@ -1,6 +1,8 @@
 import React from 'react'
 
-export type Component = React.Component<any, any> | React.FunctionComponent<any>
+export type Component =
+  | React.ComponentClass<any, any>
+  | React.FunctionComponent<any>
 
 export interface Adapter {
   mount: (spec: ElementSpec, mountPoint: HTMLElement, props: {}) => void

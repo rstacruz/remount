@@ -1,29 +1,30 @@
-// @flow
+// @ts-check
+/** @typedef { import('./types').ElementSpec } ElementSpec */
+
 import * as React from 'react'
-import ReactDOM from 'react-dom'
+import * as ReactDOM from 'react-dom'
 
-/*::
-import type { ElementSpec } from './types'
-*/
+/**
+ * @param {ElementSpec} elSpec
+ * @param {HTMLElement} mountPoint
+ * @param {object} props
+ */
 
-export function mount(
-  elSpec /*: ElementSpec */,
-  mountPoint /*: Element */,
-  props /*: {} */
-) {
+export function mount(elSpec, mountPoint, props) {
   return update(elSpec, mountPoint, props)
 }
 
 /**
  * Updates a custom element by calling `ReactDOM.render()`.
  * @private
+ *
+ * @param {ElementSpec} elSpec
+ * @param {HTMLElement} mountPoint
+ * @param {object} props
  */
 
-export function update(
-  { component } /*: ElementSpec */,
-  mountPoint /*: Element */,
-  props /*: {} */
-) {
+export function update(elSpec, mountPoint, props) {
+  const { component } = elSpec
   const reactElement = React.createElement(component, props)
   ReactDOM.render(reactElement, mountPoint)
 }
@@ -31,8 +32,11 @@ export function update(
 /**
  * Unmounts a component.
  * @private
+ *
+ * @param {ElementSpec} elSpec
+ * @param {HTMLElement} mountPoint
  */
 
-export function unmount(_ /*: ElementSpec */, mountPoint /*: Element */) {
+export function unmount(elSpec, mountPoint) {
   ReactDOM.unmountComponentAtNode(mountPoint)
 }

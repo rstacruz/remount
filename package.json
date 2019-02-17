@@ -77,7 +77,7 @@
     "prettier": "prettier '*.js' 'lib/**/*.js'",
     "eslint": "eslint '*.js' 'lib/**/*.js'",
     "deploy": "gh-pages -d . -s 'dist/**/*'",
-    "flow": "flow",
+    "tsc": "tsc",
     "jest": "jest",
     "prepare": "run-s build",
     "test": "start-server-and-test watch http://127.0.0.1:10049/ jest",

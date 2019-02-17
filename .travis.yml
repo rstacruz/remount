@@ -12,7 +12,7 @@ script:
   - yarn test
   - yarn prettier --list-different
   - yarn eslint
-  - yarn flow
+  - yarn tsc
 cache:
   yarn: true
   directories:

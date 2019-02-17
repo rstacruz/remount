@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import puppeteer from 'puppeteer'
 
 const OPTIONS = {
@@ -7,7 +8,6 @@ const OPTIONS = {
 
 const CI_OPTIONS = {
   headless: true,
-  args: ['--no-sandbox', '--disable-setuid-sandbox'],
   exitOnPageError: true
 }
 

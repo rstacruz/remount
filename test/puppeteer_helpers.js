@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import puppeteer from 'puppeteer'
 
 const OPTIONS = {
@@ -7,8 +8,7 @@ const OPTIONS = {
 
 const CI_OPTIONS = {
   headless: true,
-  args: ['--no-sandbox', '--disable-setuid-sandbox'],
-  exitOnPageError: true
+  //exitOnPageError: true
 }
 
 global.beforeAll(async () => {
@@ -18,5 +18,7 @@ global.beforeAll(async () => {
 })
 
 global.afterAll(async () => {
-  await global.browser.close()
+  if (global.browser) {
+    await global.browser.close()
+  }
 })

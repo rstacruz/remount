@@ -26,28 +26,28 @@ const UMD = {
 
 const SERVE_PLUGINS = IS_WATCH
   ? [
-    server({
-      // open: true,
-      contentBase: 'dist',
-      port: +(process.env.PORT || 10049)
-    })
-  ]
+      server({
+        // open: true,
+        contentBase: 'dist',
+        port: +(process.env.PORT || 10049)
+      })
+    ]
   : []
 
 const TEST_MODULES = IS_TEST
   ? [
-    {
-      input: 'browser_test/test.js',
-      plugins: [
-        BABEL,
-        copy({
-          'browser_test/index.html.template': 'dist/index.html'
-        }),
-        ...SERVE_PLUGINS
-      ],
-      output: { file: 'dist/test.js', format: 'cjs' }
-    }
-  ]
+      {
+        input: 'browser_test/test.js',
+        plugins: [
+          BABEL,
+          copy({
+            'browser_test/index.html.template': 'dist/index.html'
+          }),
+          ...SERVE_PLUGINS
+        ],
+        output: { file: 'dist/test.js', format: 'cjs' }
+      }
+    ]
   : []
 
 export default [

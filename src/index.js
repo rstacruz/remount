@@ -75,7 +75,9 @@ export function getStrategy() {
 
 export function define(components, defaults) {
   const Strategy = getStrategy()
-  if (!Strategy) { return }
+  if (!Strategy) {
+    return
+  }
 
   Object.keys(components).forEach((/** @type string */ name) => {
     // Construct the specs for the element.
@@ -135,7 +137,9 @@ export function define(components, defaults) {
  */
 
 function toElementSpec(thing) {
-  if (isElementSpec(thing)) { return thing }
+  if (isElementSpec(thing)) {
+    return thing
+  }
   return { component: thing }
 }
 
@@ -161,7 +165,9 @@ function isElementSpec(spec) {
 
 function getProps(element, attributes) {
   const rawJson = element.getAttribute('props-json')
-  if (rawJson) { return JSON.parse(rawJson) }
+  if (rawJson) {
+    return JSON.parse(rawJson)
+  }
 
   const names = attributes || []
   return names.reduce((

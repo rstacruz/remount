@@ -39,7 +39,7 @@ export function isSupported() {
  *
  * @private
  * @param {ElementSpec} elSpec
- * @param {string} name
+ * @param {string} elName
  * @param {ElementEvents} events
  */
 

@@ -52,3 +52,9 @@ export interface Strategy {
 export interface ObserverList {
   [key: string]: MutationObserver
 }
+
+export type Each =
+  | ((list: NodeList, fn: (item: Node) => any) => void)
+  | (<T>(list: HTMLCollectionOf<T>, fn: (item: T) => any) => void)
+  | ((list: HTMLCollection, fn: (item: HTMLElement) => any) => void)
+//  | (<T>(list: T[], fn: (item: T) => any) => void)

@@ -32,9 +32,13 @@ describe('puppeteer tests', () => {
   //   expect(text).toContain('Oh hello, John!')
   // })
 
+  beforeEach(async () => {
+    page = await browser.newPage()
+    page.setDefaultTimeout(10000)
+  })
+
   it('mocha tests', async () => {
     const url = 'http://localhost:10049/'
-    page = await browser.newPage()
     await page.goto(url)
     await assertSuccess(page)
   })
@@ -42,7 +46,6 @@ describe('puppeteer tests', () => {
   // TODO: support { mode: 'MutationObserver' } for tests
   it.skip('mocha tests, mutation observer mode', async () => {
     const url = 'http://localhost:10049/?mutation'
-    page = await browser.newPage()
     await page.goto(url)
     await assertSuccess(page)
   })

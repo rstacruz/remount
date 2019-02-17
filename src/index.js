@@ -7,19 +7,9 @@
 /** @typedef { import('./types').PropertyMap } PropertyMap */
 /** @typedef { import('./types').Strategy } Strategy */
 
-/** @type Strategy */
 import * as CustomElementsStrategy from './strategies/custom_elements'
-
-/** @type Strategy */
 import * as MutationObserverStrategy from './strategies/mutation_observer'
 import * as ReactAdapter from './react'
-
-/**
- * @callback StrategyCallback
- * @param {Strategy | null} result
- * @param {Strategy} strat
- * @returns {Strategy | null | undefined}
- */
 
 /**
  * Cache of the strategy determined by `getStrategy()`.
@@ -90,30 +80,15 @@ export function define(components, defaults) {
 
     // Define a custom element.
     Strategy.defineElement(elSpec, name, {
-      /**
-       * @param {HTMLElement} element
-       * @param {HTMLElement} mountPoint
-       */
-
       onMount(element, mountPoint) {
         const props = getProps(element, elSpec.attributes)
         adapter.mount(elSpec, mountPoint, props)
       },
 
-      /**
-       * @param {HTMLElement} element
-       * @param {HTMLElement} mountPoint
-       */
-
       onUpdate(element, mountPoint) {
         const props = getProps(element, elSpec.attributes)
         adapter.update(elSpec, mountPoint, props)
       },
-
-      /**
-       * @param {HTMLElement} element
-       * @param {HTMLElement} mountPoint
-       */
 
       onUnmount(element, mountPoint) {
         adapter.unmount(elSpec, mountPoint)
@@ -124,6 +99,7 @@ export function define(components, defaults) {
 
 /**
  * Coerces something into an `ElementSpec` type.
+ *
  * @param {ElementSpec | Component} thing
  * @returns {ElementSpec}
  * @private
@@ -144,6 +120,8 @@ function toElementSpec(thing) {
 }
 
 /**
+ * Checks if a given `spec` is an ElementSpec.
+ *
  * @param {any} spec
  * @returns {spec is ElementSpec}
  */
@@ -154,6 +132,7 @@ function isElementSpec(spec) {
 
 /**
  * Returns properties for a given HTML element.
+ *
  * @private
  * @param {HTMLElement} element
  * @param {string[] | null | undefined} attributes

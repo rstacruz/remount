@@ -15,6 +15,7 @@ import { define } from 'remount'
   - [Shadow DOM](#shadow-dom)
   - [Options](#options)
   - [Custom adapters](#custom-adapters)
+  - [Fixing React events](#fixing-react-events)
 - [getStrategy()](#getstrategy)
 
 <!-- /TOC -->
@@ -111,6 +112,19 @@ define({
   'x-component': MyComponent
 }, {
   shadow: true
+})
+```
+
+### Fixing React events
+
+Shadow DOM and React events don't play nicely together. This can be fixed using `react-shadow-dom-retarget-events`. To use this:
+
+```js
+define({
+  'x-component': MyComponent
+}, {
+  shadow: true,
+  retarget: true
 })
 ```
 

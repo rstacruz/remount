@@ -117,7 +117,7 @@ define({
 
 ### Fixing React events
 
-Shadow DOM and React events don't play nicely together. This can be fixed using `react-shadow-dom-retarget-events`. To use this:
+Shadow DOM and React events don't play nicely together at the moment. This can be fixed using `react-shadow-dom-retarget-events`. To use this:
 
 ```js
 define({
@@ -127,6 +127,8 @@ define({
   retarget: true
 })
 ```
+
+**NOTE:** When using this feature `event.nativeEvent` is no longer present in React event handlers.
 
 [getstrategy()]: #getstrategy
 

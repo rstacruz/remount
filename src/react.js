@@ -3,7 +3,6 @@
 
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-// @ts-ignore
 import retargetEvents from 'react-shadow-dom-retarget-events'
 
 /**

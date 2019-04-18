@@ -5,8 +5,18 @@ export type Component =
   | React.FunctionComponent<any>
 
 export interface Adapter {
-  mount: (spec: ElementSpec, mountPoint: HTMLElement, props: {}, element: HTMLElement | null) => void
-  update: (spec: ElementSpec, mountPoint: HTMLElement, props: {}, element: HTMLElement | null) => void
+  mount: (
+    spec: ElementSpec,
+    mountPoint: HTMLElement,
+    props: {},
+    element: HTMLElement | null
+  ) => void
+  update: (
+    spec: ElementSpec,
+    mountPoint: HTMLElement,
+    props: {},
+    element: HTMLElement | null
+  ) => void
   unmount: (spec: ElementSpec, mountPoint: HTMLElement) => void
 }
 

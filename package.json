@@ -83,6 +83,7 @@
     "watch": "env NODE_ENV=test-rollup rollup --config --watch"
   },
   "dependencies": {
-    "@babel/preset-typescript": "^7.3.3"
+    "@babel/preset-typescript": "^7.3.3",
+    "react-shadow-dom-retarget-events": "^1.0.8"
   }
 }

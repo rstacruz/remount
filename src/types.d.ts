@@ -5,8 +5,8 @@ export type Component =
   | React.FunctionComponent<any>
 
 export interface Adapter {
-  mount: (spec: ElementSpec, mountPoint: HTMLElement, props: {}) => void
-  update: (spec: ElementSpec, mountPoint: HTMLElement, props: {}) => void
+  mount: (spec: ElementSpec, mountPoint: HTMLElement, props: {}, element: HTMLElement | null) => void
+  update: (spec: ElementSpec, mountPoint: HTMLElement, props: {}, element: HTMLElement | null) => void
   unmount: (spec: ElementSpec, mountPoint: HTMLElement) => void
 }
 
@@ -22,6 +22,7 @@ export interface Defaults {
   attributes?: string[]
   quiet?: boolean
   shadow?: boolean
+  retarget?: boolean
 }
 
 export interface ElementSpec {
@@ -30,6 +31,7 @@ export interface ElementSpec {
   attributes?: Array<string>
   quiet?: boolean
   shadow?: boolean
+  retarget?: boolean
 }
 
 export type ReactAdapter = Adapter

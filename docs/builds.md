@@ -2,11 +2,10 @@
 
 Remount comes in 3 flavors:
 
-| Version       | Description                           |
-| ------------- | ------------------------------------- |
-| `remount`     | ES Modules build - the default        |
-| `remount/es5` | CommonJS build                        |
-| `remount/es6` | Uses classes and other ES2015+ syntax |
+| Version       | Description                          |
+| ------------- | ------------------------------------ |
+| `remount`     | ES Modules build (default)           |
+| `remount/es5` | UMD CommonJS build (legacy browsers) |
 
 ## Using builds
 
@@ -37,3 +36,7 @@ When used like so, Remount will be available as `window.Remount`. Great for usin
 ```js
 <script src='https://cdn.jsdelivr.net/npm/remount/dist/remount.es5.js' />
 ```
+
+## Deprecated builds
+
+The `remount/es6` and `remount/esm` builds were deprecated in v0.10.

@@ -27,7 +27,9 @@
     "rollup": "^1.1.2",
     "rollup-plugin-babel": "^4.3.2",
     "rollup-plugin-babel-minify": "^7.0.0",
+    "rollup-plugin-commonjs": "^9.3.4",
     "rollup-plugin-copy": "^0.2.3",
+    "rollup-plugin-node-resolve": "^4.2.3",
     "rollup-plugin-server": "^0.7.0",
     "start-server-and-test": "^1.7.11",
     "tslint": "^5.12.1",
@@ -40,10 +42,8 @@
   },
   "files": [
     "index.js",
-    "dist/remount.*",
-    "es5.js",
-    "es6.js",
-    "esm.js"
+    "dist",
+    "es5.js"
   ],
   "homepage": "https://github.com/rstacruz/remount#readme",
   "jest": {

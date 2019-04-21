@@ -1,6 +1,21 @@
+## [v0.11.0]
+
+> Apr 22, 2019
+
+v0.11 brings improved create-react-app support!
+
+- Deprecate the `remount/es6` build. Just use the default `remount` build, which is now compatible with create-react-app. ([#12])
+- The bundles are now made a bit slimmer. ([#12])
+- Add demos in the repo, so you can try Remount in a sandbox. ([#12])
+
+[#12]: https://github.com/rstacruz/remount/pull/12
+[v0.11.0]: https://github.com/rstacruz/remount/compare/v0.10.0...v0.11.0
+
 ## [v0.10.0]
 
 > Apr 22, 2019
+
+v0.10 brings improved Shadow DOM support, and Rails Webpacker support!
 
 - Add a workaround for React elements in Shadow DOM mode. ([#8], [@rybon])
 - Fix compatibility with Webpacker by making the main export `.js` instead of `.mjs`. ([#11])

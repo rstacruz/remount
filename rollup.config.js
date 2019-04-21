@@ -1,5 +1,7 @@
 // rollup.config.js
 import babel from 'rollup-plugin-babel'
+import resolve from 'rollup-plugin-node-resolve'
+import commonjs from 'rollup-plugin-commonjs'
 import minify from 'rollup-plugin-babel-minify'
 import server from 'rollup-plugin-server'
 import copy from 'rollup-plugin-copy'
@@ -9,13 +11,16 @@ const IS_WATCH = process.argv.includes('--watch')
 
 const MINIFY = minify({ comments: false })
 
+// Modern builds will not bundle dependencies
+const PLUGINS = [resolve({ browser: true }), commonjs()]
+
 const BABEL = babel({
   exclude: 'node_modules/**'
 })
 
 const DEFAULTS = {
   input: 'index.js',
-  external: ['react', 'react-dom']
+  external: ['react', 'react-dom', 'react-shadow-dom-retarget-events']
 }
 
 const UMD = {
@@ -54,37 +59,28 @@ export default [
   // ES Modules
   {
     ...DEFAULTS,
+    plugins: [...PLUGINS],
     output: { file: 'dist/remount.js', format: 'esm' }
   },
 
   {
     ...DEFAULTS,
-    plugins: [MINIFY],
+    plugins: [...PLUGINS, MINIFY],
     output: { file: 'dist/remount.min.js', format: 'esm' }
-  },
-
-  // ES6
-  {
-    ...DEFAULTS,
-    output: { file: 'dist/remount.es6.js', ...UMD }
-  },
-
-  {
-    ...DEFAULTS,
-    plugins: [MINIFY],
-    output: { file: 'dist/remount.es6.min.js', ...UMD }
   },
 
   // ES5
   {
     ...DEFAULTS,
-    plugins: [BABEL],
+    external: ['react', 'react-dom'],
+    plugins: [...PLUGINS, BABEL],
     output: { file: 'dist/remount.es5.js', ...UMD }
   },
 
   {
     ...DEFAULTS,
-    plugins: [BABEL, MINIFY],
+    external: ['react', 'react-dom'],
+    plugins: [...PLUGINS, BABEL, MINIFY],
     output: { file: 'dist/remount.es5.min.js', ...UMD }
   },
 

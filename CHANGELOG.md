@@ -1,4 +1,17 @@
-## Pre-v1.0.0 changes
+## [v0.10.0]
+
+> Apr 22, 2019
+
+- Add a workaround for React elements in Shadow DOM mode. ([#8], [@rybon])
+- Fix compatibility with Webpacker by making the main export `.js` instead of `.mjs`. ([#11])
+- Deprecate importing using `import remount from 'remount/esm'` - just use `'remount'` instead. ([#11])
+
+[#8]: https://github.com/rstacruz/remount/pull/8
+[#11]: https://github.com/rstacruz/remount/pull/11
+[@rybon]: https://github.com/rybon
+[v0.10.0]: https://github.com/rstacruz/remount/compare/v0.9.5...v0.10.0
+
+## v0.1 to v0.9
 
 [v0.9.5]
 

@@ -8,7 +8,7 @@ Remount supports 2 modes of operations: Custom Elements and Mutation Observers. 
 
 | Feature              |     IE     |   Chrome   |  Firefox   |     iOS     |
 | -------------------- | :--------: | :--------: | :--------: | :---------: |
-| [Custom elements]    |     -      | 67+ (2018) |     -      |             |
+| [Custom elements]    |     -      | 67+ (2018) | 63+ (2018) |             |
 | [Mutation observers] | 11+ (2013) | 18+ (2012) | 14+ (2012) | 6.1+ (2013) |
 
 [custom elements]: https://caniuse.com/#search=custom%20elements

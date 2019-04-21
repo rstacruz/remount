@@ -82,12 +82,16 @@ export function define(components, defaults) {
     Strategy.defineElement(elSpec, name, {
       onMount(element, mountPoint) {
         const props = getProps(element, elSpec.attributes)
-        adapter.mount(elSpec, mountPoint, props)
+        if (elSpec.shadow && elSpec.retarget) {
+          adapter.mount(elSpec, mountPoint, props, element)
+        } else {
+          adapter.mount(elSpec, mountPoint, props, null)
+        }
       },
 
       onUpdate(element, mountPoint) {
         const props = getProps(element, elSpec.attributes)
-        adapter.update(elSpec, mountPoint, props)
+        adapter.update(elSpec, mountPoint, props, null)
       },
 
       onUnmount(element, mountPoint) {

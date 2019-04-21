@@ -3,15 +3,17 @@
 
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
+import retargetEvents from 'react-shadow-dom-retarget-events'
 
 /**
  * @param {ElementSpec} elSpec
  * @param {HTMLElement} mountPoint
  * @param {object} props
+ * @param {HTMLElement | null} element
  */
 
-export function mount(elSpec, mountPoint, props) {
-  return update(elSpec, mountPoint, props)
+export function mount(elSpec, mountPoint, props, element) {
+  return update(elSpec, mountPoint, props, element)
 }
 
 /**
@@ -21,12 +23,16 @@ export function mount(elSpec, mountPoint, props) {
  * @param {ElementSpec} elSpec
  * @param {HTMLElement} mountPoint
  * @param {object} props
+ * @param {HTMLElement | null} element
  */
 
-export function update(elSpec, mountPoint, props) {
+export function update(elSpec, mountPoint, props, element) {
   const { component } = elSpec
   const reactElement = React.createElement(component, props)
   ReactDOM.render(reactElement, mountPoint)
+  if (element) {
+    retargetEvents(element.shadowRoot)
+  }
 }
 
 /**

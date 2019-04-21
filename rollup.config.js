@@ -69,19 +69,6 @@ export default [
     output: { file: 'dist/remount.min.js', format: 'esm' }
   },
 
-  // ES6
-  {
-    ...DEFAULTS,
-    plugins: [...PLUGINS],
-    output: { file: 'dist/remount.es6.js', ...UMD }
-  },
-
-  {
-    ...DEFAULTS,
-    plugins: [...PLUGINS, MINIFY],
-    output: { file: 'dist/remount.es6.min.js', ...UMD }
-  },
-
   // ES5
   {
     ...DEFAULTS,

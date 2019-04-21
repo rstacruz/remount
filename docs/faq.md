@@ -36,13 +36,23 @@ Yes, but it'd be better if you just use React. You're sure to have better perfor
 
 > Q: How do I use it with create-react-app?
 
-Use the `remount/es6` variant. See [builds](./builds.md) documentation on how.
+Remount works in create-react-app just fine! Try adding this to your `src/index.js`:
+
+```js
+import { define } from 'remount'
+
+define({
+  'x-hello': () => {
+    return <div>Hello from Remount :)</div>
+  }
+})
+```
 
 ## Codesandbox
 
 > Q: How do I use Remount on Codesandbox?
 
-The default Codesandbox React template is based on create-react-app. See the [answer above](#create-react-app). You can also fork [this Codesandbox template](https://codesandbox.io/s/yqqv0zz16x).
+The default Codesandbox React template is based on create-react-app. See the [answer above](#create-react-app).
 
 ## Jsfiddle
 

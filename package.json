@@ -42,10 +42,8 @@
   },
   "files": [
     "index.js",
-    "dist/remount.*",
-    "es5.js",
-    "es6.js",
-    "esm.js"
+    "dist",
+    "es5.js"
   ],
   "homepage": "https://github.com/rstacruz/remount#readme",
   "jest": {

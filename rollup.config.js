@@ -11,12 +11,8 @@ const IS_WATCH = process.argv.includes('--watch')
 
 const MINIFY = minify({ comments: false })
 
-const PLUGINS = [
-  resolve({
-    browser: true
-  }),
-  commonjs()
-]
+// Modern builds will not bundle dependencies
+const PLUGINS = [resolve({ browser: true }), commonjs()]
 
 const BABEL = babel({
   exclude: 'node_modules/**'
@@ -24,7 +20,7 @@ const BABEL = babel({
 
 const DEFAULTS = {
   input: 'index.js',
-  external: ['react', 'react-dom']
+  external: ['react', 'react-dom', 'react-shadow-dom-retarget-events']
 }
 
 const UMD = {
@@ -89,12 +85,14 @@ export default [
   // ES5
   {
     ...DEFAULTS,
+    external: ['react', 'react-dom'],
     plugins: [...PLUGINS, BABEL],
     output: { file: 'dist/remount.es5.js', ...UMD }
   },
 
   {
     ...DEFAULTS,
+    external: ['react', 'react-dom'],
     plugins: [...PLUGINS, BABEL, MINIFY],
     output: { file: 'dist/remount.es5.min.js', ...UMD }
   },

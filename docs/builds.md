@@ -4,16 +4,16 @@ Remount comes in 3 flavors:
 
 | Version       | Description                           |
 | ------------- | ------------------------------------- |
-| `remount/es5` | Supports legacy browsers (default)    |
+| `remount`     | ES Modules build - the default        |
+| `remount/es5` | CommonJS build                        |
 | `remount/es6` | Uses classes and other ES2015+ syntax |
-| `remount/esm` | es modules .mjs build                 |
 
 ## Using builds
 
-You can use them like so:
+If you'd like to use an alternate build, you can import from it like so:
 
 ```js
-import { define } from 'remount/es6'
+import { define } from 'remount/es5'
 ```
 
 Or if you're using Webpack:
@@ -24,7 +24,7 @@ module.exports = {
   /* ... */
   resolve: {
     alias: {
-      remount: 'remount/es6'
+      remount: 'remount/es5'
     }
   }
 }
@@ -35,7 +35,5 @@ module.exports = {
 When used like so, Remount will be available as `window.Remount`. Great for using in JSFiddle/Codepen.
 
 ```js
-<script src='https://cdn.jsdelivr.net/npm/remount'></script>
-<script src='https://cdn.jsdelivr.net/npm/remount/dist/remount.es6.js'></script>
-<script src='https://cdn.jsdelivr.net/npm/remount/dist/remount.esm.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/remount/dist/remount.es5.js' />
 ```

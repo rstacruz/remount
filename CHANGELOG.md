@@ -3,6 +3,8 @@
 > Apr 22, 2019
 
 - Add a workaround for React elements in Shadow DOM mode. ([#8], [@rybon])
+- Fix compatibility with Webpacker by making the main export `.js` instead of `.mjs`
+- Deprecate importing using `import remount from 'remount/esm'` - just use `'remount'` instead.
 
 [#8]: https://github.com/rstacruz/remount/pull/8
 [@rybon]: https://github.com/rybon

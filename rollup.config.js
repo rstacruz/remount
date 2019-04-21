@@ -54,13 +54,13 @@ export default [
   // ES Modules
   {
     ...DEFAULTS,
-    output: { file: 'dist/remount.esm.mjs', format: 'esm' }
+    output: { file: 'dist/remount.js', format: 'esm' }
   },
 
   {
     ...DEFAULTS,
     plugins: [MINIFY],
-    output: { file: 'dist/remount.esm.min.mjs', format: 'esm' }
+    output: { file: 'dist/remount.min.js', format: 'esm' }
   },
 
   // ES6

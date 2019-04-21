@@ -43,7 +43,7 @@
     "dist/remount.*",
     "es5.js",
     "es6.js",
-    "esm.mjs"
+    "esm.js"
   ],
   "homepage": "https://github.com/rstacruz/remount#readme",
   "jest": {
@@ -62,7 +62,7 @@
   ],
   "license": "MIT",
   "main": "dist/remount.es5.js",
-  "module": "dist/remount.esm.mjs",
+  "module": "dist/remount.js",
   "peerDependencies": {
     "react": ">= 15.0.0",
     "react-dom": ">= 15.0.0"

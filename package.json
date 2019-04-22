@@ -1,15 +1,19 @@
 {
-  "name": "remount",
-  "description": "Mount React components to the DOM using custom elements",
-  "version": "0.11.0",
-  "author": "Rico Sta. Cruz <rstacruz@users.noreply.github.com>",
-  "bugs": {
-    "url": "https://github.com/rstacruz/remount/issues"
+  "name": "remount-workspace",
+  "private": true,
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.2.3",
     "@babel/preset-react": "^7.0.0",
+    "@babel/preset-typescript": "^7.3.3",
     "@types/jest": "^24.0.5",
     "@types/puppeteer": "^1.12.1",
     "@types/react": "^16.8.3",
@@ -35,55 +39,5 @@
     "tslint": "^5.12.1",
     "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.3.3"
-  },
-  "directories": {
-    "doc": "docs",
-    "example": "examples"
-  },
-  "files": [
-    "index.js",
-    "dist",
-    "es5.js"
-  ],
-  "homepage": "https://github.com/rstacruz/remount#readme",
-  "jest": {
-    "testPathIgnorePatterns": [
-      "/node_modules/",
-      "/browser_test/",
-      "/dist/"
-    ]
-  },
-  "keywords": [
-    "custom element",
-    "mount",
-    "onmount",
-    "react",
-    "web component"
-  ],
-  "license": "MIT",
-  "main": "dist/remount.es5.js",
-  "module": "dist/remount.js",
-  "peerDependencies": {
-    "react": ">= 15.0.0",
-    "react-dom": ">= 15.0.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/rstacruz/remount.git"
-  },
-  "scripts": {
-    "build": "rollup --config",
-    "prettier": "prettier '*.js' 'src/**/*.{js,ts}'",
-    "lint": "tslint --project .",
-    "deploy": "gh-pages -d . -s 'dist/**/*'",
-    "tsc": "tsc",
-    "jest": "jest",
-    "prepare": "run-s build",
-    "test": "start-server-and-test watch http://127.0.0.1:10049/ jest",
-    "watch": "env NODE_ENV=test-rollup rollup --config --watch"
-  },
-  "dependencies": {
-    "@babel/preset-typescript": "^7.3.3",
-    "react-shadow-dom-retarget-events": "^1.0.8"
   }
 }

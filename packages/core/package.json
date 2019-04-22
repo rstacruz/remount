@@ -1,5 +1,5 @@
 {
-  "name": "remount",
+  "name": "@remount/core",
   "description": "Mount React components to the DOM using custom elements",
   "version": "0.11.0",
   "author": "Rico Sta. Cruz <rstacruz@users.noreply.github.com>",

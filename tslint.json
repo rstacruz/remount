@@ -1,17 +1,20 @@
 {
-    "defaultSeverity": "error",
-    "extends": [
-        "tslint:recommended",
-        "tslint-config-prettier"
-    ],
-    "jsRules": {},
-    "rules": {
-        // Allow interfaces even if they're not prefixed with 'I' (eg, 'IUser').
-        "interface-name": false,
-        // Don't be so strict about how object literal keys are sorted.
-        "object-literal-sort-keys": false,
-        // Don't require the 'public' keyword.
-        "member-access": [true, "no-public"]
-    },
-    "rulesDirectory": []
+"defaultSeverity": "error",
+"extends": [
+  "tslint:recommended",
+  "tslint-config-prettier"
+],
+"jsRules": {
+  "object-literal-sort-keys": false,
+  "curly": false,
+  "no-empty": false
+},
+"rules": {
+  "interface-name": false,
+  "object-literal-sort-keys": false,
+  "member-access": [true, "no-public"],
+  "curly": false,
+  "no-empty": false
+},
+"rulesDirectory": []
 }

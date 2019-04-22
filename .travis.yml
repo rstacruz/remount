@@ -9,6 +9,7 @@ addons:
     packages:
       - libnss3
 script:
+  - yarn build
   - yarn check
 cache:
   yarn: true

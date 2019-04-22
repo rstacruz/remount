@@ -9,10 +9,7 @@ addons:
     packages:
       - libnss3
 script:
-  - yarn test
-  - yarn prettier --list-different
-  - yarn lint
-  - yarn tsc
+  - yarn check
 cache:
   yarn: true
   directories:

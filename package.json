@@ -4,6 +4,17 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "build": "lerna exec --stream --concurrency 1 yarn prepare",
+    "test": "lerna exec --stream --concurrency 1 yarn test",
+    "tslint:check": "tslint --project .",
+    "tslint:fix": "tslint --project . --fix",
+    "tsc:check": "tsc",
+    "prettier:check": "prettier --list-different 'packages/*/*.{js,ts}' 'packages/*/src/**/*.{js,ts}'",
+    "prettier:fix": "prettier --write 'packages/*/*.{js,ts}' 'packages/*/src/**/*.{js,ts}'",
+    "fix": "run-s -sl '*:fix'",
+    "check": "run-s -sl '*:check'"
+  },
   "workspaces": {
     "packages": [
       "packages/*"

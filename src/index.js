@@ -1,7 +1,7 @@
 /** @typedef { import('./types').ElementMap } ElementMap */
 /** @typedef { import('./types').Defaults } Defaults */
 
-import { define } from './core'
+import { define, getStrategy } from './core'
 import * as ReactAdapter from './react'
 
 /**
@@ -16,4 +16,4 @@ function defineReact(components = {}, options = {}) {
   })
 }
 
-export { defineReact as define }
+export { defineReact as define, getStrategy }

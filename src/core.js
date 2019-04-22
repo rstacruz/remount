@@ -9,7 +9,6 @@
 
 import * as CustomElementsStrategy from './strategies/custom_elements'
 import * as MutationObserverStrategy from './strategies/mutation_observer'
-import * as ReactAdapter from './react'
 
 /**
  * Cache of the strategy determined by `getStrategy()`.
@@ -75,8 +74,9 @@ export function define(components, defaults) {
     /** @type ElementSpec */
     const elSpec = Object.assign({}, defaults, toElementSpec(components[name]))
 
-    /** @type Adapter */
-    const adapter = elSpec.adapter || ReactAdapter
+    /** @type Adapter | null | undefined */
+    const adapter = elSpec.adapter
+    if (!adapter) throw new Error('No suitable adapter found')
 
     // Define a custom element.
     Strategy.defineElement(elSpec, name, {

@@ -4,6 +4,12 @@ language: node_js
 dist: trusty
 node_js:
   - 10
+
+# https://yarnpkg.com/en/docs/install#alternatives-tab
+before_install:
+  - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.15.2
+  - export PATH="$HOME/.yarn/bin:$PATH"
+
 addons:
   apt:
     packages:

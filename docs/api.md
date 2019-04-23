@@ -99,6 +99,8 @@ While being more verbose than [named attributes](#named-attributes), it lets you
 
 If a `props-json` property exists, all other named attributes will be ignored.
 
+**NOTE:** Be careful when serializing arbitrary JSON into a `props-json` property, as it may inadvertently open a security hole for XSS. Use the [`serialize-javascript`](https://github.com/yahoo/serialize-javascript) package instead of `JSON.stringify` to be safe.
+
 ### Shadow DOM
 
 Remount doesn't use Shadow DOM by default. To enable it, pass the `shadow: true` option.

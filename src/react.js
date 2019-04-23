@@ -30,7 +30,7 @@ export function update(elSpec, mountPoint, props, element) {
   const { component } = elSpec
   const reactElement = React.createElement(component, props)
   ReactDOM.render(reactElement, mountPoint)
-  if (element) {
+  if (element && element.shadowRoot) {
     retargetEvents(element.shadowRoot)
   }
 }

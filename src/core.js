@@ -157,7 +157,10 @@ function getProps(element, attributes) {
     /** @type PropertyMap */ result,
     /** @type string */ attribute
   ) => {
-    result[attribute] = element.getAttribute(attribute)
+    const value = element.getAttribute(attribute)
+    if (value && value !== 'undefined' && value !== 'null') {
+      result[attribute] = value
+    }
     return result
   }, {})
 }

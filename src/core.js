@@ -158,7 +158,12 @@ function getProps(element, attributes) {
     /** @type string */ attribute
   ) => {
     const value = element.getAttribute(attribute)
-    if (value !== 'undefined' && value !== 'null' && value !== 'NaN' && value !== 'false') {
+    if (
+      value !== 'undefined' &&
+      value !== 'null' &&
+      value !== 'NaN' &&
+      value !== 'false'
+    ) {
       result[attribute] = value
     }
     return result

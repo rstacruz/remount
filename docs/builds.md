@@ -37,6 +37,13 @@ When used like so, Remount will be available as `window.Remount`. Great for usin
 <script src='https://cdn.jsdelivr.net/npm/remount/dist/remount.es5.js' />
 ```
 
+## remount/es5 tradeoffs
+
+The ES5 build (`remount/es5`) transpiles with some legacy workarounds. It's provided for a few reasons:
+
+- Support for legacy browsers (IE9, 2011)
+- Support for build tools that don't work with modern JavaScript (eg, UglifyJS)
+
 ## Deprecated builds
 
 The `remount/es6` and `remount/esm` builds were deprecated in v0.10.

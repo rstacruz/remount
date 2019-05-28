@@ -1,6 +1,6 @@
 # Builds
 
-Remount comes in 3 flavors:
+Remount comes in 2 flavors:
 
 | Version       | Description                          |
 | ------------- | ------------------------------------ |

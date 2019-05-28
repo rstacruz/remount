@@ -28,3 +28,5 @@ To support IE9, add the MutationObserver polyfill for legacy IE support. Here ar
   ```js
   <script src="https://cdn.polyfill.io/v2/polyfill.js?features=MutationObserver" />
   ```
+
+You may also need to use the legacy `remount/es5` build of Remount. See [Builds](./builds.md) for more info on this.

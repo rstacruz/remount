@@ -6,8 +6,6 @@ import minify from 'rollup-plugin-babel-minify'
 import server from 'rollup-plugin-server'
 import copy from 'rollup-plugin-copy'
 
-const IS_TEST = process.env.NODE_ENV === 'test-rollup'
-
 // https://github.com/rollup/rollup-watch/issues/48
 const IS_WATCH = !!process.env.ROLLUP_WATCH
 
@@ -41,23 +39,7 @@ const SERVE_PLUGINS = IS_WATCH
     ]
   : []
 
-const TEST_MODULES = IS_TEST
-  ? [
-      {
-        input: 'browser_test/test.js',
-        plugins: [
-          BABEL,
-          copy({
-            'browser_test/index.html.template': 'dist/index.html'
-          }),
-          ...SERVE_PLUGINS
-        ],
-        output: { file: 'dist/test.js', format: 'cjs' }
-      }
-    ]
-  : []
-
-export default [
+const getConfig = () => [
   // ES Modules
   {
     ...DEFAULTS,
@@ -86,5 +68,24 @@ export default [
     output: { file: 'dist/remount.es5.min.js', ...UMD }
   },
 
-  ...TEST_MODULES
+  ...(IS_WATCH ? getTestModules() : [])
 ]
+
+const getTestModules = () => [
+  {
+    input: 'browser_test/test.js',
+    plugins: [
+      BABEL,
+      copy({
+        targets: {
+          src: 'browser_test/index.html.template',
+          dest: 'dist/index.html'
+        }
+      }),
+      ...SERVE_PLUGINS
+    ],
+    output: { file: 'dist/test.js', format: 'cjs' }
+  }
+]
+
+export default getConfig()

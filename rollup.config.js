@@ -3,7 +3,7 @@ import babel from 'rollup-plugin-babel'
 import resolve from 'rollup-plugin-node-resolve'
 import commonjs from 'rollup-plugin-commonjs'
 import minify from 'rollup-plugin-babel-minify'
-import server from 'rollup-plugin-server'
+import serve from 'rollup-plugin-serve'
 import copy from 'rollup-plugin-copy'
 
 // https://github.com/rollup/rollup-watch/issues/48
@@ -31,7 +31,7 @@ const UMD = {
 
 const SERVE_PLUGINS = IS_WATCH
   ? [
-      server({
+      serve({
         // open: true,
         contentBase: 'dist',
         port: +(process.env.PORT || 10049)
@@ -77,10 +77,13 @@ const getTestModules = () => [
     plugins: [
       BABEL,
       copy({
-        targets: {
-          src: 'browser_test/index.html.template',
-          dest: 'dist/index.html'
-        }
+        verbose: true,
+        targets: [
+          {
+            src: 'browser_test/index.html',
+            dest: 'dist'
+          }
+        ]
       }),
       ...SERVE_PLUGINS
     ],

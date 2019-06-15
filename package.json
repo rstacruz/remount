@@ -7,34 +7,34 @@
     "url": "https://github.com/rstacruz/remount/issues"
   },
   "devDependencies": {
-    "@babel/core": "^7.2.2",
-    "@babel/preset-env": "^7.2.3",
+    "@babel/core": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
     "@babel/preset-react": "^7.0.0",
-    "@types/jest": "^24.0.5",
-    "@types/puppeteer": "^1.12.1",
-    "@types/react": "^16.8.3",
-    "@types/react-dom": "^16.8.2",
+    "@types/jest": "^24.0.14",
+    "@types/puppeteer": "^1.12.4",
+    "@types/react": "^16.8.20",
+    "@types/react-dom": "^16.8.4",
     "babel-core": "^7.0.0-bridge.0",
-    "babel-jest": "^23.6.0",
-    "expect-puppeteer": "3.5.1",
+    "babel-jest": "^24.8.0",
+    "expect-puppeteer": "4.1.1",
     "gh-pages": "^2.0.1",
-    "jest": "^23.6.0",
+    "jest": "^24.8.0",
     "npm-run-all": "^4.1.5",
-    "prettier": "^1.15.3",
-    "puppeteer": "^1.12.2",
-    "react": "^16.7.0",
-    "react-dom": "^16.7.0",
-    "rollup": "^1.1.2",
+    "prettier": "^1.18.2",
+    "puppeteer": "^1.17.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "rollup": "^1.15.5",
     "rollup-plugin-babel": "^4.3.2",
-    "rollup-plugin-babel-minify": "^7.0.0",
-    "rollup-plugin-commonjs": "^9.3.4",
-    "rollup-plugin-copy": "^0.2.3",
-    "rollup-plugin-node-resolve": "^4.2.3",
+    "rollup-plugin-babel-minify": "^8.0.0",
+    "rollup-plugin-commonjs": "^10.0.0",
+    "rollup-plugin-copy": "^3.0.0",
+    "rollup-plugin-node-resolve": "^5.0.2",
     "rollup-plugin-server": "^0.7.0",
-    "start-server-and-test": "^1.7.11",
-    "tslint": "^5.12.1",
+    "start-server-and-test": "^1.9.1",
+    "tslint": "^5.17.0",
     "tslint-config-prettier": "^1.18.0",
-    "typescript": "^3.3.3"
+    "typescript": "^3.5.2"
   },
   "directories": {
     "doc": "docs",
@@ -84,6 +84,6 @@
   },
   "dependencies": {
     "@babel/preset-typescript": "^7.3.3",
-    "react-shadow-dom-retarget-events": "^1.0.8"
+    "react-shadow-dom-retarget-events": "^1.0.10"
   }
 }

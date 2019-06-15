@@ -38,7 +38,7 @@ export interface Defaults {
 export interface ElementSpec {
   component: Component
   adapter?: Adapter
-  attributes?: Array<string>
+  attributes?: string[]
   quiet?: boolean
   shadow?: boolean
   retarget?: boolean
@@ -69,6 +69,5 @@ export interface ObserverList {
 
 export type Each =
   | ((list: NodeList, fn: (item: Node) => any) => void)
-  | (<T>(list: HTMLCollectionOf<T>, fn: (item: T) => any) => void)
+  | (<T>(list: T[], fn: (item: T) => any) => void)
   | ((list: HTMLCollection, fn: (item: HTMLElement) => any) => void)
-//  | (<T>(list: T[], fn: (item: T) => any) => void)

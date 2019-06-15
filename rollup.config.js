@@ -3,11 +3,11 @@ import babel from 'rollup-plugin-babel'
 import resolve from 'rollup-plugin-node-resolve'
 import commonjs from 'rollup-plugin-commonjs'
 import minify from 'rollup-plugin-babel-minify'
-import server from 'rollup-plugin-server'
+import serve from 'rollup-plugin-serve'
 import copy from 'rollup-plugin-copy'
 
-const IS_TEST = process.env.NODE_ENV === 'test-rollup'
-const IS_WATCH = process.argv.includes('--watch')
+// https://github.com/rollup/rollup-watch/issues/48
+const IS_WATCH = !!process.env.ROLLUP_WATCH
 
 const MINIFY = minify({ comments: false })
 
@@ -31,7 +31,7 @@ const UMD = {
 
 const SERVE_PLUGINS = IS_WATCH
   ? [
-      server({
+      serve({
         // open: true,
         contentBase: 'dist',
         port: +(process.env.PORT || 10049)
@@ -39,23 +39,7 @@ const SERVE_PLUGINS = IS_WATCH
     ]
   : []
 
-const TEST_MODULES = IS_TEST
-  ? [
-      {
-        input: 'browser_test/test.js',
-        plugins: [
-          BABEL,
-          copy({
-            'browser_test/index.html.template': 'dist/index.html'
-          }),
-          ...SERVE_PLUGINS
-        ],
-        output: { file: 'dist/test.js', format: 'cjs' }
-      }
-    ]
-  : []
-
-export default [
+const getConfig = () => [
   // ES Modules
   {
     ...DEFAULTS,
@@ -84,5 +68,27 @@ export default [
     output: { file: 'dist/remount.es5.min.js', ...UMD }
   },
 
-  ...TEST_MODULES
+  ...(IS_WATCH ? getTestModules() : [])
 ]
+
+const getTestModules = () => [
+  {
+    input: 'browser_test/test.js',
+    plugins: [
+      BABEL,
+      copy({
+        verbose: true,
+        targets: [
+          {
+            src: 'browser_test/index.html',
+            dest: 'dist'
+          }
+        ]
+      }),
+      ...SERVE_PLUGINS
+    ],
+    output: { file: 'dist/test.js', format: 'cjs' }
+  }
+]
+
+export default getConfig()

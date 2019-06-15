@@ -38,7 +38,7 @@ export interface Defaults {
 export interface ElementSpec {
   component: Component
   adapter?: Adapter
-  attributes?: Array<string>
+  attributes?: string[]
   quiet?: boolean
   shadow?: boolean
   retarget?: boolean

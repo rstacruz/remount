@@ -7,7 +7,9 @@ import server from 'rollup-plugin-server'
 import copy from 'rollup-plugin-copy'
 
 const IS_TEST = process.env.NODE_ENV === 'test-rollup'
-const IS_WATCH = process.argv.includes('--watch')
+
+// https://github.com/rollup/rollup-watch/issues/48
+const IS_WATCH = !!process.env.ROLLUP_WATCH
 
 const MINIFY = minify({ comments: false })
 

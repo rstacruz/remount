@@ -4,15 +4,19 @@ language: node_js
 dist: trusty
 node_js:
   - 10
+
+# https://yarnpkg.com/en/docs/install#alternatives-tab
+before_install:
+  - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.15.2
+  - export PATH="$HOME/.yarn/bin:$PATH"
+
 addons:
   apt:
     packages:
       - libnss3
 script:
-  - yarn test
-  - yarn prettier --list-different
-  - yarn lint
-  - yarn tsc
+  - yarn build
+  - yarn check
 cache:
   yarn: true
   directories:

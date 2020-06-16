@@ -157,7 +157,7 @@ function getProps(element, attributes) {
     /** @type PropertyMap */ result,
     /** @type string */ attribute
   ) => {
-    result[attribute] = element.getAttribute(attribute)
+    result[attribute] = element.getAttribute(attribute) || element[attribute];
     return result
   }, {})
 }

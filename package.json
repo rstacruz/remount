@@ -3,6 +3,14 @@
   "description": "Mount React components to the DOM using custom elements",
   "version": "0.11.0",
   "author": "Rico Sta. Cruz <rstacruz@users.noreply.github.com>",
+  "source": "src/index.js",
+  "umd:main": "dist/remount.umd.js",
+  "main": "dist/remount.js",
+  "module": "dist/remount.m.js",
+  "exports": {
+    "require": "./dist/remount.js",
+    "default": "./dist/remount.modern.js"
+  },
   "bugs": {
     "url": "https://github.com/rstacruz/remount/issues"
   },
@@ -61,8 +69,6 @@
     "web component"
   ],
   "license": "MIT",
-  "main": "dist/remount.es5.js",
-  "module": "dist/remount.js",
   "peerDependencies": {
     "react": ">= 15.0.0",
     "react-dom": ">= 15.0.0"
@@ -72,7 +78,7 @@
     "url": "https://github.com/rstacruz/remount.git"
   },
   "scripts": {
-    "build": "rollup --config",
+    "build": "microbundle src/index.js",
     "prettier": "prettier '*.js' 'src/**/*.{js,ts}'",
     "lint": "tslint --project .",
     "deploy": "gh-pages -d . -s 'dist/**/*'",
@@ -84,6 +90,7 @@
   },
   "dependencies": {
     "@babel/preset-typescript": "^7.16.7",
+    "microbundle": "^0.14.2",
     "react-shadow-dom-retarget-events": "^1.1.0"
   }
 }

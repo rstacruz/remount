@@ -5,11 +5,8 @@
   ],
   "env": {
     "test": {
-      "presets": ["@babel/preset-env", "@babel/preset-react"]
-    },
-    "test-rollup": {
       "presets": [
-        ["@babel/preset-env", { "modules": false }],
+        ["@babel/preset-env", { "targets": { "node": "current" } }],
         "@babel/preset-react"
       ]
     }

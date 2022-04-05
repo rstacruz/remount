@@ -62,7 +62,7 @@ export function defineElement(elSpec, elName, events) {
   }
 
   const observer = new MutationObserver(
-    /** @type MutationCallback */ mutations => {
+    /** @type MutationCallback */ (mutations) => {
       each(mutations, (/** @type MutationRecord */ mutation) => {
         each(mutation.addedNodes, (/** @type Node */ node) => {
           if (isElement(node)) {
@@ -75,7 +75,7 @@ export function defineElement(elSpec, elName, events) {
 
   observer.observe(document.body, {
     childList: true,
-    subtree: true
+    subtree: true,
   })
 
   observers[name] = /* true */ observer
@@ -123,7 +123,7 @@ function checkForMount(node, elName, events) {
 function observeForUpdates(node, events) {
   const { onUpdate } = events
   const observer = new MutationObserver(
-    /** @type MutationCallback */ mutations => {
+    /** @type MutationCallback */ (mutations) => {
       each(mutations, (/** @type MutationRecord */ mutation) => {
         const targetNode = mutation.target
         if (isElement(targetNode)) {
@@ -152,7 +152,7 @@ function observeForRemoval(node, events) {
   }
 
   const observer = new MutationObserver(
-    /** @type MutationCallback */ mutations => {
+    /** @type MutationCallback */ (mutations) => {
       each(mutations, (/** @type MutationRecord */ mutation) => {
         each(mutation.removedNodes, (/** @type Node */ subnode) => {
           if (node !== subnode) {

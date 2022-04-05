@@ -30,7 +30,7 @@ export function getStrategy() {
   }
 
   const StrategyUsed = [CustomElementsStrategy, MutationObserverStrategy].find(
-    strategy => !!strategy.isSupported()
+    (strategy) => !!strategy.isSupported()
   )
 
   if (!StrategyUsed) {
@@ -96,7 +96,7 @@ export function define(components, defaults) {
 
       onUnmount(element, mountPoint) {
         adapter.unmount(elSpec, mountPoint)
-      }
+      },
     })
   })
 }
@@ -153,11 +153,11 @@ function getProps(element, attributes) {
   }
 
   const names = attributes || []
-  return names.reduce((
-    /** @type PropertyMap */ result,
-    /** @type string */ attribute
-  ) => {
-    result[attribute] = element.getAttribute(attribute)
-    return result
-  }, {})
+  return names.reduce(
+    (/** @type PropertyMap */ result, /** @type string */ attribute) => {
+      result[attribute] = element.getAttribute(attribute)
+      return result
+    },
+    {}
+  )
 }

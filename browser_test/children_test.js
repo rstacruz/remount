@@ -1,8 +1,15 @@
 /* eslint-env mocha */
-import { React, Remount, root, IS_DEBUG, raf, assert } from './setup'
+import { React, Remount, root, IS_DEBUG, raf, assert } from './setup.js'
 
-const Dumper = props => {
-  return <span className='dumper'>[{JSON.stringify(props)}]</span>
+const Dumper = (props) => {
+  // return <span className='dumper'>[{JSON.stringify(props)}]</span>
+  return React.createElement(
+    'span',
+    { className: 'dumper' },
+    '[',
+    JSON.stringify(props),
+    ']'
+  )
 }
 
 describe('Children', () => {

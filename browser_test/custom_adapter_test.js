@@ -1,6 +1,6 @@
 /* eslint-env mocha */
 
-import { Remount, assert, raf, root } from './setup'
+import { Remount, assert, raf, root } from './setup.js'
 
 describe('Custom adapters', () => {
   let div
@@ -19,15 +19,15 @@ describe('Custom adapters', () => {
   beforeEach(() => {
     calls = []
     MyCustomAdapter = {
-      mount (a, b) {
+      mount(a, b) {
         calls.push({ method: 'mount', args: [a, b] })
       },
-      update (a, b) {
+      update(a, b) {
         calls.push({ method: 'update', args: [a, b] })
       },
-      unmount (a, b, c) {
+      unmount(a, b, c) {
         calls.push({ method: 'unmount', args: [a, b, c] })
-      }
+      },
     }
   })
 
@@ -102,28 +102,28 @@ describe('Example vanilla adapter', () => {
 
   // A simple adapter that delegates to the component
   const VanillaAdapter = {
-    mount (spec, el, props) {
+    mount(spec, el, props) {
       spec.component.mount(spec, el, props)
     },
-    update (spec, el, props) {
+    update(spec, el, props) {
       spec.component.update(spec, el, props)
     },
-    unmount (spec, el) {
+    unmount(spec, el) {
       spec.component.unmount(spec, el)
-    }
+    },
   }
 
   it('calls update()', () => {
     const MyComponent = {
-      mount (_, el) {
+      mount(_, el) {
         el.innerHTML = 'Hey :)'
       },
-      update (_, el) {
+      update(_, el) {
         // pass
       },
-      unmount (_, el) {
+      unmount(_, el) {
         // pass
-      }
+      },
     }
 
     Remount.define({ 'x-chocolate': MyComponent }, { adapter: VanillaAdapter })

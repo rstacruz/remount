@@ -1,12 +1,26 @@
 /* eslint-env mocha */
-import { assert, React, Remount, IS_DEBUG, raf, root } from './setup'
+import { assert, React, Remount, IS_DEBUG, raf, root } from './setup.js'
 
 const Greeter = ({ name }) => {
-  return <span className='greeter'>Hello {name || '(unknown)'}!</span>
+  // return <span className='greeter'>Hello {name || '(unknown)'}!</span>
+  return React.createElement(
+    'span',
+    { className: 'greeter' },
+    'Hello ',
+    name || '(unknown)',
+    '!'
+  )
 }
 
-const Dumper = props => {
-  return <span className='dumper'>[{JSON.stringify(props)}]</span>
+const Dumper = (props) => {
+  // return <span className='dumper'>[{JSON.stringify(props)}]</span>
+  return React.createElement(
+    'span',
+    { className: 'dumper' },
+    '[',
+    JSON.stringify(props),
+    ']'
+  )
 }
 
 describe('Remount', () => {
@@ -45,8 +59,8 @@ describe('Remount', () => {
     it('accepts { component }', () => {
       Remount.define({
         'x-apple': {
-          component: Greeter
-        }
+          component: Greeter,
+        },
       })
 
       div.innerHTML = `<x-apple props-json='{"name":"Apple"}'></x-apple>`
@@ -59,8 +73,8 @@ describe('Remount', () => {
       Remount.define({
         'x-banana': {
           component: Dumper,
-          attributes: ['name']
-        }
+          attributes: ['name'],
+        },
       })
 
       div.innerHTML = `<x-banana name='Banana'></x-banana>`
@@ -73,8 +87,8 @@ describe('Remount', () => {
       Remount.define({
         'x-cherry': {
           component: Dumper,
-          attributes: ['name']
-        }
+          attributes: ['name'],
+        },
       })
 
       div.innerHTML = `<x-cherry NAME='Cherry'></x-cherry>`
@@ -87,8 +101,8 @@ describe('Remount', () => {
       Remount.define({
         'x-guava': {
           component: Dumper,
-          attributes: ['name']
-        }
+          attributes: ['name'],
+        },
       })
 
       div.innerHTML = `<x-guava name=''></x-guava>`
@@ -101,8 +115,8 @@ describe('Remount', () => {
       Remount.define({
         'x-melon': {
           component: Dumper,
-          attributes: ['name']
-        }
+          attributes: ['name'],
+        },
       })
 
       div.innerHTML = `<x-melon name></x-melon>`
@@ -115,8 +129,8 @@ describe('Remount', () => {
       Remount.define({
         'x-apricot': {
           component: Dumper,
-          attributes: ['name']
-        }
+          attributes: ['name'],
+        },
       })
 
       div.innerHTML = `<X-APRICOT name='Apricot'></X-APRICOT>`
@@ -195,29 +209,29 @@ describe('Remount', () => {
     it('will supress errors', () => {
       Remount.define({
         'x-peach': {
-          component: Greeter
-        }
+          component: Greeter,
+        },
       })
 
       Remount.define({
         'x-peach': {
           component: Greeter,
-          quiet: true
-        }
+          quiet: true,
+        },
       })
     })
 
     it('can be passed as a second argument', () => {
       Remount.define({
-        'x-blueberry': Greeter
+        'x-blueberry': Greeter,
       })
 
       Remount.define(
         {
-          'x-blueberry': Greeter
+          'x-blueberry': Greeter,
         },
         {
-          quiet: true
+          quiet: true,
         }
       )
     })
@@ -252,11 +266,12 @@ describe('Remount', () => {
       let unmounted
 
       class Removable extends React.Component {
-        componentWillUnmount () {
+        componentWillUnmount() {
           unmounted = true
         }
-        render () {
-          return <span>Hola</span>
+        render() {
+          // return <span>Hola</span>
+          return React.createElement('span', {}, 'Hola')
         }
       }
 

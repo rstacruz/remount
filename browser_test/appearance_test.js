@@ -1,8 +1,15 @@
 /* eslint-env mocha */
-import { React, Remount, assert, root, raf, IS_DEBUG } from './setup'
+import { React, Remount, assert, root, raf, IS_DEBUG } from './setup.js'
 
-const Dumper = props => {
-  return <span className='dumper'>[{JSON.stringify(props)}]</span>
+const Dumper = (props) => {
+  // return <span className='dumper'>[{JSON.stringify(props)}]</span>
+  return React.createElement(
+    'span',
+    { className: 'dumper' },
+    '[',
+    JSON.stringify(props),
+    ']'
+  )
 }
 
 describe('Appearance', () => {
@@ -52,7 +59,10 @@ describe('Appearance', () => {
       `
 
       return raf().then(() => {
-        assert.equal(div.textContent.trim(), '[{"value":"def"}][{"value":"ghi"}]')
+        assert.equal(
+          div.textContent.trim(),
+          '[{"value":"def"}][{"value":"ghi"}]'
+        )
       })
     })
 
@@ -62,7 +72,10 @@ describe('Appearance', () => {
       `
 
       return raf().then(() => {
-        assert.equal(div.textContent.trim(), '[{"value":"def"}][{"value":"ghi"}]')
+        assert.equal(
+          div.textContent.trim(),
+          '[{"value":"def"}][{"value":"ghi"}]'
+        )
       })
     })
   })

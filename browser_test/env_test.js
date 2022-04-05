@@ -1,8 +1,7 @@
 /* eslint-env mocha */
-import { Remount } from './setup'
+import { Remount } from './setup.js'
 
 const strat = Remount.getStrategy()
-const name = Remount.getStrategy().name
 
 describe('Remount strategy: ' + strat.name, () => {
   if (strat.name === 'MutationObserver') {

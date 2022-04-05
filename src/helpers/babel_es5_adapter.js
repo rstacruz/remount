@@ -16,7 +16,7 @@ export function inject() {
   }
   const a = HTMLElement
 
-  window.HTMLElement = function() {
+  window.HTMLElement = function () {
     return Reflect.construct(a, [], this.constructor)
   }
 

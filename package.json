@@ -36,6 +36,7 @@
     "puppeteer": "^13.5.2",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
+    "react-shadow-dom-retarget-events": "^1.1.0",
     "serve": "^13.0.2",
     "start-server-and-test": "^1.14.0",
     "tslint": "^6.1.3",
@@ -87,8 +88,5 @@
     "dev:watch": "yarn build --watch",
     "dev:serve": "serve -l 10049",
     "dev": "run-p -sl dev:watch dev:serve"
-  },
-  "dependencies": {
-    "react-shadow-dom-retarget-events": "^1.1.0"
   }
 }

@@ -55,6 +55,7 @@
     "react",
     "web component"
   ],
+  "types": "dist/remount.d.ts",
   "license": "MIT",
   "peerDependencies": {
     "react": ">= 15.0.0",

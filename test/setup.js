@@ -1,27 +1,65 @@
-import ReactDOM from 'react-dom'
-import React from 'react'
+let Remount, React, ReactDOM
 
-let Remount
+if (process.env.MOCHA) {
+  React = window.React
+  ReactDOM = window.ReactDOM
+  Remount = window.Remount
 
-if (process.env.REMOUNT_VERSION === 'cjs') {
-  Remount = await import('../dist/remount.cjs')
-} else if (process.env.REMOUNT_VERSION === 'modern') {
-  Remount = await import('../dist/remount.modern.js')
+  // Make Mocha behave like Vitest/Jest, complete with a simplified
+  // assertion library so we can avoid using Chai
+  window.beforeAll = window.before
+  window.expect = (value) => {
+    return {
+      toBeTruthy() {
+        if (!value) throw new Error('toBeTruthy() failed')
+      },
+      toEqual(other) {
+        if (value !== other) throw new Error('toEqual() failed')
+      },
+      toMatch(expr) {
+        if (!value.match(expr)) throw new Error('toMatch() failed')
+      },
+      not: {
+        toEqual(other) {
+          if (value === other) throw new Error('not.toEqual() failed')
+        },
+      },
+    }
+  }
 } else {
-  Remount = await import('../src/index')
+  React = await import('react')
+  ReactDOM = await import('react-dom')
+
+  if (process.env.REMOUNT_VERSION === 'cjs') {
+    Remount = await import('../dist/remount.cjs')
+  } else if (process.env.REMOUNT_VERSION === 'modern') {
+    Remount = await import('../dist/remount.modern.js')
+  } else {
+    Remount = await import('../src/index')
+  }
 }
 
-// Root element
+/*
+ * Root element
+ */
+
 const root = document.createElement('div')
 root.id = 'debug'
 document.body.appendChild(root)
 
-// True if in ?debug mode
+/*
+ * Debug mode in mocha makes the elements visible
+ */
+
 const IS_DEBUG = window.location.search.indexOf('debug') !== -1
 if (IS_DEBUG) root.classList.add('-visible')
 
-// For happy-dom, the define() implementation doesn't throw errors, so this will
-// emulate browser behaviour better
+/*
+ * Happy-DOM workarounds:
+ * For happy-dom, the define() implementation doesn't throw errors, so this will
+ * emulate browser behaviour better
+ */
+
 if (window.happyDOM) {
   const oldDefine = window.customElements.define.bind(window.customElements)
 
@@ -40,51 +78,10 @@ if (window.happyDOM) {
   }
 }
 
-let assert
-if (typeof expect === 'function') {
-  assert = (value) => expect(value).toBeTruthy()
-  assert.notEqual = (a, b) => expect(a).not.toEqual(b)
-  assert.equal = (a, b) => expect(a).toEqual(b)
-  assert.match = (a, b) => expect(a).toMatch(b)
-} else {
-  // Crappy knock-off of an assertion library because
-  // we don't need the entire chai library in Mocha mode
-  assert = (value) => {
-    if (!value) throw new Error('Assertion failed')
-  }
+/**
+ * Defer until next frame in a way that's aware of polyfiils
+ */
 
-  assert.equal = (left, right) => {
-    if (left !== right) {
-      throw new Error(
-        'Equal assertion failed\n\n' +
-          `Left:  ${JSON.stringify(left)}\n` +
-          `Right: ${JSON.stringify(right)}\n\n`
-      )
-    }
-  }
-
-  assert.notEqual = (left, right) => {
-    if (left === right) {
-      throw new Error(
-        'Not equal assertion failed\n\n' +
-          `Left:  ${JSON.stringify(left)}\n` +
-          `Right: ${JSON.stringify(right)}\n\n`
-      )
-    }
-  }
-
-  assert.match = (haystack, needle) => {
-    if (!haystack.match(needle)) {
-      throw new Error(
-        'Match assertion failed\n\n' +
-          `Left:  ${JSON.stringify(haystack)}\n` +
-          `Right: ${needle.toString()}\n\n`
-      )
-    }
-  }
-}
-
-// Defer until next frame
 function raf() {
   if (window.MutationObserver._period) {
     // If MutationObserver was polyfilled, it will be
@@ -103,4 +100,4 @@ function raf() {
   }
 }
 
-export { root, IS_DEBUG, assert, raf, Remount, React, ReactDOM }
+export { root, IS_DEBUG, raf, Remount, React, ReactDOM }

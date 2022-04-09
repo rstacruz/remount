@@ -1,5 +1,5 @@
 /* eslint-env mocha */
-import { React, Remount, root, IS_DEBUG, raf, assert } from './setup.js'
+import { React, Remount, root, IS_DEBUG, raf } from './setup.js'
 
 const Dumper = (props) => {
   // return <span className='dumper'>[{JSON.stringify(props)}]</span>
@@ -40,7 +40,7 @@ describe('Children', () => {
       div.appendChild(el)
 
       return raf().then(() => {
-        assert.equal(div.textContent, '[{"value":"abc"}]')
+        expect(div.textContent).toEqual('[{"value":"abc"}]')
       })
     })
   })
@@ -55,21 +55,21 @@ describe('Children', () => {
 
       return raf()
         .then(() => {
-          assert.equal(div.textContent, '[{"value":"abc"}]')
+          expect(div.textContent).toEqual('[{"value":"abc"}]')
           // This will emit warning like "It looks like the React-rendered content of
           // this container was removed without using React"
           el.innerHTML = '<span>I am overridding React</span>'
           return raf()
         })
         .then(() => {
-          assert.equal(div.textContent, 'I am overridding React')
+          expect(div.textContent).toEqual('I am overridding React')
           // At this point, we lose the mutation observer, because we did an evil thing
           // of overriding innerHTML. This new attribute change will now not be detected.
           el.setAttribute('value', 'def')
           return raf()
         })
         .then(() => {
-          assert.equal(div.textContent, 'I am overridding React')
+          expect(div.textContent).toEqual('I am overridding React')
         })
     })
   })

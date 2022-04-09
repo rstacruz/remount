@@ -1,8 +1,8 @@
 // @ts-check
 /** @typedef { import('./types').ElementSpec } ElementSpec */
 
-import * as React from 'react'
-import * as ReactDOM from 'react-dom'
+import React from 'react'
+import ReactDOM from 'react-dom'
 import retargetEvents from 'react-shadow-dom-retarget-events'
 
 /**

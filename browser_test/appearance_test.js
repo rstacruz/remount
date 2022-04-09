@@ -24,7 +24,7 @@ describe('Appearance', () => {
     if (!IS_DEBUG) root.removeChild(div)
   })
 
-  before(() => {
+  beforeEach(() => {
     Remount.define({ 'x-white': Dumper }, { attributes: ['value'] })
   })
 

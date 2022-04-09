@@ -1,14 +1,17 @@
-/* eslint-env mocha */
-'use strict'
+import Remount from '../dist/remount.cjs' // TODO: what about modern build
+import ReactDOM from 'react-dom'
+import * as React from 'react'
 
 // Root element
-export const root = document.getElementById('debug')
+const root = document.createElement('div')
+root.id = 'debug'
+document.body.appendChild(root)
 
 // True if in ?debug mode
-export const IS_DEBUG = window.location.search.indexOf('debug') !== -1
+const IS_DEBUG = window.location.search.indexOf('debug') !== -1
 
 // Crappy knock-off of an assertion library
-export function assert(value) {
+function assert(value) {
   if (!value) throw new Error('Assertion failed')
 }
 
@@ -43,7 +46,7 @@ assert.match = (haystack, needle) => {
 }
 
 // Defer until next frame
-export function raf() {
+function raf() {
   if (window.MutationObserver._period) {
     // If MutationObserver was polyfilled, it will be
     // checking with a polling period.
@@ -61,14 +64,12 @@ export function raf() {
   }
 }
 
-export const Remount = window.Remount
-export const React = window.React
-export const ReactDOM = window.ReactDOM
+if (import.meta.vitest) {
+  assert.notEqual = (a, b) => expect(a).not.toEqual(b)
+}
+
+export { root, IS_DEBUG, assert, raf, Remount, React, ReactDOM }
+// export const React = window.React
+// export const ReactDOM = window.ReactDOM
 
 if (IS_DEBUG) root.classList.add('-visible')
-
-after(() => {
-  const div = document.createElement('div')
-  div.id = 'finish'
-  document.body.appendChild(div)
-})

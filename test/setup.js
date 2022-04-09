@@ -1,9 +1,15 @@
-// import Remount from '../dist/remount.cjs'
-// import Remount from '../dist/remount.modern.js'
-import Remount from '../src/index'
-
 import ReactDOM from 'react-dom'
 import React from 'react'
+
+let Remount
+
+if (process.env.REMOUNT_VERSION === 'cjs') {
+  Remount = await import('../dist/remount.cjs')
+} else if (process.env.REMOUNT_VERSION === 'modern') {
+  Remount = await import('../dist/remount.modern.js')
+} else {
+  Remount = await import('../src/index')
+}
 
 // Root element
 const root = document.createElement('div')

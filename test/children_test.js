@@ -20,8 +20,7 @@ describe('Children', () => {
     root.appendChild(div)
   })
 
-  beforeEach(() => {
-    if (window.customElements.get('x-indigo')) return
+  beforeAll(() => {
     Remount.define({ 'x-indigo': Dumper }, { attributes: ['value'] })
   })
 
@@ -57,6 +56,8 @@ describe('Children', () => {
       return raf()
         .then(() => {
           assert.equal(div.textContent, '[{"value":"abc"}]')
+          // This will emit warning like "It looks like the React-rendered content of
+          // this container was removed without using React"
           el.innerHTML = '<span>I am overridding React</span>'
           return raf()
         })

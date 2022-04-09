@@ -30,7 +30,6 @@
     "expect-puppeteer": "6.1.0",
     "gh-pages": "^3.2.3",
     "happy-dom": "^2.55.0",
-    "jest": "^27.5.1",
     "microbundle": "^0.14.2",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.6.2",
@@ -55,13 +54,6 @@
     "es5.js"
   ],
   "homepage": "https://github.com/rstacruz/remount#readme",
-  "jest": {
-    "testPathIgnorePatterns": [
-      "/node_modules/",
-      "/browser_test/",
-      "/dist/"
-    ]
-  },
   "keywords": [
     "custom element",
     "mount",
@@ -80,13 +72,12 @@
   },
   "scripts": {
     "build": "microbundle --name Remount --globals react=React,react-dom=ReactDOM",
-    "prettier": "prettier '*.js' '{src,browser_test}/**/*.{js,ts}'",
+    "prettier": "prettier '*.js' '{src,test}/**/*.{js,ts}'",
     "lint": "tslint --project .",
     "deploy": "gh-pages -d . -s 'dist/**/*'",
     "tsc": "tsc",
-    "jest": "jest",
     "prepare": "run-s build",
-    "test": "start-server-and-test dev http://127.0.0.1:10049/ jest",
+    "test": "vitest",
     "dev:watch": "yarn build --watch",
     "dev:serve": "serve -l 10049",
     "dev": "run-p -sl dev:watch dev:serve"

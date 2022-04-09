@@ -24,8 +24,7 @@ describe('Appearance', () => {
     if (!IS_DEBUG) root.removeChild(div)
   })
 
-  beforeEach(() => {
-    if (window.customElements.get('x-white')) return
+  beforeAll(() => {
     Remount.define({ 'x-white': Dumper }, { attributes: ['value'] })
   })
 

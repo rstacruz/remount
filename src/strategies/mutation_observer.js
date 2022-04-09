@@ -75,7 +75,7 @@ export function defineElement(elSpec, elName, events) {
 
   observer.observe(document.body, {
     childList: true,
-    subtree: true,
+    subtree: true
   })
 
   observers[name] = /* true */ observer

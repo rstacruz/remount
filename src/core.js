@@ -96,7 +96,7 @@ export function define(components, defaults) {
 
       onUnmount(element, mountPoint) {
         adapter.unmount(elSpec, mountPoint)
-      },
+      }
     })
   })
 }

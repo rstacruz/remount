@@ -27,7 +27,7 @@ describe('Custom adapters', () => {
       },
       unmount(a, b, c) {
         calls.push({ method: 'unmount', args: [a, b, c] })
-      },
+      }
     }
   })
 
@@ -110,7 +110,7 @@ describe('Example vanilla adapter', () => {
     },
     unmount(spec, el) {
       spec.component.unmount(spec, el)
-    },
+    }
   }
 
   it('calls update()', () => {
@@ -123,7 +123,7 @@ describe('Example vanilla adapter', () => {
       },
       unmount(_, el) {
         // pass
-      },
+      }
     }
 
     Remount.define({ 'x-chocolate': MyComponent }, { adapter: VanillaAdapter })

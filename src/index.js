@@ -12,7 +12,7 @@ import * as ReactAdapter from './react'
 function defineReact(components = {}, options = {}) {
   return define(components, {
     adapter: ReactAdapter,
-    ...options,
+    ...options
   })
 }
 

@@ -22,8 +22,8 @@ if (process.env.MOCHA) {
       not: {
         toEqual(other) {
           if (value === other) throw new Error('not.toEqual() failed')
-        },
-      },
+        }
+      }
     }
   }
 } else {

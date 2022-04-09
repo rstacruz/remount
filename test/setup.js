@@ -18,9 +18,11 @@ document.body.appendChild(root)
 
 // True if in ?debug mode
 const IS_DEBUG = window.location.search.indexOf('debug') !== -1
+if (IS_DEBUG) root.classList.add('-visible')
 
-// For happy-dom, this isn't
-if (true) {
+// For happy-dom, the define() implementation doesn't throw errors, so this will
+// emulate browser behaviour better
+if (window.happyDOM) {
   const oldDefine = window.customElements.define.bind(window.customElements)
 
   window.customElements.define = (name, customClass) => {
@@ -28,7 +30,8 @@ if (true) {
       throw new Error(`'${name}' has already been defined`)
     }
 
-    // Validate https://html.spec.whatwg.org/#valid-custom-element-name
+    // Validate names according to:
+    // https://html.spec.whatwg.org/#valid-custom-element-name
     if (!name.match(/^[a-z]+\-([a-z0-9\-]*)+$/)) {
       throw new Error(`'${name}' is not the correct format`)
     }
@@ -37,38 +40,47 @@ if (true) {
   }
 }
 
-// Crappy knock-off of an assertion library
-function assert(value) {
-  if (!value) throw new Error('Assertion failed')
-}
-
-assert.equal = (left, right) => {
-  if (left !== right) {
-    throw new Error(
-      'Equal assertion failed\n\n' +
-        `Left:  ${JSON.stringify(left)}\n` +
-        `Right: ${JSON.stringify(right)}\n\n`
-    )
+let assert
+if (typeof expect === 'function') {
+  assert = (value) => expect(value).toBeTruthy()
+  assert.notEqual = (a, b) => expect(a).not.toEqual(b)
+  assert.equal = (a, b) => expect(a).toEqual(b)
+  assert.match = (a, b) => expect(a).toMatch(b)
+} else {
+  // Crappy knock-off of an assertion library because
+  // we don't need the entire chai library in Mocha mode
+  assert = (value) => {
+    if (!value) throw new Error('Assertion failed')
   }
-}
 
-assert.notEqual = (left, right) => {
-  if (left === right) {
-    throw new Error(
-      'Not equal assertion failed\n\n' +
-        `Left:  ${JSON.stringify(left)}\n` +
-        `Right: ${JSON.stringify(right)}\n\n`
-    )
+  assert.equal = (left, right) => {
+    if (left !== right) {
+      throw new Error(
+        'Equal assertion failed\n\n' +
+          `Left:  ${JSON.stringify(left)}\n` +
+          `Right: ${JSON.stringify(right)}\n\n`
+      )
+    }
   }
-}
 
-assert.match = (haystack, needle) => {
-  if (!haystack.match(needle)) {
-    throw new Error(
-      'Match assertion failed\n\n' +
-        `Left:  ${JSON.stringify(haystack)}\n` +
-        `Right: ${needle.toString()}\n\n`
-    )
+  assert.notEqual = (left, right) => {
+    if (left === right) {
+      throw new Error(
+        'Not equal assertion failed\n\n' +
+          `Left:  ${JSON.stringify(left)}\n` +
+          `Right: ${JSON.stringify(right)}\n\n`
+      )
+    }
+  }
+
+  assert.match = (haystack, needle) => {
+    if (!haystack.match(needle)) {
+      throw new Error(
+        'Match assertion failed\n\n' +
+          `Left:  ${JSON.stringify(haystack)}\n` +
+          `Right: ${needle.toString()}\n\n`
+      )
+    }
   }
 }
 
@@ -91,12 +103,4 @@ function raf() {
   }
 }
 
-if (import.meta.vitest) {
-  assert.notEqual = (a, b) => expect(a).not.toEqual(b)
-}
-
 export { root, IS_DEBUG, assert, raf, Remount, React, ReactDOM }
-// export const React = window.React
-// export const ReactDOM = window.ReactDOM
-
-if (IS_DEBUG) root.classList.add('-visible')

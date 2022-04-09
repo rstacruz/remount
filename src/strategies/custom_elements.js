@@ -69,8 +69,13 @@ export function defineElement(elSpec, elName, events) {
   }
 
   // Supress warning when quiet mode is on
-  if (elSpec.quiet && window.customElements.get(elName)) {
-    return
+  if (window.customElements.get(elName)) {
+    if (elSpec.quiet) return
+    else {
+      throw new Error(
+        `'${elName}' has already been defined as a custom element`
+      )
+    }
   }
 
   window.customElements.define(elName, ComponentElement)

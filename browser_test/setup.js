@@ -13,6 +13,24 @@ document.body.appendChild(root)
 // True if in ?debug mode
 const IS_DEBUG = window.location.search.indexOf('debug') !== -1
 
+// For happy-dom, this isn't
+if (true) {
+  const oldDefine = window.customElements.define.bind(window.customElements)
+
+  window.customElements.define = (name, customClass) => {
+    if (window.customElements.get(name)) {
+      throw new Error(`'${name}' has already been defined`)
+    }
+
+    // Validate https://html.spec.whatwg.org/#valid-custom-element-name
+    if (!name.match(/^[a-z]+\-([a-z0-9\-]*)+$/)) {
+      throw new Error(`'${name}' is not the correct format`)
+    }
+
+    return oldDefine(name, customClass)
+  }
+}
+
 // Crappy knock-off of an assertion library
 function assert(value) {
   if (!value) throw new Error('Assertion failed')

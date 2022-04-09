@@ -25,6 +25,7 @@ describe('Appearance', () => {
   })
 
   beforeEach(() => {
+    if (window.customElements.get('x-white')) return
     Remount.define({ 'x-white': Dumper }, { attributes: ['value'] })
   })
 

@@ -139,7 +139,7 @@ describe('Remount', () => {
       })
     })
 
-    it.only('tag names will fail to be defined twice (case sensitive)', () => {
+    it('tag names will fail to be defined twice (case sensitive)', () => {
       try {
         Remount.define({ 'x-dragonfruit': Greeter })
         Remount.define({ 'x-dragonfruit': Greeter })

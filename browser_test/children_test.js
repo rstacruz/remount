@@ -20,8 +20,8 @@ describe('Children', () => {
     root.appendChild(div)
   })
 
-  // before(() => {
   beforeEach(() => {
+    if (window.customElements.get('x-indigo')) return
     Remount.define({ 'x-indigo': Dumper }, { attributes: ['value'] })
   })
 

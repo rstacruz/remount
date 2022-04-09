@@ -20,7 +20,8 @@ describe('Children', () => {
     root.appendChild(div)
   })
 
-  before(() => {
+  // before(() => {
+  beforeEach(() => {
     Remount.define({ 'x-indigo': Dumper }, { attributes: ['value'] })
   })
 

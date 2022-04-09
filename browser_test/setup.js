@@ -1,6 +1,9 @@
-import Remount from '../dist/remount.cjs' // TODO: what about modern build
+// import Remount from '../dist/remount.cjs'
+// import Remount from '../dist/remount.modern.js'
+import Remount from '../src/index'
+
 import ReactDOM from 'react-dom'
-import * as React from 'react'
+import React from 'react'
 
 // Root element
 const root = document.createElement('div')

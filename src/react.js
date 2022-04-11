@@ -39,10 +39,10 @@ export function update(elSpec, mountPoint, props, element) {
  * Unmounts a component.
  * @private
  *
- * @param {ElementSpec} elSpec
+ * @param {ElementSpec} _elSpec
  * @param {HTMLElement} mountPoint
  */
 
-export function unmount(elSpec, mountPoint) {
+export function unmount(_elSpec, mountPoint) {
   ReactDOM.unmountComponentAtNode(mountPoint)
 }

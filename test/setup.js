@@ -86,13 +86,13 @@ function raf() {
   if (window.MutationObserver._period) {
     // If MutationObserver was polyfilled, it will be
     // checking with a polling period.
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       setTimeout(() => {
         resolve()
       }, window.MutationObserver._period * 2)
     })
   } else {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       window.requestAnimationFrame(() => {
         resolve()
       })

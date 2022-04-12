@@ -1,8 +1,8 @@
 // @ts-check
 /** @typedef { import('./types').ElementSpec } ElementSpec */
 
-import * as React from 'react'
-import * as ReactDOM from 'react-dom'
+import React from 'react'
+import ReactDOM from 'react-dom'
 import retargetEvents from 'react-shadow-dom-retarget-events'
 
 /**
@@ -39,10 +39,10 @@ export function update(elSpec, mountPoint, props, element) {
  * Unmounts a component.
  * @private
  *
- * @param {ElementSpec} elSpec
+ * @param {ElementSpec} _elSpec
  * @param {HTMLElement} mountPoint
  */
 
-export function unmount(elSpec, mountPoint) {
+export function unmount(_elSpec, mountPoint) {
   ReactDOM.unmountComponentAtNode(mountPoint)
 }

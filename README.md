@@ -87,7 +87,7 @@ Custom Elements API<sup>[#][custom-elements]</sup> ("Web Components") will be us
 
 [custom-elements]: https://caniuse.com/#search=custom%20elements
 
-## Documentation
+  ## Documentation
 
 - [API documentation](./docs/api.md)
 - [Builds](./docs/builds.md) &mdash; ES2015+ and ES Module builds are also provided.

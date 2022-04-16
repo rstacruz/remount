@@ -7,8 +7,7 @@
   "source": "src/index.js",
   "exports": {
     "require": "./dist/remount.cjs",
-    "default": "./dist/remount.modern.js",
-    "es5": "./dist/remount.cjs"
+    "default": "./dist/remount.modern.js"
   },
   "main": "dist/remount.js",
   "module": "dist/remount.module.js",

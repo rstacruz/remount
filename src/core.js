@@ -37,9 +37,9 @@ export function getStrategy() {
     /* tslint:disable no-console */
     console.warn(
       "Remount: This browser doesn't support the " +
-        'MutationObserver API or the Custom Elements API. Including ' +
-        'polyfills might fix this. Remount elements will not work. ' +
-        'https://github.com/rstacruz/remount'
+      'MutationObserver API or the Custom Elements API. Including ' +
+      'polyfills might fix this. Remount elements will not work. ' +
+      'https://github.com/rstacruz/remount'
     )
   }
 
@@ -160,4 +160,15 @@ function getProps(element, attributes) {
     },
     {}
   )
+}
+
+/**
+ * @param {Adapter} adapter
+ */
+
+export function defineWithAdapter(adapter) {
+  return (
+    /* @type {ElementMap} */ components = {},
+    /** @type {Defaults} */ options = {}
+  ) => define(components, { adapter, ...options })
 }

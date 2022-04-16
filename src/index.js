@@ -1,22 +1,11 @@
 /** @typedef { import('./types').ElementMap } ElementMap */
 /** @typedef { import('./types').Defaults } Defaults */
 
-import { define, getStrategy } from './core'
+import { defineWithAdapter, getStrategy } from './core'
 import * as ReactAdapter from './adapters/react-17'
 
-/**
- * @param {ElementMap} components
- * @param {Defaults=} defaults
- */
-
-function defineReact(components = {}, options = {}) {
-  return define(components, {
-    adapter: ReactAdapter,
-    ...options
-  })
-}
+const define = defineWithAdapter(ReactAdapter)
 
 // Alias for doing `import Remount from 'remount'` rather than `import * as Remount`
-const Remount = { define: defineReact, getStrategy }
-
-export { defineReact as define, getStrategy, Remount as default }
+const Remount = { define, getStrategy }
+export { define, getStrategy, Remount as default }

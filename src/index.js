@@ -2,7 +2,7 @@
 /** @typedef { import('./types').Defaults } Defaults */
 
 import { define, getStrategy } from './core'
-import * as ReactAdapter from './react'
+import * as ReactAdapter from './adapters/react-17'
 
 /**
  * @param {ElementMap} components

@@ -1,5 +1,11 @@
 // @ts-check
-/** @typedef { import('./types').ElementSpec } ElementSpec */
+/*
+ * Adapter for React 17 and below.
+ * This adapter uses the ReactDOM.render() API, which React 18
+ * has deprecated.
+ */
+
+/** @typedef { import('../types').ElementSpec } ElementSpec */
 
 import React from 'react'
 import ReactDOM from 'react-dom'

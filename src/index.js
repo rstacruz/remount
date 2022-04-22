@@ -2,7 +2,7 @@
 /** @typedef { import('./types').Defaults } Defaults */
 
 import { defineWithAdapter, getStrategy } from './core'
-import * as ReactAdapter from './adapters/react-17'
+import * as ReactAdapter from './adapters/react'
 
 const define = defineWithAdapter(ReactAdapter)
 

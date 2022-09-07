@@ -9,6 +9,7 @@
 /** @typedef { import('../types').PropertyMap } PropertyMap */
 
 import { inject as enableBabelClasses } from '../helpers/babel_es5_adapter'
+import { createRoot } from 'react-dom/client'
 
 /**
  * The name of this strategy.
@@ -50,21 +51,22 @@ export function defineElement(elSpec, elName, events) {
 
     connectedCallback() {
       this._mountPoint = createMountPoint(this, elSpec)
-      onMount(this, this._mountPoint)
+      this._root = createRoot(this._mountPoint)
+      onMount(this, this._root)
     }
 
     disconnectedCallback() {
-      if (!this._mountPoint) {
+      if (!this._root) {
         return
       }
-      onUnmount(this, this._mountPoint)
+      onUnmount(this, this._root)
     }
 
     attributeChangedCallback() {
-      if (!this._mountPoint) {
+      if (!this._root) {
         return
       }
-      onUpdate(this, this._mountPoint)
+      onUpdate(this, this._root)
     }
   }
 

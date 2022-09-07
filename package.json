@@ -12,8 +12,8 @@
     "@babel/preset-react": "^7.0.0",
     "@types/jest": "^24.0.5",
     "@types/puppeteer": "^1.12.1",
-    "@types/react": "^16.8.3",
-    "@types/react-dom": "^16.8.2",
+    "@types/react": "^18.0.18",
+    "@types/react-dom": "^18.0.6",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^23.6.0",
     "expect-puppeteer": "3.5.1",
@@ -22,8 +22,8 @@
     "npm-run-all": "^4.1.5",
     "prettier": "^1.15.3",
     "puppeteer": "^1.12.2",
-    "react": "^16.7.0",
-    "react-dom": "^16.7.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "rollup": "^1.1.2",
     "rollup-plugin-babel": "^4.3.2",
     "rollup-plugin-babel-minify": "^7.0.0",
@@ -64,8 +64,8 @@
   "main": "dist/remount.es5.js",
   "module": "dist/remount.js",
   "peerDependencies": {
-    "react": ">= 15.0.0",
-    "react-dom": ">= 15.0.0"
+    "react": ">= 18.0.0",
+    "react-dom": ">= 18.0.0"
   },
   "repository": {
     "type": "git",

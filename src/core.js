@@ -6,6 +6,7 @@
 /** @typedef { import('./types').ElementSpec } ElementSpec */
 /** @typedef { import('./types').PropertyMap } PropertyMap */
 /** @typedef { import('./types').Strategy } Strategy */
+/** @typedef { import('react-dom/client').Root } Root */
 
 import * as CustomElementsStrategy from './strategies/custom_elements'
 import * as MutationObserverStrategy from './strategies/mutation_observer'
@@ -80,22 +81,22 @@ export function define(components, defaults) {
 
     // Define a custom element.
     Strategy.defineElement(elSpec, name, {
-      onMount(element, mountPoint) {
+      onMount(element, root) {
         const props = getProps(element, elSpec.attributes)
         if (elSpec.shadow && elSpec.retarget) {
-          adapter.mount(elSpec, mountPoint, props, element)
+          adapter.mount(elSpec, root, props, element)
         } else {
-          adapter.mount(elSpec, mountPoint, props, null)
+          adapter.mount(elSpec, root, props, null)
         }
       },
 
-      onUpdate(element, mountPoint) {
+      onUpdate(element, root) {
         const props = getProps(element, elSpec.attributes)
-        adapter.update(elSpec, mountPoint, props, null)
+        adapter.update(elSpec, root, props, null)
       },
 
-      onUnmount(element, mountPoint) {
-        adapter.unmount(elSpec, mountPoint)
+      onUnmount(_element, root) {
+        adapter.unmount(elSpec, root)
       }
     })
   })

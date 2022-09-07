@@ -1,4 +1,5 @@
 import React from 'react'
+import { Root } from 'react-dom/client'
 
 export type Component =
   | React.ComponentClass<any, any>
@@ -7,17 +8,17 @@ export type Component =
 export interface Adapter {
   mount: (
     spec: ElementSpec,
-    mountPoint: HTMLElement,
+    root: Root,
     props: {},
     element: HTMLElement | null
   ) => void
   update: (
     spec: ElementSpec,
-    mountPoint: HTMLElement,
+    root: Root,
     props: {},
     element: HTMLElement | null
   ) => void
-  unmount: (spec: ElementSpec, mountPoint: HTMLElement) => void
+  unmount: (spec: ElementSpec, root: Root) => void
 }
 
 export interface PropertyMap {
@@ -47,9 +48,9 @@ export interface ElementSpec {
 export type ReactAdapter = Adapter
 
 export interface ElementEvents {
-  onMount: (source: HTMLElement, mountPoint: HTMLElement) => void
-  onUpdate: (source: HTMLElement, mountPoint: HTMLElement) => void
-  onUnmount: (source: HTMLElement, mountPoint: HTMLElement) => void
+  onMount: (source: HTMLElement, root: Root) => void
+  onUpdate: (source: HTMLElement, root: Root) => void
+  onUnmount: (source: HTMLElement, root: Root) => void
 }
 
 export interface Strategy {

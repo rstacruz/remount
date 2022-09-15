@@ -4,6 +4,7 @@
 /** @typedef { import('../types').ObserverList } ObserverList */
 
 import each from '../each'
+import { createRoot } from 'react-dom/client';
 
 /**
  * The name of this strategy.
@@ -127,7 +128,8 @@ function observeForUpdates(node, events) {
       each(mutations, (/** @type MutationRecord */ mutation) => {
         const targetNode = mutation.target
         if (isElement(targetNode)) {
-          onUpdate(targetNode, targetNode)
+          const root = createRoot(targetNode);
+          onUpdate(targetNode, root)
         }
       })
     }
@@ -161,7 +163,8 @@ function observeForRemoval(node, events) {
           if (isElement(node)) {
             // @ts-ignore TypeScript expects 0 arguments...?
             observer.disconnect(parent)
-            onUnmount(node, node)
+            const root = createRoot(node);
+            onUnmount(node, root)
           }
         })
       })

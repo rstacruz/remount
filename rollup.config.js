@@ -1,18 +1,17 @@
 // rollup.config.js
-import babel from 'rollup-plugin-babel'
-import resolve from 'rollup-plugin-node-resolve'
-import commonjs from 'rollup-plugin-commonjs'
-import minify from 'rollup-plugin-babel-minify'
+import babel from '@rollup/plugin-babel'
+import resolve from '@rollup/plugin-node-resolve'
+import commonjs from '@rollup/plugin-commonjs'
+import injectProcessEnv from 'rollup-plugin-inject-process-env'
 import server from 'rollup-plugin-server'
 import copy from 'rollup-plugin-copy'
 
 const IS_TEST = process.env.NODE_ENV === 'test-rollup'
 const IS_WATCH = process.argv.includes('--watch')
 
-const MINIFY = minify({ comments: false })
+// const MINIFY = minify({ comments: false })
 
-// Modern builds will not bundle dependencies
-const PLUGINS = [resolve({ browser: true }), commonjs()]
+const PLUGINS = [resolve({ browser: true }), commonjs(), injectProcessEnv({ NODE_ENV: process.env.NODE_ENV })]
 
 const BABEL = babel({
   exclude: 'node_modules/**'
@@ -65,7 +64,7 @@ export default [
 
   {
     ...DEFAULTS,
-    plugins: [...PLUGINS, MINIFY],
+    plugins: [...PLUGINS],
     output: { file: 'dist/remount.min.js', format: 'esm' }
   },
 
@@ -80,7 +79,7 @@ export default [
   {
     ...DEFAULTS,
     external: ['react', 'react-dom'],
-    plugins: [...PLUGINS, BABEL, MINIFY],
+    plugins: [...PLUGINS, BABEL],
     output: { file: 'dist/remount.es5.min.js', ...UMD }
   },
 

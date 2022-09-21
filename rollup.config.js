@@ -20,13 +20,13 @@ const BABEL = babel({
 
 const DEFAULTS = {
   input: 'index.js',
-  external: ['react', 'react-dom/client']
+  external: ['react', 'react-dom', 'react-dom/client']
 }
 
 const UMD = {
   format: 'umd',
   name: 'Remount',
-  globals: { react: 'React', 'react-dom': 'ReactDOM' }
+  globals: { react: 'React', 'react-dom/client': 'ReactDOM' }
 }
 
 const SERVE_PLUGINS = IS_WATCH
@@ -72,14 +72,12 @@ export default [
   // ES5
   {
     ...DEFAULTS,
-    external: ['react', 'react-dom'],
     plugins: [...PLUGINS, BABEL],
     output: { file: 'dist/remount.es5.js', ...UMD }
   },
 
   {
     ...DEFAULTS,
-    external: ['react', 'react-dom'],
     plugins: [...PLUGINS, BABEL, MINIFY],
     output: { file: 'dist/remount.es5.min.js', ...UMD }
   },

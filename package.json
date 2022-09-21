@@ -7,23 +7,23 @@
     "url": "https://github.com/rstacruz/remount/issues"
   },
   "devDependencies": {
-    "@babel/core": "^7.2.2",
-    "@babel/preset-env": "^7.2.3",
-    "@babel/preset-react": "^7.0.0",
-    "@types/jest": "^24.0.5",
+    "@babel/core": "^7.19.1",
+    "@babel/preset-env": "^7.19.1",
+    "@babel/preset-react": "^7.18.6",
+    "@types/jest": "^29.0.3",
     "@types/puppeteer": "^1.12.1",
-    "@types/react": "^16.8.3",
-    "@types/react-dom": "^16.8.2",
+    "@types/react": "^18.0.20",
+    "@types/react-dom": "^18.0.6",
     "babel-core": "^7.0.0-bridge.0",
-    "babel-jest": "^23.6.0",
+    "babel-jest": "^29.0.3",
     "expect-puppeteer": "3.5.1",
     "gh-pages": "^2.0.1",
     "jest": "^23.6.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^1.15.3",
     "puppeteer": "^1.12.2",
-    "react": "^16.7.0",
-    "react-dom": "^16.7.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "rollup": "^1.1.2",
     "rollup-plugin-babel": "^4.3.2",
     "rollup-plugin-babel-minify": "^7.0.0",
@@ -83,7 +83,7 @@
     "watch": "env NODE_ENV=test-rollup rollup --config --watch"
   },
   "dependencies": {
-    "@babel/preset-typescript": "^7.3.3",
+    "@babel/preset-typescript": "^7.18.6",
     "react-shadow-dom-retarget-events": "^1.0.8"
   }
 }

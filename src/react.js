@@ -1,8 +1,12 @@
 // @ts-check
 /** @typedef { import('./types').ElementSpec } ElementSpec */
+/** @typedef { import('react-dom/client').Root } ReactDOMRoot */
 
 import * as React from 'react'
 import * as ReactDOM from 'react-dom/client'
+
+/** @type {Map<HTMLElement, ReactDOMRoot>} */
+const roots = new Map()
 
 /**
  * @param {ElementSpec} elSpec
@@ -12,7 +16,10 @@ import * as ReactDOM from 'react-dom/client'
  */
 
 export function mount(elSpec, mountPoint, props, element) {
-  return update(elSpec, mountPoint, props, element)
+  const reactElement = React.createElement(elSpec.component, props)
+  const root = ReactDOM.createRoot(mountPoint)
+  roots.set(mountPoint, root)
+  root.render(reactElement)
 }
 
 /**
@@ -26,10 +33,9 @@ export function mount(elSpec, mountPoint, props, element) {
  */
 
 export function update(elSpec, mountPoint, props, element) {
-  const { component } = elSpec
-  const reactElement = React.createElement(component, props)
-  mountPoint.__reactRoot = ReactDOM.createRoot(mountPoint)
-  mountPoint.__reactRoot.render(reactElement)
+  const reactElement = React.createElement(elSpec.component, props)
+  const root = roots.get(mountPoint)
+  if (root) root.render(reactElement)
 }
 
 /**
@@ -41,5 +47,9 @@ export function update(elSpec, mountPoint, props, element) {
  */
 
 export function unmount(elSpec, mountPoint) {
-  mountPoint.__reactRoot.unmount()
+  const root = roots.get(mountPoint)
+  if (!root) return
+
+  root.unmount()
+  roots.delete(mountPoint)
 }

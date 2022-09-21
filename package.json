@@ -65,8 +65,8 @@
   "main": "dist/remount.es5.js",
   "module": "dist/remount.js",
   "peerDependencies": {
-    "react": ">= 15.0.0",
-    "react-dom": ">= 15.0.0"
+    "react": ">= 18.0.0",
+    "react-dom": ">= 18.0.0"
   },
   "repository": {
     "type": "git",

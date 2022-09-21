@@ -2,8 +2,7 @@
 /** @typedef { import('./types').ElementSpec } ElementSpec */
 
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
-import retargetEvents from 'react-shadow-dom-retarget-events'
+import * as ReactDOM from 'react-dom/client'
 
 /**
  * @param {ElementSpec} elSpec
@@ -29,10 +28,8 @@ export function mount(elSpec, mountPoint, props, element) {
 export function update(elSpec, mountPoint, props, element) {
   const { component } = elSpec
   const reactElement = React.createElement(component, props)
-  ReactDOM.render(reactElement, mountPoint)
-  if (element) {
-    retargetEvents(element.shadowRoot)
-  }
+  mountPoint.__reactRoot = ReactDOM.createRoot(mountPoint)
+  mountPoint.__reactRoot.render(reactElement)
 }
 
 /**
@@ -44,5 +41,5 @@ export function update(elSpec, mountPoint, props, element) {
  */
 
 export function unmount(elSpec, mountPoint) {
-  ReactDOM.unmountComponentAtNode(mountPoint)
+  mountPoint.__reactRoot.unmount()
 }

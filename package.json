@@ -10,6 +10,7 @@
     "@babel/core": "^7.19.1",
     "@babel/preset-env": "^7.19.1",
     "@babel/preset-react": "^7.18.6",
+    "@babel/preset-typescript": "^7.18.6",
     "@types/jest": "^29.0.3",
     "@types/puppeteer": "^1.12.1",
     "@types/react": "^18.0.20",
@@ -81,9 +82,5 @@
     "prepare": "run-s build",
     "test": "start-server-and-test watch http://127.0.0.1:10049/ jest",
     "watch": "env NODE_ENV=test-rollup rollup --config --watch"
-  },
-  "dependencies": {
-    "@babel/preset-typescript": "^7.18.6",
-    "react-shadow-dom-retarget-events": "^1.0.8"
   }
 }

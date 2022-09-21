@@ -20,7 +20,7 @@ const BABEL = babel({
 
 const DEFAULTS = {
   input: 'index.js',
-  external: ['react', 'react-dom', 'react-shadow-dom-retarget-events']
+  external: ['react', 'react-dom/client']
 }
 
 const UMD = {

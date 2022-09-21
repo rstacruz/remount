@@ -49,7 +49,7 @@ describe('Children', () => {
       return raf()
         .then(() => {
           assert.equal(div.textContent, '[{"value":"abc"}]')
-          el.innerHTML = '<span>I am overridding React</span>'
+          div.innerHTML = '<span>I am overridding React</span>'
           return raf()
         })
         .then(() => {

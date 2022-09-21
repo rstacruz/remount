@@ -148,33 +148,7 @@ _define()_ accepts these options:
 
 ### Custom adapters
 
-You can specify custom adapters to integrate Remount with other non-React frameworks.
-
-```js
-const ElmAdapter = {
-  mount({ component }, mountPoint, props) {
-    // This function will be called on the first appearance of the custom
-    // element.
-    component.embed(mountPoint, props)
-  },
-  update({ component }, mountPoint, props) {
-    // This function will be called on any subsequent updates afterwards (ie,
-    // if attributes were changed).
-  },
-  unmount({ component }, mountPoint) {
-    // This function will be called when a custom element is removed from the
-    // DOM (eg, `parent.removeChild()`).
-  }
-}
-```
-
-```js
-define({
-  'x-elm-tooltip': Elm.Tooltip
-}, {
-  adapter: ElmAdapter
-})
-```
+Custom adapters were once supported, but has since been removed in v0.12.0. See [remount#80](https://github.com/rstacruz/remount/pull/80) for details and discussion.
 
 ## getStrategy()
 

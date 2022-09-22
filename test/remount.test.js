@@ -1,5 +1,4 @@
 /** @jest-environment jsdom */
-/* eslint-env mocha */
 import { raf } from './utils'
 
 const Greeter = ({ name }) => {

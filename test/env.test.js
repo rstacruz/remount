@@ -1,5 +1,4 @@
 /** @jest-environment jsdom */
-/* eslint-env mocha */
 const strat = Remount.getStrategy()
 const name = Remount.getStrategy().name
 

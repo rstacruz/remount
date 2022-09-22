@@ -1,4 +1,3 @@
-/* eslint-env mocha */
 // Root element
 export const root = document.getElementById('debug')
 

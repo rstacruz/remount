@@ -1,21 +1,22 @@
 // rollup.config.js
-import babel from 'rollup-plugin-babel'
-import resolve from 'rollup-plugin-node-resolve'
-import commonjs from 'rollup-plugin-commonjs'
-import minify from 'rollup-plugin-babel-minify'
+import babel from '@rollup/plugin-babel'
+import resolve from '@rollup/plugin-node-resolve'
+import commonjs from '@rollup/plugin-commonjs'
+import { terser } from 'rollup-plugin-terser'
 import server from 'rollup-plugin-server'
 import copy from 'rollup-plugin-copy'
 
 const IS_TEST = process.env.NODE_ENV === 'test-rollup'
 const IS_WATCH = process.argv.includes('--watch')
 
-const MINIFY = minify({ comments: false })
+const MINIFY = terser()
 
 // Modern builds will not bundle dependencies
 const PLUGINS = [resolve({ browser: true }), commonjs()]
 
 const BABEL = babel({
-  exclude: 'node_modules/**'
+  exclude: 'node_modules/**',
+  babelHelpers: 'bundled'
 })
 
 const DEFAULTS = {

@@ -7,8 +7,6 @@
 <h1 align='center'>Remount</h1>
 
 <p align='center'>
-<a href='https://travis-ci.org/rstacruz/remount'><img src='https://img.shields.io/travis/rstacruz/remount/master.svg?colorA=234' alt='Travis CI' /></a>
-&nbsp;
 <a href='https://npmjs.com/package/remount'><img src='https://img.shields.io/npm/v/remount.svg?colorA=234&colorB=83e' alt='version'></a>
 &nbsp;
 <a href='https://bundlephobia.com/result?p=remount'><img src='https://img.shields.io/bundlephobia/minzip/remount.svg?colorA=345&colorB=89a&label=size' alt='Bundle size'></a>

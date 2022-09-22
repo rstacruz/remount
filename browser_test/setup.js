@@ -48,8 +48,11 @@ export function raf () {
     })
   } else {
     return new Promise((resolve, reject) => {
+      // Since React 18, updates sometimes get deferred by 2 animation frames intermittently
       window.requestAnimationFrame(() => {
-        resolve()
+        window.requestAnimationFrame(() => {
+          resolve()
+        })
       })
     })
   }

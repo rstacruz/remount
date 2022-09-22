@@ -223,27 +223,18 @@ describe('Remount', () => {
     })
   })
 
-  describe('Shadow DOM mode', () => {
-    // Skip this for now; only Chrome supports this.
-    // Polyfilled environments have no way of hiding it from .textContent.
-    it.skip('will not be seen by .textContent', () => {
+  // Shadow DOM isn't always available
+  const hasShadow =
+    Remount.getStrategy().name === 'CustomElements' &&
+    document.body.attachShadow
+
+  ;(hasShadow ? describe : describe.skip)('Shadow DOM mode', () => {
+    it('will not be seen by .textContent', () => {
       Remount.define({ 'x-grape': Greeter }, { shadow: true })
       div.innerHTML = `Grape: <x-grape></x-grape>`
 
       // It's "shadowed" so we can't see it
       assert(!div.textContent.match(/Hello/))
-    })
-
-    // Shadow DOM isn't always available
-    const hasShadow =
-      Remount.getStrategy().name === 'CustomElements' &&
-      document.body.attachShadow
-    ;(hasShadow ? it : it.skip)('will be seen in .shadowRoot', () => {
-      Remount.define({ 'x-orange': Greeter }, { shadow: true })
-
-      div.innerHTML = `Orange: <x-orange></x-orange>`
-      const shadowHTML = document.querySelector('x-orange').shadowRoot.innerHTML
-      assert.match(shadowHTML, /Hello/)
     })
   })
 

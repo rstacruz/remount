@@ -5,11 +5,14 @@
 v0.12 brings React 18 support.
 
 - Add React 18 support. ([#81])
+- Fix issue when loading asynchronously in mutation observer mode (eg, IE11). ([#30])
 - BREAKING: React 17 and below are no longer supported.
-- Internal: update test suite. ([#82])
+- Internal: update test suite, update Rollup ([#82], [#88])
 
-[#81]: https://github.com/rstacruz/remount/pull/82
+[#30]: https://github.com/rstacruz/remount/pull/30
+[#81]: https://github.com/rstacruz/remount/pull/81
 [#82]: https://github.com/rstacruz/remount/pull/82
+[#88]: https://github.com/rstacruz/remount/pull/88
 
 ## [v0.11.0]
 

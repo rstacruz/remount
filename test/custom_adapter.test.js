@@ -1,3 +1,4 @@
+/** @jest-environment jsdom */
 /* eslint-env mocha */
 import { assert, raf } from './utils'
 

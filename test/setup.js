@@ -15,5 +15,7 @@ after(() => {
   document.body.appendChild(div)
 })
 
+// Mocha's "before" is Jest's "beforeAll"
+window.beforeAll = window.before
 window.IS_DEBUG = IS_DEBUG
 window.root = root

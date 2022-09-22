@@ -1,3 +1,4 @@
+/** @jest-environment jsdom */
 /* eslint-env mocha */
 import { assert, raf } from './utils'
 
@@ -38,7 +39,7 @@ describe('Remount', () => {
       })
     })
 
-    it('can handle JSON errors (TODO)')
+    it.skip('can handle JSON errors (TODO)', () => {})
   })
 
   describe('Remount.define()', () => {
@@ -270,7 +271,7 @@ describe('Remount', () => {
         })
     })
 
-    it('is triggered via reordering (TODO)')
+    it.skip('is triggered via reordering (TODO)', () => {})
   })
 
   describe('Updating', () => {

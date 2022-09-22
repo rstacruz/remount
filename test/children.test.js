@@ -1,3 +1,4 @@
+/** @jest-environment jsdom */
 /* eslint-env mocha */
 import { assert, raf } from './utils'
 
@@ -13,7 +14,7 @@ describe('Children', () => {
     root.appendChild(div)
   })
 
-  before(() => {
+  beforeAll(() => {
     Remount.define({ 'x-indigo': Dumper }, { attributes: ['value'] })
   })
 

@@ -1,3 +1,4 @@
+/** @jest-environment jsdom */
 /* eslint-env mocha */
 import { assert, raf } from './utils'
 
@@ -17,7 +18,7 @@ describe('Appearance', () => {
     if (!IS_DEBUG) root.removeChild(div)
   })
 
-  before(() => {
+  beforeAll(() => {
     Remount.define({ 'x-white': Dumper }, { attributes: ['value'] })
   })
 

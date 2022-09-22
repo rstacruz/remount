@@ -56,7 +56,7 @@
   <script crossorigin src='https://cdn.jsdelivr.net/npm/react-dom@18/umd/react-dom.development.js'></script>
   <script src='./remount.es5.js'></script>
   <script>mocha.setup('bdd')</script>
-  <script src='./test.js'></script>
+  <script src='./browser_test.js'></script>
   <script>mocha.run()</script>
 </body>
 </html>

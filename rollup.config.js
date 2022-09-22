@@ -42,15 +42,15 @@ const SERVE_PLUGINS = IS_WATCH
 const TEST_MODULES = IS_TEST
   ? [
       {
-        input: 'browser_test/test.js',
+        input: 'test/browser_test.js',
         plugins: [
           BABEL,
           copy({
-            'browser_test/index.html.template': 'dist/index.html'
+            'test/index.html.template': 'dist/index.html'
           }),
           ...SERVE_PLUGINS
         ],
-        output: { file: 'dist/test.js', format: 'cjs' }
+        output: { file: 'dist/browser_test.js', format: 'cjs' }
       }
     ]
   : []

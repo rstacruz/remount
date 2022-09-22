@@ -49,7 +49,6 @@
   "jest": {
     "testPathIgnorePatterns": [
       "/node_modules/",
-      "/browser_test/",
       "/dist/"
     ]
   },

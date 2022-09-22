@@ -1,6 +1,6 @@
 /** @jest-environment jsdom */
 /* eslint-env mocha */
-import { assert, raf } from './utils'
+import { raf } from './utils'
 
 describe('Inception mode', () => {
   let div
@@ -39,7 +39,7 @@ describe('Inception mode', () => {
     root.render(<Outer />)
 
     return raf().then(() => {
-      assert.equal(div.textContent, 'OutsideInsideHello')
+      expect(div.textContent).toEqual('OutsideInsideHello')
     })
   })
 })

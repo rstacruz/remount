@@ -19,33 +19,3 @@ export function raf () {
     })
   }
 }
-
-// Crappy knock-off of an assertion library
-export function assert (value) {
-  if (!value) throw new Error('Assertion failed')
-}
-
-assert.equal = (left, right) => {
-  if (left !== right) {
-    throw new Error('Equal assertion failed\n\n' +
-      `Left:  ${JSON.stringify(left)}\n` +
-      `Right: ${JSON.stringify(right)}\n\n`)
-  }
-}
-
-assert.notEqual = (left, right) => {
-  if (left === right) {
-    throw new Error('Not equal assertion failed\n\n' +
-      `Left:  ${JSON.stringify(left)}\n` +
-      `Right: ${JSON.stringify(right)}\n\n`)
-  }
-}
-
-assert.match = (haystack, needle) => {
-  if (!haystack.match(needle)) {
-    throw new Error('Match assertion failed\n\n' +
-      `Left:  ${JSON.stringify(haystack)}\n` +
-      `Right: ${needle.toString()}\n\n`)
-  }
-}
-

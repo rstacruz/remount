@@ -1,6 +1,6 @@
 /** @jest-environment jsdom */
 /* eslint-env mocha */
-import { assert, raf } from './utils'
+import { raf } from './utils'
 
 const Dumper = props => {
   return <span className='dumper'>[{JSON.stringify(props)}]</span>
@@ -34,7 +34,7 @@ describe('Children', () => {
       div.appendChild(el)
 
       return raf().then(() => {
-        assert.equal(div.textContent, '[{"value":"abc"}]')
+        expect(div.textContent).toEqual('[{"value":"abc"}]')
       })
     })
   })
@@ -49,19 +49,19 @@ describe('Children', () => {
 
       return raf()
         .then(() => {
-          assert.equal(div.textContent, '[{"value":"abc"}]')
+          expect(div.textContent).toEqual('[{"value":"abc"}]')
           div.innerHTML = '<span>I am overridding React</span>'
           return raf()
         })
         .then(() => {
-          assert.equal(div.textContent, 'I am overridding React')
+          expect(div.textContent).toEqual('I am overridding React')
           // At this point, we lose the mutation observer, because we did an evil thing
           // of overriding innerHTML. This new attribute change will now not be detected.
           el.setAttribute('value', 'def')
           return raf()
         })
         .then(() => {
-          assert.equal(div.textContent, 'I am overridding React')
+          expect(div.textContent).toEqual('I am overridding React')
         })
     })
   })

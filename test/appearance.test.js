@@ -1,6 +1,6 @@
 /** @jest-environment jsdom */
 /* eslint-env mocha */
-import { assert, raf } from './utils'
+import { raf } from './utils'
 
 const Dumper = props => {
   return <span className='dumper'>[{JSON.stringify(props)}]</span>
@@ -27,7 +27,7 @@ describe('Appearance', () => {
       div.innerHTML = '<x-white value="abc"></x-white>'
 
       return raf().then(() => {
-        assert.equal(div.textContent, '[{"value":"abc"}]')
+        expect(div.textContent).toEqual('[{"value":"abc"}]')
       })
     })
 
@@ -35,7 +35,7 @@ describe('Appearance', () => {
       div.innerHTML = '<span><x-white value="ABC"></x-white></span>'
 
       return raf().then(() => {
-        assert.equal(div.textContent, '[{"value":"ABC"}]')
+        expect(div.textContent).toEqual('[{"value":"ABC"}]')
       })
     })
 
@@ -43,7 +43,7 @@ describe('Appearance', () => {
       div.innerHTML = '<p><x-white value="abcd"></x-white></p>'
 
       return raf().then(() => {
-        assert.equal(div.textContent, '[{"value":"abcd"}]')
+        expect(div.textContent).toEqual('[{"value":"abcd"}]')
       })
     })
 
@@ -53,7 +53,7 @@ describe('Appearance', () => {
       `
 
       return raf().then(() => {
-        assert.equal(div.textContent.trim(), '[{"value":"def"}][{"value":"ghi"}]')
+        expect(div.textContent.trim()).toEqual('[{"value":"def"}][{"value":"ghi"}]')
       })
     })
 
@@ -63,7 +63,7 @@ describe('Appearance', () => {
       `
 
       return raf().then(() => {
-        assert.equal(div.textContent.trim(), '[{"value":"def"}][{"value":"ghi"}]')
+        expect(div.textContent.trim()).toEqual('[{"value":"def"}][{"value":"ghi"}]')
       })
     })
   })
@@ -75,7 +75,7 @@ describe('Appearance', () => {
       div.appendChild(el)
 
       return raf().then(() => {
-        assert(div.textContent === '[{"value":"abc"}]')
+        expect(div.textContent).toEqual('[{"value":"abc"}]')
       })
     })
 
@@ -89,7 +89,7 @@ describe('Appearance', () => {
       div.appendChild(container)
 
       return raf().then(() => {
-        assert(div.textContent === '[{"value":"def"}]')
+        expect(div.textContent).toEqual('[{"value":"def"}]')
       })
     })
 
@@ -103,7 +103,7 @@ describe('Appearance', () => {
       container.appendChild(el)
 
       return raf().then(() => {
-        assert(div.textContent === '[{"value":"ghi"}]')
+        expect(div.textContent).toEqual('[{"value":"ghi"}]')
       })
     })
   })

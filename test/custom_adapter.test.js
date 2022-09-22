@@ -1,6 +1,6 @@
 /** @jest-environment jsdom */
 /* eslint-env mocha */
-import { assert, raf } from './utils'
+import { raf } from './utils'
 
 describe('Custom adapters', () => {
   let div
@@ -38,9 +38,9 @@ describe('Custom adapters', () => {
     div.appendChild(el)
 
     return raf().then(() => {
-      assert(calls[0])
-      assert.equal(calls[0].method, 'mount')
-      assert.equal(calls[0].args[0].component, 'MyComponent')
+      expect(calls[0]).not.toEqual(undefined)
+      expect(calls[0].method).toEqual('mount')
+      expect(calls[0].args[0].component).toEqual('MyComponent')
     })
   })
 
@@ -59,9 +59,9 @@ describe('Custom adapters', () => {
         return raf()
       })
       .then(() => {
-        assert(calls[1])
-        assert.equal(calls[1].method, 'update')
-        assert.equal(calls[1].args[0].component, 'MyComponent')
+        expect(calls[1]).not.toEqual(undefined)
+        expect(calls[1].method).toEqual('update')
+        expect(calls[1].args[0].component).toEqual('MyComponent')
       })
   })
 
@@ -80,10 +80,10 @@ describe('Custom adapters', () => {
         return raf()
       })
       .then(() => {
-        assert(calls[1])
-        assert.equal(calls[1].method, 'unmount')
-        assert.equal(calls[1].args[0].component, 'MyComponent')
-        assert.equal(calls[1].args[1].nodeName.toLowerCase(), 'x-raspberry')
+        expect(calls[1]).not.toEqual(undefined)
+        expect(calls[1].method).toEqual('unmount')
+        expect(calls[1].args[0].component).toEqual('MyComponent')
+        expect(calls[1].args[1].nodeName.toLowerCase()).toEqual('x-raspberry')
       })
   })
 })
@@ -132,7 +132,7 @@ describe('Example vanilla adapter', () => {
     div.appendChild(el)
 
     return raf().then(() => {
-      assert.equal(el.textContent, 'Hey :)')
+      expect(el.textContent).toEqual('Hey :)')
     })
   })
 })

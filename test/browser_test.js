@@ -1,5 +1,5 @@
 /* eslint-env mocha */
-import './setup'
+import './browser_setup'
 import './env.test'
 import './remount.test'
 import './inception.test'

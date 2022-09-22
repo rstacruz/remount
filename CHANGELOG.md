@@ -1,3 +1,16 @@
+## v0.12.0 - unreleased
+
+> TBD
+
+v0.12 brings React 18 support.
+
+- Add React 18 support. ([#81])
+- BREAKING: React 17 and below are no longer supported.
+- Internal: update test suite. ([#82])
+
+[#81]: https://github.com/rstacruz/remount/pull/82
+[#82]: https://github.com/rstacruz/remount/pull/82
+
 ## [v0.11.0]
 
 > Apr 22, 2019

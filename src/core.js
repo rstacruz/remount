@@ -34,7 +34,6 @@ export function getStrategy() {
   )
 
   if (!StrategyUsed) {
-    /* tslint:disable no-console */
     console.warn(
       "Remount: This browser doesn't support the " +
         'MutationObserver API or the Custom Elements API. Including ' +

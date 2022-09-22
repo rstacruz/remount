@@ -1,5 +1,5 @@
-/* eslint-env mocha */
-import { React, ReactDOM, Remount, assert, root, raf, IS_DEBUG } from './setup'
+/** @jest-environment jsdom */
+import { raf } from './utils'
 
 describe('Inception mode', () => {
   let div
@@ -34,10 +34,11 @@ describe('Inception mode', () => {
       )
     }
 
-    ReactDOM.render(<Outer />, div)
+    const root = ReactDOM.createRoot(div)
+    root.render(<Outer />)
 
     return raf().then(() => {
-      assert.equal(div.textContent, 'OutsideInsideHello')
+      expect(div.textContent).toEqual('OutsideInsideHello')
     })
   })
 })

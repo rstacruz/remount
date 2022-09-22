@@ -1,5 +1,5 @@
-/* eslint-env mocha */
-import { assert, React, Remount, IS_DEBUG, raf, root } from './setup'
+/** @jest-environment jsdom */
+import { raf } from './utils'
 
 const Greeter = ({ name }) => {
   return <span className='greeter'>Hello {name || '(unknown)'}!</span>
@@ -26,7 +26,7 @@ describe('Remount', () => {
       Remount.define({ 'x-red': Greeter })
       div.innerHTML = `<x-red props-json='{"name":"John"}'></x-greeter>`
       return raf().then(() => {
-        assert.match(div.textContent, /Hello John/)
+        expect(div.textContent).toMatch(/Hello John/)
       })
     })
 
@@ -34,11 +34,11 @@ describe('Remount', () => {
       Remount.define({ 'x-blue': Greeter })
       div.innerHTML = `<x-blue name='Alice'></x-blue>`
       return raf().then(() => {
-        assert.match(div.textContent, /Hello \(unknown\)/)
+        expect(div.textContent).toMatch(/Hello \(unknown\)/)
       })
     })
 
-    it('can handle JSON errors (TODO)')
+    it.skip('can handle JSON errors (TODO)', () => {})
   })
 
   describe('Remount.define()', () => {
@@ -51,7 +51,7 @@ describe('Remount', () => {
 
       div.innerHTML = `<x-apple props-json='{"name":"Apple"}'></x-apple>`
       return raf().then(() => {
-        assert.match(div.textContent, /Hello Apple/)
+        expect(div.textContent).toMatch(/Hello Apple/)
       })
     })
 
@@ -65,7 +65,7 @@ describe('Remount', () => {
 
       div.innerHTML = `<x-banana name='Banana'></x-banana>`
       return raf().then(() => {
-        assert.equal(div.textContent, '[{"name":"Banana"}]')
+        expect(div.textContent).toEqual('[{"name":"Banana"}]')
       })
     })
 
@@ -79,7 +79,7 @@ describe('Remount', () => {
 
       div.innerHTML = `<x-cherry NAME='Cherry'></x-cherry>`
       return raf().then(() => {
-        assert.equal(div.textContent, '[{"name":"Cherry"}]')
+        expect(div.textContent).toEqual('[{"name":"Cherry"}]')
       })
     })
 
@@ -93,7 +93,7 @@ describe('Remount', () => {
 
       div.innerHTML = `<x-guava name=''></x-guava>`
       return raf().then(() => {
-        assert.equal(div.textContent, '[{"name":""}]')
+        expect(div.textContent).toEqual('[{"name":""}]')
       })
     })
 
@@ -107,7 +107,7 @@ describe('Remount', () => {
 
       div.innerHTML = `<x-melon name></x-melon>`
       return raf().then(() => {
-        assert.equal(div.textContent, '[{"name":""}]')
+        expect(div.textContent).toEqual('[{"name":""}]')
       })
     })
 
@@ -121,7 +121,7 @@ describe('Remount', () => {
 
       div.innerHTML = `<X-APRICOT name='Apricot'></X-APRICOT>`
       return raf().then(() => {
-        assert.equal(div.textContent, '[{"name":"Apricot"}]')
+        expect(div.textContent).toEqual('[{"name":"Apricot"}]')
       })
     })
 
@@ -131,7 +131,7 @@ describe('Remount', () => {
         Remount.define({ 'x-dragonfruit': Greeter })
         throw new Error('Failed')
       } catch (e) {
-        assert.notEqual(e.message, 'Failed')
+        expect(e.message).not.toEqual('Failed')
       }
     })
 
@@ -141,7 +141,7 @@ describe('Remount', () => {
         Remount.define({ 'x-CURRANT': Dumper })
         throw new Error('Failed')
       } catch (e) {
-        assert.notEqual(e.message, 'Failed')
+        expect(e.message).not.toEqual('Failed')
       }
     })
   })
@@ -152,7 +152,7 @@ describe('Remount', () => {
         Remount.define({ banana: Greeter })
         throw new Error('Failed')
       } catch (e) {
-        assert.notEqual(e.message, 'Failed')
+        expect(e.message).not.toEqual('Failed')
       }
     })
 
@@ -177,7 +177,7 @@ describe('Remount', () => {
         Remount.define({ '0-element': Greeter })
         throw new Error('Failed')
       } catch (e) {
-        assert.notEqual(e.message, 'Failed')
+        expect(e.message).not.toEqual('Failed')
       }
     })
 
@@ -186,7 +186,7 @@ describe('Remount', () => {
         Remount.define({ '-element': Greeter })
         throw new Error('Failed')
       } catch (e) {
-        assert.notEqual(e.message, 'Failed')
+        expect(e.message).not.toEqual('Failed')
       }
     })
   })
@@ -234,7 +234,7 @@ describe('Remount', () => {
       div.innerHTML = `Grape: <x-grape></x-grape>`
 
       // It's "shadowed" so we can't see it
-      assert(!div.textContent.match(/Hello/))
+      expect(!!div.textContent.match(/Hello/)).toEqual(false)
     })
   })
 
@@ -258,19 +258,19 @@ describe('Remount', () => {
           return raf()
         })
         .then(() => {
-          assert(div.textContent.includes('Hola'))
+          expect(div.textContent.includes('Hola')).toEqual(true)
           // Disconnect it
           div.removeChild(div.children[0])
           return raf()
         })
         .then(() => {
           // Assert that componentWillUnmount is ran
-          assert.equal(unmounted, true)
-          assert.equal(div.textContent.trim(), '')
+          expect(unmounted).toEqual(true)
+          expect(div.textContent.trim()).toEqual('')
         })
     })
 
-    it('is triggered via reordering (TODO)')
+    it.skip('is triggered via reordering (TODO)', () => {})
   })
 
   describe('Updating', () => {
@@ -282,13 +282,13 @@ describe('Remount', () => {
           return raf()
         })
         .then(() => {
-          assert.equal(div.textContent.trim(), '[{"value":123}]')
+          expect(div.textContent.trim()).toEqual('[{"value":123}]')
           const el = div.querySelector('x-lemon')
           el.setAttribute('props-json', '{"value":456}')
           return raf()
         })
         .then(() => {
-          assert.equal(div.textContent.trim(), '[{"value":456}]')
+          expect(div.textContent.trim()).toEqual('[{"value":456}]')
         })
     })
   })

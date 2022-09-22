@@ -95,7 +95,7 @@ Custom Elements API<sup>[#][custom-elements]</sup> ("Web Components") will be us
 
 ## Thanks
 
-**remount** © 2018, Rico Sta. Cruz. Released under the [MIT] License.<br>
+**remount** © 2022, Rico Sta. Cruz. Released under the [MIT] License.<br>
 Authored and maintained by Rico Sta. Cruz with help from contributors ([list][contributors]).
 
 > [ricostacruz.com](http://ricostacruz.com) &nbsp;&middot;&nbsp;

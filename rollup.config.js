@@ -3,7 +3,7 @@ import babel from '@rollup/plugin-babel'
 import resolve from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
 import { terser } from 'rollup-plugin-terser'
-import server from 'rollup-plugin-server'
+import serve from 'rollup-plugin-serve'
 import copy from 'rollup-plugin-copy'
 
 const IS_TEST = process.env.NODE_ENV === 'test-rollup'
@@ -32,7 +32,7 @@ const UMD = {
 
 const SERVE_PLUGINS = IS_WATCH
   ? [
-      server({
+      serve({
         // open: true,
         contentBase: 'dist',
         port: +(process.env.PORT || 10049)

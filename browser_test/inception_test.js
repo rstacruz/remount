@@ -1,5 +1,5 @@
 /* eslint-env mocha */
-import { React, ReactDOM, Remount, assert, root, raf, IS_DEBUG } from './setup'
+import { assert, raf } from './utils'
 
 describe('Inception mode', () => {
   let div

@@ -1,5 +1,5 @@
 /* eslint-env mocha */
-import { React, Remount, assert, root, raf, IS_DEBUG } from './setup'
+import { assert, raf } from './utils'
 
 const Dumper = props => {
   return <span className='dumper'>[{JSON.stringify(props)}]</span>

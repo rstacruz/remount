@@ -1,6 +1,5 @@
 /* eslint-env mocha */
-
-import { Remount, assert, raf, root } from './setup'
+import { assert, raf } from './utils'
 
 describe('Custom adapters', () => {
   let div

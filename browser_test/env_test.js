@@ -1,6 +1,4 @@
 /* eslint-env mocha */
-import { Remount } from './setup'
-
 const strat = Remount.getStrategy()
 const name = Remount.getStrategy().name
 

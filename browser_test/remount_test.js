@@ -1,5 +1,5 @@
 /* eslint-env mocha */
-import { assert, React, Remount, IS_DEBUG, raf, root } from './setup'
+import { assert, raf } from './utils'
 
 const Greeter = ({ name }) => {
   return <span className='greeter'>Hello {name || '(unknown)'}!</span>

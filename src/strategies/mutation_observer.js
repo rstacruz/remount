@@ -78,14 +78,23 @@ export function defineElement(elSpec, elName, events) {
     subtree: true
   })
 
-  observers[name] = /* true */ observer
+  observers[elName] = /* true */ observer
 
-  window.addEventListener('DOMContentLoaded', () => {
-    const nodes = document.getElementsByTagName(name)
+  function mountElementsInDOM() {
+    const nodes = document.getElementsByTagName(elName)
     each(nodes, (/** @type HTMLElement */ node) =>
-      checkForMount(node, name, events)
+      checkForMount(node, elName, events)
     )
-  })
+  }
+
+  if (
+    document.readyState === 'complete' ||
+    document.readyState === 'interactive'
+  ) {
+    mountElementsInDOM()
+  } else {
+    window.addEventListener('DOMContentLoaded', mountElementsInDOM)
+  }
 }
 
 /**

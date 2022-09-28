@@ -4,10 +4,11 @@
 
 v0.12 brings React 18 support.
 
+- BREAKING: **React 17 and below are no longer supported.** React 18 is the minimum version.
+- BREAKING: **IE11 is no longer officially supported** by Remount 0.12 and React 18. If IE support is needed, consider using Remount v0.11 with React 17. Some IE11 workarounds will continue to exist in Remount 0.12, but they will be removed in the next version.
 - Add React 18 support. ([#81])
 - Fix issue when loading asynchronously in mutation observer mode (eg, IE11). ([#30])
-- BREAKING: React 17 and below are no longer supported.
-- Internal: update test suite, update Rollup ([#82], [#88])
+- Internal: update test suite, update Rollup. ([#82], [#88])
 
 [#30]: https://github.com/rstacruz/remount/pull/30
 [#81]: https://github.com/rstacruz/remount/pull/81

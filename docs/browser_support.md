@@ -1,6 +1,6 @@
 # Browser support
 
-All modern browsers are supported out-of-the-box, including IE11 (Internet Explorer's oldest supported version as of 2016). Legacy IE support (IE9) is available using polyfills.
+Remount supports all browsers that React 18 supports.
 
 ## API used
 
@@ -16,17 +16,6 @@ Remount supports 2 modes of operations: Custom Elements and Mutation Observers. 
 
 ## Legacy IE support
 
-To support IE9, add the MutationObserver polyfill for legacy IE support. Here are two ways to include it (my preference is for the first one):
+React 18 doesn't officially support IE11, though polyfills are reported to work. Remount itself can work with IE11 via the Mutation Observer API. For more information on React's compatilibity with IE, see:
 
-- via Jsdelivr CDN ([source](https://github.com/megawac/MutationObserver.js)):
-
-  ```html
-  <script>if(!window.MutationObserver){document.write('<script src="https://cdn.jsdelivr.net/g/mutationobserver/"></scr'+'ipt>')}</script>
-  ```
-- Via polyfill.io:
-
-  ```js
-  <script src="https://cdn.polyfill.io/v2/polyfill.js?features=MutationObserver" />
-  ```
-
-You may also need to use the legacy `remount/es5` build of Remount. See [Builds](./builds.md) for more info on this.
+- [JavaScript Environment Requirements – React](https://reactjs.org/docs/javascript-environment-requirements.html) _(reactjs.org)_

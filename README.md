@@ -26,7 +26,14 @@
 
 ## Installation
 
-Remount is available through the npm package repository.
+Remount is available through the npm package repository. React 18 is required.
+
+```sh
+# npm
+npm install remount react react-dom
+# yarn
+yarn add remount react react-dom
+```
 
 - Via yarn: `yarn add remount`
 - or npm: `npm install remount`
@@ -77,7 +84,7 @@ Some ideas on why you might want to consider Remount for your project:
 
 ## Browser support
 
-Remount supports all browsers that React support, which includes IE11. Legacy IE support (IE9) is available using polyfills.
+Remount supports all browsers that React 18 supports.
 
 Custom Elements API<sup>[#][custom-elements]</sup> ("Web Components") will be used if it's available (Chrome/67+), and will fallback to a compatible API otherwise.
 

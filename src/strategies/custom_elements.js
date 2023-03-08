@@ -44,6 +44,18 @@ export function defineElement(elSpec, elName, events) {
   const attributes = elSpec.attributes || []
 
   class ComponentElement extends HTMLElement {
+    _props = {}
+    get props() {
+      return this._props;
+    }
+    set props(p) {
+      this._props = p;
+      // only fire "onUpdate" if mountpoint is present
+      if (!!this._mountPoint) {
+        onUpdate(this, this._mountPoint);
+      }
+    }
+
     static get observedAttributes() {
       return ['props-json', ...attributes]
     }

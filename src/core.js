@@ -6,6 +6,7 @@
 /** @typedef { import('./types').ElementSpec } ElementSpec */
 /** @typedef { import('./types').PropertyMap } PropertyMap */
 /** @typedef { import('./types').Strategy } Strategy */
+/** @typedef { import('./types').ComponentElement } ComponentElement */
 
 import * as CustomElementsStrategy from './strategies/custom_elements'
 import * as MutationObserverStrategy from './strategies/mutation_observer'
@@ -137,7 +138,7 @@ function isElementSpec(spec) {
  * Returns properties for a given HTML element.
  *
  * @private
- * @param {HTMLElement} element
+ * @param {HTMLElement | ComponentElement} element
  * @param {string[] | null | undefined} attributes
  *
  * @example
@@ -146,6 +147,12 @@ function isElementSpec(spec) {
  */
 
 function getProps(element, attributes) {
+  // If the `props` property is present, get that
+  if('props' in element) {
+    return element.props
+  }
+
+  // If the props-json attribute is present, get that
   const rawJson = element.getAttribute('props-json')
   if (rawJson) {
     return JSON.parse(rawJson)

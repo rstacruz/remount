@@ -1,5 +1,15 @@
 {
   "compilerOptions": {
+    // Types should go into this directory.
+    // Removing this would place the .d.ts files
+    // next to the .js files
+    "outDir": "dist",
+    // Generate d.ts files
+    "declaration": true,
+    // This compiler run should
+    // only output d.ts files
+    "emitDeclarationOnly": true,
+    "noEmit": false,
     "target": "es5",
     "lib": [
       "dom",
@@ -16,7 +26,6 @@
     "strict": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true,
     "jsx": "preserve"
   },
   "include": [

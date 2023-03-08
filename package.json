@@ -60,6 +60,7 @@
   "license": "MIT",
   "main": "dist/remount.es5.js",
   "module": "dist/remount.js",
+  "types": "dist/index.d.ts",
   "peerDependencies": {
     "react": ">= 18.0.0",
     "react-dom": ">= 18.0.0"
@@ -70,6 +71,7 @@
   },
   "scripts": {
     "build": "rollup --config",
+    "postbuild": "run-s tsc",
     "prettier": "prettier '*.js' 'src/**/*.{js,ts}'",
     "tsc": "tsc",
     "jest": "jest",

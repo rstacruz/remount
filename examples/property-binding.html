@@ -1,0 +1,137 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='utf-8'>
+<script crossorigin src='https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2.0.4/custom-elements-es5-adapter.js'></script>
+<script crossorigin src='https://cdn.jsdelivr.net/npm/@webcomponents/webcomponentsjs@2.0.4/webcomponents-loader.js'></script>
+<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src='../dist/remount.es5.js'></script>
+</head>
+<body>
+  <h1>Web components test</h1>
+  <my-lit-element></my-lit-element>
+
+  <!-- Defines <my-react-element> -->
+  <script>
+    const h = React.createElement
+    /**
+     * Basic counter button that also calls the arbitrary callback function that was passed in
+     * and renders the complex data that was passed in, without needing to serialize
+     */
+    function Counter({ count, complexData, arbitraryCallback }) {
+      React.useEffect(() => {
+        console.log('complex data received in React!', complexData)
+      }, [complexData])
+
+      const handleClick = () => {
+        console.log('handleClick from React')
+        arbitraryCallback();
+      }
+
+      return h('button', { onClick: () => handleClick() }, 'Count from React:', count, '')
+    }
+
+    Remount.define({
+      'my-react-element': Counter,
+    })
+  </script>
+
+  <!-- Defines <my-lit-element> -->
+  <script type="module">
+    import { LitElement, html } from 'https://cdn.skypack.dev/lit@2'
+
+    /**
+     * Basic example of usage of a LitElement, a close to native Web Components library maintained by Google.
+     * See more: https://lit.dev/docs/
+     */
+    class ElementThatUsesWrappedReact extends LitElement {
+      static properties = {
+        name: { type: String },
+        count: { type: Number },
+      }
+
+      /**
+       * @override See: https://lit.dev/docs/api/LitElement/#LitElement.firstUpdated
+       */
+      firstUpdated() {
+        this.name = 'World'
+        this.count = 0
+      }
+
+      _handleClick() {
+        console.log('handleClick from Lit!')
+        this.count += 1
+      }
+
+      render() {
+        return html`
+        <p>Hello, ${this.name}!</p>
+        <p>
+          In <a href="https://lit.dev/docs/">Lit</a>, the Property Expression (the <code>.props</code> part) is used to assign 
+          <u>Properties</u> to an element, not to be confused with its <u>Attributes</u> (<a href="https://stackoverflow.com/q/6003819">there's a difference</a>).
+        </p>
+        <blockquote>
+          <span><a href="https://lit.dev/docs/templates/expressions/#property-expressions">Lit syntax</a>:</span><br />
+          <code>&lt;custom-element my-attr="123" .myProperty=\$\{123\}></custom-element></code>
+        </blockquote>
+        <p>
+          There are similar syntaxes in other web frameworks, such as: 
+        </p>
+        <ul>
+          <li><a href="https://angular.io/guide/property-binding#binding-to-a-property">Angular</a>:</li>
+          <ul>
+            <li>
+              <code>&lt;img alt="item" [attr.title]="'Title ' + ' goes here'" [src]="itemImageUrl"></code>
+            </li>
+            <li>
+              <code>&lt;custom-element [attr.my-attr]="123" [myProperty]="123"></code>
+            </li>
+          </ul>
+          <li><a href="https://vuejs.org/guide/extras/web-components.html#using-custom-elements-in-vue">Vue.js</a></li>
+          <ul>
+            <li>
+              <code>&lt;my-element :user.prop="{ name: 'jack' }"></my-element></code>
+            </li>
+            <li>
+              <code>&lt;my-element .user="{ name: 'jack' }"></my-element></code>
+            </li>
+            <li>
+              <code>&lt;custom-element :my-attr="123" .myProperty="123"></my-element></code>
+            </li>
+          </ul>
+          <li><a href="https://github.com/facebook/react/issues/11347#top">React is expected to support assigning properties like attributes in the future, but for now you're limited to doing this:</a>
+          <ul>
+            <li>
+              <code>&lt;custom-element my-attr="123" ref={el => el.myProperty = 123;} /></code>
+            </li>
+          </ul>
+        </ul>
+        <p style="color: red; font-weight: bold;">Check the console!</p>
+        <button @click="${this._handleClick}">Count from Lit: ${this.count}</button>
+        <my-react-element .props=${{
+          count: this.count,
+          complexData: {
+            hello: 'world',
+            foo: [4, 5, 6],
+            bar: new Set([1,1,1,2,2,2,3,3,3]),
+            bazz: {
+              fizz: 99,
+              buzz: {
+                id: 11,
+                name: 'GitHub'
+              }
+            },
+            doc: document.querySelector('h1'),
+            doThing: () => alert(1)
+          },
+          arbitraryCallback: () => this._handleClick()
+        }}
+          ></my-react-element>
+        `
+      }
+    }
+    customElements.define('my-lit-element', ElementThatUsesWrappedReact);
+  </script>
+</body>
+</html>

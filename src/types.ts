@@ -1,5 +1,14 @@
 import React from 'react'
 
+/**
+ * Excerpt from `custom_elements.js` to keep type safety
+ * @private
+ */
+export class ComponentElement extends HTMLElement {
+  _props: any = {};
+  props: any = {};
+}
+
 export type Component =
   | React.ComponentClass<any, any>
   | React.FunctionComponent<any>
